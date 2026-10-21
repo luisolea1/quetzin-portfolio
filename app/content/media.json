@@ -1,0 +1,23 @@
+{
+  "portrait":{"src":null,"alt":"Retrato pendiente","position":"50% 50%"},
+  "architecture":{"src":null,"alt":"Fotografía de arquitectura pendiente","position":"50% 50%"},
+  "cover01":{"src":null,"alt":"Portada del proyecto 01 pendiente","position":"50% 50%"},
+  "cover02":{"src":null,"alt":"Portada del proyecto 02 pendiente","position":"50% 50%"},
+  "cover03":{"src":null,"alt":"Portada del proyecto 03 pendiente","position":"50% 50%"},
+  "cover04":{"src":null,"alt":"Portada del proyecto 04 pendiente","position":"50% 50%"},
+  "cover05":{"src":null,"alt":"Portada del proyecto 05 pendiente","position":"50% 50%"},
+  "cover06":{"src":null,"alt":"Portada del proyecto 06 pendiente","position":"50% 50%"},
+  "hero01":{"src":null,"alt":"Imagen principal del proyecto 01 pendiente"},
+  "hero02":{"src":null,"alt":"Imagen principal del proyecto 02 pendiente"},
+  "hero03":{"src":null,"alt":"Imagen principal del proyecto 03 pendiente"},
+  "hero04":{"src":null,"alt":"Imagen principal del proyecto 04 pendiente"},
+  "hero05":{"src":null,"alt":"Imagen principal del proyecto 05 pendiente"},
+  "hero06":{"src":null,"alt":"Imagen principal del proyecto 06 pendiente"},
+  "gallery01a":{"src":null,"alt":"Imagen de galería pendiente"},"gallery01b":{"src":null,"alt":"Imagen de galería pendiente"},"gallery01wide":{"src":null,"alt":"Imagen de galería pendiente"},
+  "gallery02a":{"src":null,"alt":"Imagen de galería pendiente"},"gallery02b":{"src":null,"alt":"Imagen de galería pendiente"},"gallery02wide":{"src":null,"alt":"Imagen de galería pendiente"},
+  "gallery03a":{"src":null,"alt":"Imagen de galería pendiente"},"gallery03b":{"src":null,"alt":"Imagen de galería pendiente"},"gallery03wide":{"src":null,"alt":"Imagen de galería pendiente"},
+  "gallery04a":{"src":null,"alt":"Imagen de galería pendiente"},"gallery04b":{"src":null,"alt":"Imagen de galería pendiente"},"gallery04wide":{"src":null,"alt":"Imagen de galería pendiente"},
+  "gallery05a":{"src":null,"alt":"Imagen de galería pendiente"},"gallery05b":{"src":null,"alt":"Imagen de galería pendiente"},
+  "gallery06a":{"src":null,"alt":"Imagen de galería pendiente"},"gallery06b":{"src":null,"alt":"Imagen de galería pendiente"},"gallery06wide":{"src":null,"alt":"Imagen de galería pendiente"},
+  "wheel01":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel02":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel03":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel04":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel05":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel06":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel07":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel08":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel09":{"src":null,"alt":"Fotografía de la rueda pendiente"},"wheel10":{"src":null,"alt":"Fotografía de la rueda pendiente"}
+}

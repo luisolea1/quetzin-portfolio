@@ -1,0 +1,2 @@
+:root{--ink:#111;--muted:#888;--page-gutter:5vw;--radius:7px;--font-display:"Inter Variable",Inter,Arial,sans-serif;--font-mono:"IBM Plex Mono",monospace}
+@media(max-width:1199px){:root{--page-gutter:30px}}@media(max-width:809px){:root{--page-gutter:20px}}

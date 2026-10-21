@@ -1,0 +1,1 @@
+.gallery{display:flex;flex-direction:column;gap:10px}.wide{aspect-ratio:2/1}.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.square{aspect-ratio:1}@media(max-width:809px){.gallery{gap:10px}.pair{grid-template-columns:1fr;gap:5px}.first{order:0}.second{order:1}}

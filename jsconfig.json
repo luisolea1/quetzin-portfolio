@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "resolveJsonModule": true
+  },
+  "include": ["app", "vite.config.js", "react-router.config.js"]
+}
