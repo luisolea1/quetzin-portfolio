@@ -1,0 +1,36 @@
+.profile-hero {
+  min-width: 0;
+}
+.profile-hero__mark {
+  margin: 38px 0 24px;
+}
+.profile-hero__intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  margin: 35px 0 110px;
+}
+.profile-hero__paragraph {
+  max-width: 390px;
+  margin: 0;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+.profile-hero__emphasis {
+  color: var(--ink);
+  font-weight: 400;
+}
+@media (max-width: 809px) {
+  .profile-hero__mark {
+    margin: 25px 0 0;
+  }
+  .profile-hero__intro {
+    margin: 150px auto 44px;
+    display: block;
+    text-align: center;
+    max-width: 320px;
+  }
+  .profile-hero__paragraph + .profile-hero__paragraph {
+    margin-top: 8px;
+  }
+}

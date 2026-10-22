@@ -1,0 +1,13 @@
+.error-state {
+  padding: 14vw var(--page-gutter);
+  min-height: 55vh;
+}
+.error-state__title {
+  font-size: clamp(50px, 9vw, 135px);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+  max-width: 900px;
+}
+.error-state__link {
+  font: 500 16px var(--font-mono);
+}

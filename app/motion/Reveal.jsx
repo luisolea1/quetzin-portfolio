@@ -12,16 +12,14 @@ export default function Reveal({ children, className = "" }) {
     const element = ref.current;
     const finish = (event) => {
       if (event.target !== element) return;
-      element.classList.remove(styles.visible);
-      delete element.dataset.deformationPaused;
+      element.classList.remove(styles["reveal--visible"]);
     };
     element.addEventListener("animationend", finish);
     element.addEventListener("animationcancel", finish);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          entry.target.dataset.deformationPaused = "true";
-          entry.target.classList.add(styles.visible);
+          entry.target.classList.add(styles["reveal--visible"]);
           observer.disconnect();
         }
       },
@@ -32,12 +30,11 @@ export default function Reveal({ children, className = "" }) {
       observer.disconnect();
       element.removeEventListener("animationend", finish);
       element.removeEventListener("animationcancel", finish);
-      element.classList.remove(styles.visible);
-      delete element.dataset.deformationPaused;
+      element.classList.remove(styles["reveal--visible"]);
     };
   }, []);
   return (
-    <div ref={ref} className={`${styles.reveal} ${className}`}>
+    <div ref={ref} className={`${styles["reveal"]} ${className}`}>
       {children}
     </div>
   );

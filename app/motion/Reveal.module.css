@@ -3,7 +3,7 @@
   transform: none;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .visible {
+  .reveal--visible {
     animation: enter 0.7s backwards;
   }
   @keyframes enter {

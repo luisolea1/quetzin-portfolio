@@ -1,0 +1,27 @@
+.related-projects {
+  margin-top: 130px;
+}
+.related-projects__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 30px;
+}
+.related-projects__title {
+  font-size: clamp(55px, 8vw, 110px);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  margin: 0;
+}
+.related-projects__link {
+  font: 500 14px var(--font-mono);
+  text-decoration: none;
+}
+@media (max-width: 809px) {
+  .related-projects {
+    margin-top: 80px;
+  }
+  .related-projects__title {
+    font-size: 55px;
+  }
+}

@@ -1,4 +1,4 @@
-.card {
+.project-card {
   position: relative;
   display: block;
   aspect-ratio: 1;
@@ -8,16 +8,12 @@
   background: #454545;
   overflow: hidden;
 }
-.picture {
+.project-card__media {
   width: 100%;
   height: 100%;
   border-radius: inherit;
 }
-.picture > div {
-  background: linear-gradient(135deg, #777, #393939);
-  color: #ddd;
-}
-.top {
+.project-card__overlay {
   position: absolute;
   z-index: 6;
   left: 30px;
@@ -28,7 +24,7 @@
   justify-content: space-between;
   gap: 15px;
 }
-.title {
+.project-card__title {
   font-size: 24px;
   font-weight: 500;
   line-height: 1.2;
@@ -38,29 +34,29 @@
   display: block;
   padding-bottom: 3px;
 }
-.title span {
+.project-card__title-text {
   display: block;
   transition:
     transform 0.36s,
     opacity 0.36s;
 }
-.title span + span {
+.project-card__title-text--copy {
   position: absolute;
   inset: 0;
   opacity: 0;
   transform: translateY(100%);
 }
-.card:hover .title span:first-child,
-.card:focus-visible .title span:first-child {
+.project-card:hover .project-card__title-text,
+.project-card:focus-visible .project-card__title-text {
   transform: translateY(-100%);
   opacity: 0;
 }
-.card:hover .title span + span,
-.card:focus-visible .title span + span {
+.project-card:hover .project-card__title-text--copy,
+.project-card:focus-visible .project-card__title-text--copy {
   opacity: 1;
   transform: translateY(0);
 }
-.arrow {
+.project-card__arrow {
   width: 50px;
   height: 50px;
   flex: none;
@@ -72,27 +68,27 @@
   overflow: hidden;
   font-size: 25px;
 }
-.arrow span {
+.project-card__arrow-icon {
   grid-area: 1/1;
   transition:
     transform 0.35s,
     opacity 0.35s;
 }
-.arrow span + span {
+.project-card__arrow-icon--copy {
   transform: translate(-20px, 20px);
   opacity: 0;
 }
-.card:hover .arrow span:first-child,
-.card:focus-visible .arrow span:first-child {
+.project-card:hover .project-card__arrow-icon,
+.project-card:focus-visible .project-card__arrow-icon {
   transform: translate(20px, -20px);
   opacity: 0;
 }
-.card:hover .arrow span + span,
-.card:focus-visible .arrow span + span {
+.project-card:hover .project-card__arrow-icon--copy,
+.project-card:focus-visible .project-card__arrow-icon--copy {
   transform: translate(0);
   opacity: 1;
 }
-.categories {
+.project-card__categories {
   position: absolute;
   z-index: 6;
   bottom: 30px;
@@ -101,7 +97,7 @@
   flex-wrap: wrap;
   gap: 5px;
 }
-.categories span {
+.project-card__category {
   border-radius: 100px;
   padding: 9px 13px;
   background: rgba(0, 0, 0, 0.15);
@@ -109,25 +105,25 @@
   font: 500 14px/1.2 var(--font-mono);
 }
 @media (max-width: 1199px) {
-  .top {
+  .project-card__overlay {
     left: 20px;
     right: 20px;
     top: 20px;
   }
-  .categories {
+  .project-card__categories {
     left: 20px;
     bottom: 20px;
   }
-  .title {
+  .project-card__title {
     font-size: 20px;
   }
-  .categories span {
+  .project-card__category {
     font-size: 13px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .title span,
-  .arrow span {
+  .project-card__title-text,
+  .project-card__arrow-icon {
     transition: none;
   }
 }

@@ -5,30 +5,42 @@ import styles from "./ProjectCard.module.css";
 export default function ProjectCard({ project, media }) {
   return (
     <Link
-      className={styles.card}
+      className={styles["project-card"]}
       to={`/projects/${project.slug}`}
       aria-label={`Ver ${project.title}`}
     >
       <Media
         media={media[project.cover]}
-        className={styles.picture}
+        className={styles["project-card__media"]}
         label={`Portada · ${project.title}`}
-        deform
+        tone="dark"
       />
-      <div className={styles.top}>
-        <span className={styles.title}>
-          <span>{project.title}</span>
-          <span aria-hidden="true">{project.title}</span>
+      <div className={styles["project-card__overlay"]}>
+        <span className={styles["project-card__title"]}>
+          <span className={styles["project-card__title-text"]}>{project.title}</span>
+          <span
+            className={`${styles["project-card__title-text"]} ${styles["project-card__title-text--copy"]}`}
+            aria-hidden="true"
+          >
+            {project.title}
+          </span>
         </span>
-        <span className={styles.arrow}>
-          <span>↗</span>
-          <span aria-hidden="true">↗</span>
+        <span className={styles["project-card__arrow"]}>
+          <span className={styles["project-card__arrow-icon"]}>↗</span>
+          <span
+            className={`${styles["project-card__arrow-icon"]} ${styles["project-card__arrow-icon--copy"]}`}
+            aria-hidden="true"
+          >
+            ↗
+          </span>
         </span>
       </div>
       {project.categories.length > 0 && (
-        <div className={styles.categories}>
+        <div className={styles["project-card__categories"]}>
           {project.categories.map((category) => (
-            <span key={category}>{category}</span>
+            <span className={styles["project-card__category"]} key={category}>
+              {category}
+            </span>
           ))}
         </div>
       )}

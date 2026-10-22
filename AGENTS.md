@@ -11,9 +11,9 @@ Las instrucciones actuales del usuario prevalecen sobre este documento. Si una d
 ## Objetivo y alcance del producto
 
 - Construir un portfolio público que reproduzca la composición, el comportamiento adaptable y las animaciones documentadas de [Paul Michel](https://paul-michel.framer.website/), usando la identidad y el contenido del usuario.
-- Implementar nueve páginas: `/`, `/work`, `/about` y seis fichas bajo `/projects/:slug`.
+- Implementar siete páginas: `/`, `/work`, `/about` y cuatro fichas bajo `/projects/:slug`.
 - Reutilizar cuatro plantillas: inicio, catálogo, biografía y proyecto. La página de error 404 es auxiliar.
-- Mantener seis proyectos editables mediante datos locales. No incorporar un administrador, CMS, base de datos ni servidor de aplicación sin un cambio de alcance acordado.
+- Mantener cuatro proyectos editables mediante datos locales. No incorporar un administrador, CMS, base de datos ni servidor de aplicación sin un cambio de alcance acordado.
 - Permitir que textos, imágenes y enlaces se completen después mediante registros provisionales y espacios reservados.
 - Omitir la insignia y los enlaces comerciales de Framer. No inventar clientes, experiencia, datos de contacto ni proyectos personales.
 
@@ -25,36 +25,43 @@ Las instrucciones actuales del usuario prevalecen sobre este documento. Si una d
 | Interfaz y compilación | React y Vite |
 | Dependencias | pnpm; conservar `pnpm-lock.yaml` en el repositorio |
 | Rutas | React Router en modo framework, integrado con Vite |
-| Publicación | Prerenderizar las nueve rutas y publicar archivos estáticos |
-| Estilos | CSS Modules junto a los componentes y variables CSS compartidas |
+| Publicación | Prerenderizar las siete rutas y publicar archivos estáticos |
+| Estilos | BEM dentro de CSS Modules junto a los componentes y variables CSS compartidas |
 | Contenido | Archivos JSON locales, acceso común y validación en JavaScript |
-| Movimiento | GSAP/ScrollTrigger, Lenis, CSS 3D y un módulo gráfico aislado |
+| Movimiento | GSAP/ScrollTrigger, Lenis y CSS 3D; M05 retirado temporalmente |
 
 No introducir TypeScript, archivos `.ts` o `.tsx`, `tsconfig.json` ni tareas de `tsc`. `jsconfig.json` puede configurar el editor para JavaScript. Usar `"type": "module"` en `package.json`.
 
-La arquitectura general ya está aprobada: avanzar con las decisiones locales necesarias para implementarla. Consultar al usuario antes de sustituir tecnologías principales, cambiar la estrategia de renderizado o ampliar el alcance funcional. La elección interna de Canvas 2D o WebGL se resolverá mediante la prueba técnica prevista en el README, documentando el resultado; no requiere volver a elegir la arquitectura general.
+La arquitectura general ya está aprobada: avanzar con las decisiones locales necesarias para implementarla. Consultar al usuario antes de sustituir tecnologías principales, cambiar la estrategia de renderizado o ampliar el alcance funcional. M05 se retiró temporalmente por indicación del usuario: no reintroducir la deformación de imágenes y paneles al hacer scroll hasta que defina su sustitución. Si solicita un efecto gráfico nuevo, evaluar su implementación mediante la prueba técnica prevista en el README.
 
 ## Organización y límites del código
 
 Seguir el árbol de la sección 15 del README. Crear archivos cuando su función sea necesaria y mantener los siguientes límites:
 
-- `app/root.jsx`: documento y estructura compartida.
+- `app/root.jsx`: documento HTML, metadatos y límites de error; delega el marco compartido a `SiteLayout`.
 - `app/routes.js` y `app/routes/`: declaración de URL, selección de datos, composición de páginas y metadatos.
 - `app/components/`: piezas reutilizables de layout, portfolio, contenido editorial e interfaz. Reciben sus datos mediante propiedades.
+- `app/components/layout/`: `SiteLayout` reúne proveedores, `Header`, un único `main` y `Footer`; `PageLayout` aplica el margen lateral del contenido.
+- `app/components/sections/`: secciones de `home/`, `work/`, `about/` y `project/`, con composiciones reutilizables en `shared/`. Reciben datos de las rutas y no importan los JSON.
 - `app/content/`: `site.json`, `projects.json`, `media.json`, `index.js` y `validate.js`. No importa componentes ni motores de animación.
 - `app/motion/`: componentes de movimiento y parámetros comunes en `motionConfig.js`.
-- `app/motion/deformation/`: integración entre superficies DOM y renderizador; el motor reside en `renderer.client.js`.
+- `app/motion/CircularCarousel.jsx`: adaptación JavaScript/CSS de React Bits que sustituye el anillo de marcas en Home y About. Recibe fotos por propiedades, usa BEM con CSS Modules y conserva su licencia en `licenses/react-bits-LICENSE.md`.
 - `app/styles/`: `tokens.css`, `fonts.css` y `globals.css` para valores compartidos, fuentes y reglas base.
 - `public/images/`, `public/fonts/` y `public/documents/`: recursos definitivos del usuario.
 
 Nombrar componentes en PascalCase y funciones, variables y hooks según las convenciones habituales de JavaScript y React. Colocar `Nombre.module.css` junto al componente correspondiente. Mantener nombres y formato coherentes con el código existente.
 
-Evitar copiar seis páginas de proyecto, introducir un estado global sin necesidad o mezclar datos personales dentro de los efectos. La estructura debe facilitar cambios de contenido y diseño sin añadir capas que el portfolio no necesita.
+Usar BEM dentro de CSS Modules: `bloque`, `bloque__elemento` y `bloque--modificador`, con palabras en minúsculas separadas por guiones. Los modificadores acompañan a su clase base. Acceder desde JSX con `styles["bloque__elemento"]`. Reservar el prefijo global `u-` para utilidades compartidas; mantener estilos propios en el módulo de su componente, sin volver a reunir varias páginas en `Page.module.css` ni depender de clases internas de otro componente.
+
+Conservar un único `h1` por página. Usar `header`, `nav`, `main`, `article`, `section` y `footer` según su función; las secciones y navegaciones deben tener nombre accesible. Cuando un encabezado no forme parte del diseño visible, usar `u-visually-hidden`. Mantener las imágenes HTML ajustadas al contenedor con `object-fit: cover` y el encuadre de `media.json`.
+
+Evitar copiar cuatro páginas de proyecto, introducir un estado global sin necesidad o mezclar datos personales dentro de los efectos. La estructura debe facilitar cambios de contenido y diseño sin añadir capas que el portfolio no necesita.
 
 ## Contenido, imágenes y enlaces
 
 - Centralizar perfil, biografía, experiencia, contacto y redes en `site.json`; proyectos y galerías en `projects.json`; rutas o URL de imágenes, texto alternativo y encuadres en `media.json`.
-- Usar identificadores estables para proyectos relacionados y recursos. Derivar las rutas prerenderizadas de los slugs de los seis registros, junto con las tres páginas principales.
+- Conservar las notas `_comment` de `media.json` para orientar la edición; JSON estándar no admite `//`. Mantener [MEDIA-GUIDE.md](./app/content/MEDIA-GUIDE.md) coherente con los usos y carpetas. El Circular Carousel usa ocho recursos propios (`carousel01` a `carousel08`) de `media.json`, ordenados mediante `site.carousel`. Sus imágenes son independientes de `cover01` a `cover04` y de la rueda de Work; no vincularlo de nuevo a las portadas.
+- Usar identificadores estables para proyectos relacionados y recursos. Derivar las rutas prerenderizadas de los slugs de los cuatro registros, junto con las tres páginas principales.
 - Validar campos necesarios, slugs duplicados y referencias inexistentes antes de generar las páginas. Distinguir un recurso pendiente admitido de una referencia incorrecta.
 - Conservar la configuración individual de galerías: imagen ancha, pareja de imágenes, encuadre y orden móvil. No eliminar apariciones repetidas de una imagen automáticamente.
 - Mantener visibles los espacios reservados cuando `src` esté vacío o un recurso falle. Reservar dimensiones y proporciones para evitar saltos de contenido.
@@ -68,7 +75,7 @@ Tomar las medidas, colores, tipografías, proporciones y jerarquías del README 
 
 Respetar los tres intervalos documentados: móvil por debajo de 810 px, tableta desde 810 px hasta menos de 1200 px y escritorio desde 1200 px. Comprobar especialmente el apilado de tarjetas, la rueda sobre el título de Work, el retrato antes del texto en About y el orden de las parejas de imágenes en móvil.
 
-La identidad del usuario sustituye a la de la referencia. El logotipo original es un SVG: preparar un recurso propio editable o un espacio reservado y conservar su función compositiva; no presentar una aproximación tipográfica como una reproducción exacta.
+La identidad del usuario sustituye a la de la referencia. El nombre tipográfico «Quetzin Cuevas», definido en `site.name`, es la marca aprobada del portfolio y no debe etiquetarse como logotipo pendiente. `site.logo` admite una imagen opcional; su ausencia no implica contenido pendiente. Conservar la función compositiva de la marca sin presentar el nombre tipográfico como una reproducción exacta del SVG de referencia.
 
 No añadir efectos, secciones o comportamientos que no estén pedidos o documentados para reinterpretar el estilo. Revisar los títulos largos, el recorte de imágenes y el desplazamiento horizontal accidental.
 
@@ -82,18 +89,20 @@ Seguir el inventario de la sección 11 del README. Mantener estos identificadore
 | M02 | Sustitución vertical de letras en enlaces, con desfase por carácter |
 | M03 | Intercambio de capas del título de tarjeta; verificar trayectoria y reversión |
 | M04 | Movimiento de las flechas de tarjeta; verificar recorrido sin desplazar el círculo |
-| M05 | Deformación real de imágenes y paneles, sincronizada con el DOM y el scroll |
-| M06 | Efecto sobre el logotipo SVG; verificar la respuesta al puntero |
-| M07 | Anillo de diez rótulos con CSS 3D y giro continuo |
+| M05 | Retirado temporalmente por el usuario; imágenes HTML sin deformación y sustitución pendiente |
+| M06 | Efecto sobre la marca tipográfica o el SVG opcional; verificar la respuesta al puntero |
+| M07 | Circular Carousel de React Bits con ocho fotos independientes en Home y About; sustituye el anillo de marcas por petición del usuario |
 | M08 | Rueda de diez imágenes de Work con CSS 3D; no convertirla en carrusel horizontal |
 | M09 | Scroll amortiguado, enlaces internos, retorno al inicio y restauración de posición |
 | M10 | Navegación, entradas, montaje y limpieza al cambiar de ruta |
 
 Los tiempos, curvas y fórmulas aún no medidos deben seguir identificados como provisionales. Comparar el movimiento con la referencia antes de afirmar fidelidad exacta. No sustituir la deformación por una simple escala o inclinación ni dar por confirmada una transición compartida entre imágenes.
 
+M07 es una desviación aprobada de la referencia: mantener arrastre con inercia, ajuste y selección de tarjeta, teclado, foco visible y respaldo HTML. El usuario pidió retirar los botones, nombres y contador visibles; no reintroducirlos. Conservar los nombres accesibles y las instrucciones para lectores de pantalla, así como Espacio para pausar o reanudar y flechas e Inicio/Fin para navegar. Con movimiento reducido no girar automáticamente ni interpolar la navegación. Pausar el carrusel fuera de pantalla, con foco dentro o con la pestaña oculta. Este carrusel usa CSS 3D y no reactiva M05.
+
 Mantener un solo controlador de scroll. Sincronizar Lenis y ScrollTrigger, coordinar la restauración con el router y evitar que dos motores animen simultáneamente la misma propiedad.
 
-Compartir el canvas y coordinar el ciclo de animación de las superficies deformables. No crear un bucle independiente por imagen ni actualizar el estado de React en cada fotograma. Limpiar animaciones, observadores y eventos al desmontar; pausar efectos continuos fuera de pantalla y cuando la pestaña no sea visible.
+Si se reincorpora un efecto gráfico por petición del usuario, compartir el canvas y coordinar su ciclo de animación. No crear un bucle independiente por imagen ni actualizar el estado de React en cada fotograma. Limpiar animaciones, observadores y eventos al desmontar; pausar efectos continuos fuera de pantalla y cuando la pestaña no sea visible.
 
 ## Prerenderizado, accesibilidad y respaldo visual
 
@@ -115,12 +124,13 @@ Antes de ejecutar una tarea, revisar `package.json` y usar los comandos realment
 | Desarrollo | `pnpm dev` → `react-router dev` |
 | Compilación y prerenderizado | `pnpm build` → `react-router build` |
 | Instalación reproducible en integración continua | `pnpm install --frozen-lockfile` |
-| Pruebas de contenido y compilación | `pnpm check` |
+| Verificación del HTML ya compilado | `pnpm check:pages` |
+| Formato, pruebas, compilación y HTML generado | `pnpm check` |
 | Revisar compilación estática | `pnpm preview` (`sirv` con fallback propio) |
 
 Fijar la versión exacta de pnpm mediante `packageManager` al inicializar el proyecto y documentar una versión compatible de Node.js. Usar pnpm para instalar, añadir o retirar dependencias; no generar archivos de bloqueo de otros gestores ni editar manualmente `pnpm-lock.yaml`.
 
-Incorporar dependencias sólo cuando resuelvan una necesidad concreta. El prototipo Canvas 2D compartido aún debe compararse con imágenes definitivas; no dar la deformación por calibrada. Actualizar el README cuando cambien los comandos o la estructura real.
+Incorporar dependencias sólo cuando resuelvan una necesidad concreta. El prototipo Canvas 2D se eliminó al retirar M05; no reintroducirlo ni dar la deformación por calibrada. Actualizar el README cuando cambien los comandos o la estructura real.
 
 ## Verificación y entrega de cambios
 
@@ -128,10 +138,10 @@ Para cambios de implementación, ejecutar la compilación y las comprobaciones e
 
 Al completar las pantallas y sus efectos, verificar:
 
-1. Las nueve rutas mediante navegación, acceso directo y recarga; también un slug desconocido y la navegación atrás/adelante.
+1. Las siete rutas mediante navegación, acceso directo y recarga; también un slug desconocido y la navegación atrás/adelante.
 2. El HTML generado, los metadatos de cada proyecto y la ausencia de errores de hidratación o de consola relacionados con el cambio.
 3. La comparación visual a 1440, 1024 y 390 px; añadir 360, 768, 809/810, 1199/1200 y 1920 px para comprobar extremos y cambios de distribución.
-4. Reposo, entrada, hover, scroll lento, rápido e inverso, retorno al inicio y ciclos completos de rueda y anillo. Una captura estática no valida una animación.
+4. Reposo, entrada, hover, scroll lento, rápido e inverso, retorno al inicio y ciclos completos de rueda y carrusel; comprobar también arrastre, pausa y teclado del carrusel. Una captura estática no valida una animación.
 5. La alineación entre canvas y DOM al cargar fuentes, redimensionar y navegar repetidamente; comprobar que no se acumulen bucles o eventos.
 6. Teclado, foco, movimiento reducido, contenido pendiente, imágenes fallidas y respaldo al desactivar el renderizador.
 

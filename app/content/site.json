@@ -1,5 +1,5 @@
 {
-  "name": "Tu nombre",
+  "name": "Quetzin Cuevas",
   "role": "Tu disciplina / especialidad",
   "intro": "Un espacio para presentar tu trabajo, tu mirada y tus proyectos.",
   "approach": "Aquí podrás contar qué haces y cómo te gusta trabajar.",
@@ -9,11 +9,10 @@
     "Explica qué te inspira y qué tipo de colaboraciones buscas."
   ],
   "description": "Una selección de proyectos y procesos, lista para tomar tu forma.",
-  "workIntro": "Seis proyectos listos para sustituirse por tus propios trabajos.",
+  "workIntro": "Cuatro proyectos listos para sustituirse por tus propios trabajos.",
   "services": [],
   "industries": [],
   "experience": [],
-  "brands": ["Tu marca 01", "Tu marca 02", "Tu marca 03", "Tu marca 04", "Tu marca 05"],
   "email": null,
   "phone": null,
   "resume": null,
@@ -32,5 +31,15 @@
     "wheel08",
     "wheel09",
     "wheel10"
+  ],
+  "carousel": [
+    "carousel01",
+    "carousel02",
+    "carousel03",
+    "carousel04",
+    "carousel05",
+    "carousel06",
+    "carousel07",
+    "carousel08"
   ]
 }

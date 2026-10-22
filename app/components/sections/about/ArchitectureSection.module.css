@@ -1,0 +1,13 @@
+.architecture-section {
+  min-width: 0;
+}
+.architecture-section__image {
+  aspect-ratio: 2/1;
+  margin: 10px 0;
+}
+@media (max-width: 809px) {
+  .architecture-section__image {
+    margin: 5px 0;
+    aspect-ratio: 1.9;
+  }
+}

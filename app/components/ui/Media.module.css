@@ -5,17 +5,14 @@
   border-radius: var(--radius);
   isolation: isolate;
 }
-.media img {
+.media__image {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
   object-position: var(--media-position);
 }
-.media[data-rendered="true"] img {
-  opacity: 0;
-}
-.placeholder {
+.media__placeholder {
   width: 100%;
   height: 100%;
   display: grid;
@@ -27,6 +24,10 @@
   padding: 20px;
   letter-spacing: 0.02em;
 }
-.placeholder span {
+.media__placeholder-label {
   max-width: 170px;
+}
+.media--dark .media__placeholder {
+  background: linear-gradient(135deg, #777, #393939);
+  color: #ddd;
 }

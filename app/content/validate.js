@@ -19,12 +19,16 @@ function requireLink(value, label, allowLocal = false) {
 
 export function validate(site, projects, media) {
   requireText(site.name, "Nombre");
-  if (!Array.isArray(projects) || projects.length !== 6)
-    throw new Error("Se requieren seis proyectos");
+  if (!Array.isArray(projects) || projects.length !== 4)
+    throw new Error("Se requieren cuatro proyectos");
+  if (
+    !Array.isArray(site.carousel) ||
+    site.carousel.length !== 8 ||
+    new Set(site.carousel).size !== 8
+  )
+    throw new Error("El anillo requiere ocho referencias de imagen distintas");
   if (!Array.isArray(site.wheel) || site.wheel.length !== 10)
     throw new Error("La rueda requiere diez imágenes");
-  if (!Array.isArray(site.brands) || site.brands.length !== 5)
-    throw new Error("El anillo requiere cinco nombres");
   requireLink(site.logo, "Logotipo", true);
   requireLink(site.resume, "CV", true);
   if (!Array.isArray(site.socials)) throw new Error("Redes inválidas");
@@ -34,7 +38,7 @@ export function validate(site, projects, media) {
   }
   if (site.email != null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(site.email))
     throw new Error("Correo inválido");
-  for (const id of [...site.wheel, site.portrait, site.architecture])
+  for (const id of [...site.carousel, ...site.wheel, site.portrait, site.architecture])
     requireMedia(id, media, "Sitio");
   const ids = new Set();
   const slugs = new Set();
@@ -54,6 +58,10 @@ export function validate(site, projects, media) {
       throw new Error(`Categorías inválidas: ${project.slug}`);
     requireLink(project.url, `Enlace de ${project.slug}`);
     requireMedia(project.cover, media, project.slug);
+    if (site.carousel.includes(project.cover))
+      throw new Error(
+        `El anillo debe usar recursos independientes de las portadas: ${project.cover}`,
+      );
     requireMedia(project.hero, media, project.slug);
     if (!Array.isArray(project.gallery) || !Array.isArray(project.related))
       throw new Error(`Galería o relacionados inválidos: ${project.slug}`);

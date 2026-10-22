@@ -102,53 +102,5 @@
     "related": ["project01", "project02"],
     "url": null,
     "description": "Ficha provisional del proyecto 04."
-  },
-  {
-    "id": "project05",
-    "slug": "proyecto-05",
-    "title": "Proyecto 05",
-    "year": null,
-    "client": null,
-    "categories": [],
-    "featured": false,
-    "cover": "cover05",
-    "hero": "hero05",
-    "summary": ["Presenta aquí el reto de este proyecto.", "Explica tu proceso y el resultado."],
-    "gallery": [
-      {
-        "type": "pair",
-        "items": ["gallery05a", "gallery05b"],
-        "mobileOrder": [0, 1]
-      }
-    ],
-    "related": ["project01", "project02"],
-    "url": null,
-    "description": "Ficha provisional del proyecto 05."
-  },
-  {
-    "id": "project06",
-    "slug": "proyecto-06",
-    "title": "Proyecto 06",
-    "year": null,
-    "client": null,
-    "categories": [],
-    "featured": false,
-    "cover": "cover06",
-    "hero": "hero06",
-    "summary": ["Presenta aquí el reto de este proyecto.", "Explica tu proceso y el resultado."],
-    "gallery": [
-      {
-        "type": "pair",
-        "items": ["gallery06a", "gallery06b"],
-        "mobileOrder": [0, 1]
-      },
-      {
-        "type": "wide",
-        "media": "gallery06wide"
-      }
-    ],
-    "related": ["project01", "project02"],
-    "url": null,
-    "description": "Ficha provisional del proyecto 06."
   }
 ]

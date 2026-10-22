@@ -1,36 +1,36 @@
-.link {
+.animated-link {
   color: inherit;
   text-decoration: none;
   display: inline-block;
 }
-.line {
+.animated-link__line {
   display: inline-flex;
 }
-.mask {
+.animated-link__mask {
   overflow: hidden;
   display: inline-block;
 }
-.letters {
+.animated-link__letters {
   position: relative;
   display: block;
   transition: transform var(--letter-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
   transition-delay: calc(var(--index) * var(--letter-stagger));
 }
-.second {
+.animated-link__copy {
   position: absolute;
   top: 100%;
   left: 0;
 }
-.link:hover .letters,
-.link:focus-visible .letters {
+.animated-link:hover .animated-link__letters,
+.animated-link:focus-visible .animated-link__letters {
   transform: translateY(-100%);
 }
 @media (prefers-reduced-motion: reduce) {
-  .letters {
+  .animated-link__letters {
     transition: none;
   }
-  .link:hover .letters,
-  .link:focus-visible .letters {
+  .animated-link:hover .animated-link__letters,
+  .animated-link:focus-visible .animated-link__letters {
     transform: none;
   }
 }

@@ -1,0 +1,22 @@
+.project-hero {
+  min-width: 0;
+}
+.project-hero__title {
+  font-size: clamp(65px, 11.9vw, 180px);
+  line-height: 0.875;
+  letter-spacing: -0.06em;
+  text-align: center;
+  font-weight: 600;
+  margin: 90px auto 65px;
+  max-width: 1200px;
+  overflow-wrap: anywhere;
+}
+.project-hero__image {
+  aspect-ratio: 16/9;
+}
+@media (max-width: 809px) {
+  .project-hero__title {
+    font-size: clamp(54px, 15vw, 115px);
+    margin: 75px auto 40px;
+  }
+}

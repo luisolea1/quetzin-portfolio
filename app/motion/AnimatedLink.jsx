@@ -6,7 +6,7 @@ export default function AnimatedLink({ to, children, className = "" }) {
   const label = typeof children === "string" ? children : null;
   if (!label)
     return (
-      <Link to={to} className={`${styles.link} ${className}`}>
+      <Link to={to} className={`${styles["animated-link"]} ${className}`}>
         {children}
       </Link>
     );
@@ -14,18 +14,20 @@ export default function AnimatedLink({ to, children, className = "" }) {
     <Link
       to={to}
       aria-label={label}
-      className={`${styles.link} ${className}`}
+      className={`${styles["animated-link"]} ${className}`}
       style={{
         "--letter-duration": `${motionConfig.letterDuration}s`,
         "--letter-stagger": `${motionConfig.letterStagger}s`,
       }}
     >
-      <span aria-hidden="true" className={styles.line}>
+      <span aria-hidden="true" className={styles["animated-link__line"]}>
         {Array.from(label).map((character, index) => (
-          <span className={styles.mask} key={index} style={{ "--index": index }}>
-            <span className={styles.letters}>
+          <span className={styles["animated-link__mask"]} key={index} style={{ "--index": index }}>
+            <span className={styles["animated-link__letters"]}>
               {character === " " ? "\u00a0" : character}
-              <span className={styles.second}>{character === " " ? "\u00a0" : character}</span>
+              <span className={styles["animated-link__copy"]}>
+                {character === " " ? "\u00a0" : character}
+              </span>
             </span>
           </span>
         ))}

@@ -3,37 +3,29 @@ import styles from "./ProjectGallery.module.css";
 
 export default function ProjectGallery({ blocks, media }) {
   return (
-    <div className={styles.gallery}>
+    <div className={styles["project-gallery"]}>
       {blocks.map((block, index) =>
         block.type === "wide" ? (
           <Media
             key={index}
-            className={styles.wide}
+            className={`${styles["project-gallery__image"]} ${styles["project-gallery__image--wide"]}`}
             media={media[block.media]}
             label="Imagen del proyecto pendiente"
-            deform
           />
         ) : (
-          <div key={index} className={styles.pair}>
-            {block.items
-              .map((id, position) => (
+          <div key={index} className={styles["project-gallery__pair"]}>
+            {block.items.map((id, position) => (
+              <div
+                key={`${index}-${position}`}
+                className={`${styles["project-gallery__item"]} ${styles[block.mobileOrder[0] === position ? "project-gallery__item--first" : "project-gallery__item--second"]}`}
+              >
                 <Media
-                  key={`${index}-${position}`}
-                  className={styles.square}
+                  className={`${styles["project-gallery__image"]} ${styles["project-gallery__image--square"]}`}
                   media={media[id]}
                   label="Imagen del proyecto pendiente"
-                  deform
-                  priority={false}
                 />
-              ))
-              .map((element, position) => (
-                <div
-                  key={position}
-                  className={block.mobileOrder[0] === position ? styles.first : styles.second}
-                >
-                  {element}
-                </div>
-              ))}
+              </div>
+            ))}
           </div>
         ),
       )}

@@ -1,31 +1,35 @@
-.gallery {
+.project-gallery {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.wide {
+.project-gallery__image,
+.project-gallery__item {
+  min-width: 0;
+}
+.project-gallery__image--wide {
   aspect-ratio: 2/1;
 }
-.pair {
+.project-gallery__pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
-.square {
+.project-gallery__image--square {
   aspect-ratio: 1;
 }
 @media (max-width: 809px) {
-  .gallery {
+  .project-gallery {
     gap: 10px;
   }
-  .pair {
+  .project-gallery__pair {
     grid-template-columns: 1fr;
     gap: 5px;
   }
-  .first {
+  .project-gallery__item--first {
     order: 0;
   }
-  .second {
+  .project-gallery__item--second {
     order: 1;
   }
 }

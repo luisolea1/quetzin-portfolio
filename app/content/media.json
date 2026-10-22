@@ -1,173 +1,215 @@
 {
   "portrait": {
+    "_comment": "Retrato de la página About. Se muestra antes de la biografía en móvil. Ejemplo de src: /images/about/portrait.webp. El contenedor es cuadrado en móvil y vertical en escritorio.",
     "src": null,
     "alt": "Retrato pendiente",
     "position": "50% 50%"
   },
   "architecture": {
+    "_comment": "Fotografía ancha de About, después de la biografía. Ejemplo de src: /images/about/architecture.webp. Contenedor aproximado 2:1.",
     "src": null,
     "alt": "Fotografía de arquitectura pendiente",
     "position": "50% 50%"
   },
   "cover01": {
+    "_comment": "Portada de Modelaje: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-01/cover.webp.",
     "src": "/images/modelaje.webp",
-    "alt": "Portada del proyecto 01 pendiente",
+    "alt": "Imagen de Modelaje",
     "position": "50% 50%"
   },
   "cover02": {
+    "_comment": "Portada de Paisajes: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-02/cover.webp.",
     "src": "/images/paisaje.webp",
-    "alt": "Portada del proyecto 02 pendiente",
+    "alt": "Imagen de Paisaje",
     "position": "50% 50%"
   },
   "cover03": {
-    "src": null,
-    "alt": "Portada del proyecto 03 pendiente",
+    "_comment": "Portada de Producto: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-03/cover.webp.",
+    "src": "/images/producto.webp",
+    "alt": "Imagen de Producto",
     "position": "50% 50%"
   },
   "cover04": {
-    "src": null,
-    "alt": "Portada del proyecto 04 pendiente",
-    "position": "50% 50%"
-  },
-  "cover05": {
-    "src": null,
-    "alt": "Portada del proyecto 05 pendiente",
-    "position": "50% 50%"
-  },
-  "cover06": {
-    "src": null,
-    "alt": "Portada del proyecto 06 pendiente",
+    "_comment": "Portada de Música: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-04/cover.webp.",
+    "src": "/images/conciertos.webp",
+    "alt": "Imagen de Conciertos",
     "position": "50% 50%"
   },
   "hero01": {
+    "_comment": "Imagen principal de Modelaje en /projects/proyecto-01, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-01/hero.webp.",
     "src": null,
     "alt": "Imagen principal del proyecto 01 pendiente"
   },
   "hero02": {
+    "_comment": "Imagen principal de Paisajes en /projects/proyecto-02, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-02/hero.webp.",
     "src": null,
     "alt": "Imagen principal del proyecto 02 pendiente"
   },
   "hero03": {
+    "_comment": "Imagen principal de Producto en /projects/proyecto-03, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-03/hero.webp.",
     "src": null,
     "alt": "Imagen principal del proyecto 03 pendiente"
   },
   "hero04": {
+    "_comment": "Imagen principal de Música en /projects/proyecto-04, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-04/hero.webp.",
     "src": null,
     "alt": "Imagen principal del proyecto 04 pendiente"
   },
-  "hero05": {
-    "src": null,
-    "alt": "Imagen principal del proyecto 05 pendiente"
-  },
-  "hero06": {
-    "src": null,
-    "alt": "Imagen principal del proyecto 06 pendiente"
-  },
   "gallery01a": {
+    "_comment": "Galería de Modelaje: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-01/gallery-01.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery01b": {
+    "_comment": "Galería de Modelaje: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-01/gallery-02.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery01wide": {
+    "_comment": "Galería de Modelaje: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-01/gallery-wide.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery02a": {
+    "_comment": "Galería de Paisajes: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-02/gallery-01.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery02b": {
+    "_comment": "Galería de Paisajes: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-02/gallery-02.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery02wide": {
+    "_comment": "Galería de Paisajes: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-02/gallery-wide.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery03a": {
+    "_comment": "Galería de Producto: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-03/gallery-01.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery03b": {
+    "_comment": "Galería de Producto: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-03/gallery-02.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery03wide": {
+    "_comment": "Galería de Producto: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-03/gallery-wide.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery04a": {
+    "_comment": "Galería de Música: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-04/gallery-01.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery04b": {
+    "_comment": "Galería de Música: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-04/gallery-02.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
   "gallery04wide": {
+    "_comment": "Galería de Música: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-04/gallery-wide.webp.",
     "src": null,
     "alt": "Imagen de galería pendiente"
   },
-  "gallery05a": {
+  "carousel01": {
+    "_comment": "Foto independiente 01 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/01.webp. El orden se configura en site.json > carousel.",
     "src": null,
-    "alt": "Imagen de galería pendiente"
+    "alt": "Fotografía del anillo 01 pendiente",
+    "position": "50% 50%"
   },
-  "gallery05b": {
+  "carousel02": {
+    "_comment": "Foto independiente 02 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/02.webp. El orden se configura en site.json > carousel.",
     "src": null,
-    "alt": "Imagen de galería pendiente"
+    "alt": "Fotografía del anillo 02 pendiente",
+    "position": "50% 50%"
   },
-  "gallery06a": {
+  "carousel03": {
+    "_comment": "Foto independiente 03 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/03.webp. El orden se configura en site.json > carousel.",
     "src": null,
-    "alt": "Imagen de galería pendiente"
+    "alt": "Fotografía del anillo 03 pendiente",
+    "position": "50% 50%"
   },
-  "gallery06b": {
+  "carousel04": {
+    "_comment": "Foto independiente 04 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/04.webp. El orden se configura en site.json > carousel.",
     "src": null,
-    "alt": "Imagen de galería pendiente"
+    "alt": "Fotografía del anillo 04 pendiente",
+    "position": "50% 50%"
   },
-  "gallery06wide": {
+  "carousel05": {
+    "_comment": "Foto independiente 05 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/05.webp. El orden se configura en site.json > carousel.",
     "src": null,
-    "alt": "Imagen de galería pendiente"
+    "alt": "Fotografía del anillo 05 pendiente",
+    "position": "50% 50%"
+  },
+  "carousel06": {
+    "_comment": "Foto independiente 06 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/06.webp. El orden se configura en site.json > carousel.",
+    "src": null,
+    "alt": "Fotografía del anillo 06 pendiente",
+    "position": "50% 50%"
+  },
+  "carousel07": {
+    "_comment": "Foto independiente 07 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/07.webp. El orden se configura en site.json > carousel.",
+    "src": null,
+    "alt": "Fotografía del anillo 07 pendiente",
+    "position": "50% 50%"
+  },
+  "carousel08": {
+    "_comment": "Foto independiente 08 del anillo Circular Carousel de Home y About. No modifica tarjetas ni fichas de proyecto. Ejemplo de src: /images/carousel/08.webp. El orden se configura en site.json > carousel.",
+    "src": null,
+    "alt": "Fotografía del anillo 08 pendiente",
+    "position": "50% 50%"
   },
   "wheel01": {
+    "_comment": "Fotografía 01 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-01.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel02": {
+    "_comment": "Fotografía 02 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-02.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel03": {
+    "_comment": "Fotografía 03 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-03.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel04": {
+    "_comment": "Fotografía 04 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-04.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel05": {
+    "_comment": "Fotografía 05 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-05.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel06": {
+    "_comment": "Fotografía 06 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-06.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel07": {
+    "_comment": "Fotografía 07 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-07.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel08": {
+    "_comment": "Fotografía 08 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-08.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel09": {
+    "_comment": "Fotografía 09 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-09.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   },
   "wheel10": {
+    "_comment": "Fotografía 10 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-10.webp.",
     "src": null,
     "alt": "Fotografía de la rueda pendiente"
   }

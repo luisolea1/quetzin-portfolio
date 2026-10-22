@@ -1,0 +1,12 @@
+.experience-list {
+  list-style: none;
+  padding: 0;
+  margin: 35px 0 0;
+}
+.experience-list__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #454545;
+}

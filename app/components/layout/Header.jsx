@@ -2,27 +2,33 @@ import { NavLink } from "react-router";
 import AnimatedLink from "../../motion/AnimatedLink.jsx";
 import styles from "./Header.module.css";
 
-export default function Header({ site }) {
+export default function Header({ site, projectCount }) {
   return (
-    <header className={styles.header}>
-      <NavLink className={styles.brand} to="/" aria-label="Inicio">
+    <header className={styles["site-header"]}>
+      <NavLink className={styles["site-header__brand"]} to="/" aria-label="Inicio">
         {site.name}
-        <span aria-hidden="true">®</span>
+        <span className={styles["site-header__registration"]} aria-hidden="true">
+          ®
+        </span>
       </NavLink>
-      <nav className={styles.nav} aria-label="Navegación principal">
+      <nav className={styles["site-header__nav"]} aria-label="Navegación principal">
         <AnimatedLink to="/">Home</AnimatedLink>
         <AnimatedLink to="/work">
-          Work <span className={styles.count}>(06)</span>
+          Work{" "}
+          <span className={styles["site-header__count"]}>
+            ({String(projectCount).padStart(2, "0")})
+          </span>
         </AnimatedLink>
         <AnimatedLink to="/about">About</AnimatedLink>
       </nav>
       {site.email ? (
-        <a className={styles.contact} href={`mailto:${site.email}`}>
+        <a className={styles["site-header__contact"]} href={`mailto:${site.email}`}>
           Contacto ↗
         </a>
       ) : (
-        <span className={styles.contact}>
-          Contacto <span className="muted">(pendiente)</span>
+        <span className={styles["site-header__contact"]}>
+          Contacto{" "}
+          <span className={`${styles["site-header__contact-pending"]} u-muted`}>(pendiente)</span>
         </span>
       )}
     </header>

@@ -1,30 +1,23 @@
 import { media, projects, site } from "../content/index.js";
-import ImageWheel from "../motion/ImageWheel.jsx";
-import Reveal from "../motion/Reveal.jsx";
-import ProjectGrid from "../components/portfolio/ProjectGrid.jsx";
-import styles from "./Page.module.css";
+import PageLayout from "../components/layout/PageLayout.jsx";
+import WorkHero from "../components/sections/work/WorkHero.jsx";
+import ProjectsSection from "../components/sections/shared/ProjectsSection.jsx";
 
 export function meta() {
   return [{ title: `Work — ${site.name}` }, { name: "description", content: site.workIntro }];
 }
 
 export default function Work() {
+  const wheelImages = site.wheel.map((id) => media[id]);
   return (
-    <div className={styles.page}>
-      <div className={styles.workHero}>
-        <div>
-          <h1>
-            Selected
-            <br />
-            Work.
-          </h1>
-          <p>{site.workIntro}</p>
-        </div>
-        <ImageWheel images={site.wheel.map((id) => media[id])} />
-      </div>
-      <Reveal>
-        <ProjectGrid projects={projects} media={media} />
-      </Reveal>
-    </div>
+    <PageLayout>
+      <WorkHero intro={site.workIntro} images={wheelImages} />
+      <ProjectsSection
+        projects={projects}
+        media={media}
+        headingId="work-projects-title"
+        title="Proyectos"
+      />
+    </PageLayout>
   );
 }

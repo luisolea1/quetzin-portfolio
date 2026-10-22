@@ -8,27 +8,37 @@ Este documento especifica la apariencia, composición adaptable, navegación, re
 
 ### Ejecutar y editar la implementación actual
 
-Con Node.js 22 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. `pnpm test` valida el modelo de contenido y la conservación del DOM al formatear HTML; `pnpm build` genera las nueve páginas en `build/client/` y aplica sangría al HTML; `pnpm preview` sirve esa compilación en http://localhost:8080. `pnpm check` ejecuta pruebas y compilación. El alojamiento estático debe servir los HTML prerenderizados antes del fallback `__spa-fallback.html` para rutas no generadas; este fallback muestra 404 en el navegador, pero la respuesta HTTP de un servidor estático sin configuración específica puede ser 200.
+Con Node.js 22 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. `pnpm test` valida el modelo de contenido, el avance y la detención del carrusel y la conservación del DOM al formatear HTML; `pnpm build` genera las siete páginas en `build/client/` y aplica sangría al HTML; `pnpm preview` sirve esa compilación en http://localhost:8080. `pnpm check` comprueba el formato, ejecuta pruebas, compila y verifica la estructura del HTML generado, incluido el respaldo del carrusel. El alojamiento estático debe servir los HTML prerenderizados antes del fallback `__spa-fallback.html` para rutas no generadas; este fallback muestra 404 en el navegador, pero la respuesta HTTP de un servidor estático sin configuración específica puede ser 200.
 
 El documento de inicio generado está en `build/client/index.html`. `pnpm format:html` vuelve a formatear los HTML de una compilación existente. `scripts/format-html.js` utiliza Prettier con sensibilidad estricta a los espacios y verifica con parse5 que el DOM permanezca idéntico. Algunos cierres `>` quedan en la línea siguiente para no introducir nodos de texto que afecten a la hidratación. Los textos, comentarios de React y scripts se conservan literalmente. Los cambios de contenido y estructura se realizan en `app/`; los HTML de `build/` se regeneran al compilar.
 
 Para mantener legibles los archivos fuente, `pnpm format` aplica Prettier al JavaScript, JSX, CSS y JSON de `app/`, a los scripts y a la configuración de la raíz. `pnpm format:check` comprueba el formato sin modificar archivos y se ejecuta al inicio de `pnpm check`. La configuración compartida está en `prettier.config.js`: sangría de dos espacios y un ancho objetivo de 100 caracteres. `.prettierignore` excluye dependencias, compilaciones, recursos de `public/` y el archivo de bloqueo. Los componentes y las reglas CSS conservan su estructura y comportamiento.
 
-Personaliza `app/content/site.json`, `projects.json` y `media.json`; coloca imágenes propias bajo `public/images/` y, si existe, tu logo SVG en `public/images/`. Las seis fichas provisionales están en `/projects/proyecto-01` a `/projects/proyecto-06`. Los recursos y enlaces vacíos muestran espacios reservados o quedan desactivados. Las fuentes Inter e IBM Plex Mono se empaquetan desde Fontsource; Inter Variable aproxima Inter Display hasta contar con el archivo definitivo. La prueba inicial de deformación utiliza Canvas 2D compartido con tiras horizontales para imágenes y panel oscuro; amplitudes, encuadre, logotipo y transiciones M01–M10 requieren comparación animada con la referencia y medios propios. No se han recibido `recursos-referencia.json` ni las capturas mencionadas en este documento.
+Personaliza `app/content/site.json`, `projects.json` y `media.json`; coloca imágenes propias bajo `public/images/` y, si existe, tu logo SVG en `public/images/`. Las cuatro fichas están en `/projects/proyecto-01` a `/projects/proyecto-04`. Los recursos y enlaces vacíos muestran espacios reservados o quedan desactivados. Las fuentes Inter e IBM Plex Mono se empaquetan desde Fontsource; Inter Variable aproxima Inter Display hasta contar con el archivo definitivo. Los efectos activos requieren comparación animada con la referencia y medios propios. No se han recibido `recursos-referencia.json` ni las capturas mencionadas en este documento.
 
-Las tarjetas omiten las categorías cuando su lista está vacía; no muestran la etiqueta «Proyecto pendiente». En la implementación de M01/M05, la entrada utiliza la imagen HTML mientras el contenedor está animándose. Al terminar o cancelarse, se libera su transformación y el canvas retoma la deformación después de dibujar, conservando nombres, flechas y categorías sobre la imagen. `pnpm test` incluye esta coordinación entre el respaldo HTML y el renderizador.
+Las tarjetas omiten las categorías cuando su lista está vacía; no muestran la etiqueta «Proyecto pendiente». Los nombres y las flechas conservan sus capas sobre la imagen.
+
+**Cambio de alcance solicitado el 22 de octubre de 2026:** se retiró temporalmente M05, la deformación de imágenes y paneles al hacer scroll. Se eliminaron el motor Canvas 2D, su proveedor, registros, parámetros y pruebas exclusivas. Las imágenes se muestran directamente en HTML con `object-fit: cover`, el encuadre de `media.json` y recorte dentro de su contenedor. Las entradas de bloques M01 y las demás animaciones permanecen activas. El usuario definirá una animación sustituta más adelante; no reintroducir M05 sin una nueva indicación.
+
+**Cambio de M07 solicitado el 22 de octubre de 2026:** el anillo de nombres de marcas se sustituyó en Home y About por [Circular Carousel de React Bits](https://reactbits.dev/components/circular-carousel), con ocho fotografías independientes de las portadas, configuradas como `carousel01` a `carousel08` en `media.json` y ordenadas mediante `site.carousel`. Por indicación posterior del usuario se retiraron los botones visibles, los nombres y el contador inferior, junto con sus estilos y espacio reservado; las fotos quedan centradas en toda la altura del carrusel. La adaptación JavaScript/CSS conserva la geometría 3D, arrastre con inercia, ajuste a tarjetas y enfoque al pulsar una foto. Mantiene navegación con flechas e Inicio/Fin, pausa o reanudación con Espacio, pausa durante el foco y movimiento reducido sin giro ni interpolación. Las instrucciones, los nombres y la posición activa permanecen disponibles para lectores de pantalla. Mantiene HTML visible durante la carga, espacios reservados para fotos pendientes o fallidas y detiene el ciclo fuera de pantalla o con la pestaña oculta. Utiliza CSS 3D, sin canvas ni dependencias nuevas, y no reactiva M05. Los parámetros iniciales no son medidas de la referencia.
+
+La fuente adaptada es [CircularCarousel.jsx de React Bits](https://github.com/DavidHDev/react-bits/blob/e12c22192ac7b4b452c5e2feb9b586d74765d696/src/content/Components/CircularCarousel/CircularCarousel.jsx), revisión `e12c22192ac7b4b452c5e2feb9b586d74765d696`. Su aviso de autoría y licencia se conserva en [licenses/react-bits-LICENSE.md](./licenses/react-bits-LICENSE.md). El CSS se integra mediante BEM y CSS Modules.
+
+Los registros de `media.json` incluyen una nota `_comment` con su ubicación, proporción y ejemplo de ruta. JSON estándar no admite comentarios `//`; estas notas son campos de edición y no se muestran en el sitio. Consulta [la guía de imágenes](./app/content/MEDIA-GUIDE.md) para organizar carpetas y completar cada registro. Las fotos existentes conservan su ubicación hasta que se decida moverlas y actualizar sus rutas.
+
+**Ajuste de contenido solicitado el 22 de octubre de 2026:** Work muestra cuatro proyectos y la navegación deriva su contador del catálogo (`Work (04)`). Se retiraron los registros provisionales 05 y 06, sus recursos vacíos y sus rutas prerenderizadas; sus URL muestran 404. El anillo de Home/About pasa a ocho recursos propios, inicialmente pendientes, que no comparten identificadores con las portadas. La rueda de Work conserva sus diez imágenes independientes.
 
 ### Requisitos confirmados por el usuario
 
 - Será un portfolio público que evolucionará antes de considerarse definitivo.
 - Se prioriza una estructura fácil de modificar y ampliar en el futuro.
 - Se utilizarán **JavaScript, React, Vite y pnpm**, con componentes `.jsx` y módulos de lógica y configuración `.js`.
-- Se reproducirán las **nueve páginas**: inicio, catálogo, biografía y seis fichas de proyecto.
-- No se necesita añadir más proyectos ni se ha solicitado un editor administrativo.
+- Se implementan **siete páginas**: inicio, catálogo, biografía y cuatro fichas de proyecto.
+- El catálogo tendrá cuatro proyectos: Modelaje, Paisajes, Producto y Música. No se ha solicitado un editor administrativo.
 - Se utilizará **contenido propio**. Las imágenes y los textos podrán quedar pendientes mediante espacios reservados y referencias editables.
-- El diseño adaptable y las animaciones de la referencia siguen formando parte del alcance.
+- El diseño adaptable y las animaciones de la referencia siguen formando parte del alcance, con M05 retirado temporalmente y M07 sustituido por Circular Carousel con fotos de proyectos por indicación del usuario.
 
-Las secciones de inspección describen el sitio original. Sus nombres, imágenes, marcas, datos de contacto y textos son referencias de análisis, no contenido aprobado para el portfolio personal. La arquitectura acordada se detalla en las secciones 14, 15 y 19. La elección interna de Canvas 2D o WebGL sigue sujeta a la prueba técnica de fidelidad prevista; no bloquea la organización del proyecto.
+Las secciones de inspección describen el sitio original. Sus nombres, imágenes, marcas, datos de contacto y textos son referencias de análisis, no contenido aprobado para el portfolio personal. La arquitectura acordada se detalla en las secciones 14, 15 y 19. Las propuestas gráficas se conservan como referencia para una futura revisión de M05; actualmente no se ejecuta un renderizador de deformación.
 
 ## 1. Alcance y grado de certeza
 
@@ -82,7 +92,7 @@ Rasgos que determinan la fidelidad:
 | 5 | Kaleidoscope | Design / Development | 2025 | No |
 | 6 | Camera RX | Branding / Development | 2025 | No |
 
-El slug original es `machine-s-children`. Para el portfolio personal, las seis rutas de proyecto se definirán desde los datos de contenido; podrán comenzar con nombres provisionales como `proyecto-01`. Se conserva la estructura de nueve páginas, sin exigir los nombres de los proyectos de la referencia. Si un slug cambia después de publicar, deberá contemplarse la redirección de su URL anterior.
+El slug original es `machine-s-children`. Para el portfolio personal, las cuatro rutas de proyecto se definen desde los datos de contenido, de `proyecto-01` a `proyecto-04`. La implementación tiene siete páginas; la tabla anterior conserva las nueve rutas observadas en la referencia. Si un slug cambia después de publicar, deberá contemplarse la redirección de su URL anterior.
 
 ## 4. Sistema visual medido
 
@@ -117,7 +127,7 @@ Los títulos editoriales usan tracking `-.06em` y línea aproximada `.8735`. En 
 
 La referencia declara estilos fluidos y variantes por anchura. Las medidas anteriores son puntos de control, no una orden de fijar esos tamaños para cualquier pantalla.
 
-El SVG del logotipo de referencia tiene proporción de origen **1470:250**, aproximadamente `5.88:1`, y ajuste `contain`. Sus trazados explican por qué escribir el mismo nombre con Inter Display no produce una copia exacta. Para el portfolio personal se propone un campo de logotipo propio y, mientras falte, el texto provisional «Tu nombre». Conservar la importancia visual, el contenedor y el efecto; adaptar el encaje a la longitud del nombre real. No presentar el nombre de Paul Michel como identidad del usuario.
+El SVG del logotipo de referencia tiene proporción de origen **1470:250**, aproximadamente `5.88:1`, y ajuste `contain`. Sus trazados explican por qué escribir el mismo nombre con Inter Display no produce una copia exacta. La identidad aprobada del portfolio es el nombre tipográfico «Quetzin Cuevas», definido en `site.name`; es contenido definitivo y no se etiqueta como logotipo pendiente. `site.logo` permite usar una imagen de marca opcional; si está vacío o la imagen falla, se muestra el nombre. Conservar la importancia visual, el contenedor y el efecto; adaptar el encaje a la longitud del nombre real. No presentar el nombre de Paul Michel como identidad del usuario.
 
 ### 4.3 Espaciado y geometría
 
@@ -256,9 +266,9 @@ Esta tabla incluye los efectos detectados y los puntos que deberán cerrarse al 
 | M02 | Enlaces de navegación, pie y CTA / puntero | Dos juegos de letras dentro de una máscara. La segunda línea parte en `translateY(110%)`. Se midieron letras de Work con desplazamientos diferentes durante la interacción | Sustitución vertical por caracteres, con desfase; conservar un solo nombre accesible | Estructura y movimiento confirmados |
 | M03 | Nombre de tarjeta / hover | Dos títulos superpuestos; uno visible y otro inicialmente con opacidad 0 | Preparar intercambio de capas dentro de máscara; confirmar trayectoria y reversión antes de fijarlas | Estructura confirmada; transición exacta pendiente |
 | M04 | Flecha de tarjeta / hover | Dos flechas dentro de círculo de cristal; segunda con opacidad 0 | Animar las capas sin desplazar el círculo ni alterar el área del enlace | Estructura confirmada; recorrido exacto pendiente |
-| M05 | Imágenes y paneles / scroll y posición en pantalla | Los bordes se curvan hacia fuera; se observó un lienzo compartido superpuesto y elementos de reserva debajo | Módulo de deformación con geometría/texturas sincronizadas con el DOM; mantener el enlace y texto en HTML | Deformación y canvas confirmados; fórmula pendiente |
-| M06 | Logotipo grande | SVG de base y lienzo adicional en Home, About y pie; el lienzo puede exceder 28 px el contenedor | Componente aislado de efecto sobre el SVG, preservando una imagen estática de respaldo | Capas confirmadas; respuesta exacta al puntero pendiente |
-| M07 | Marcas / tiempo | Diez rótulos: cinco marcas repetidas. Anillo con giro continuo en Y, perspectiva e inclinación | CSS 3D con un ángulo de rotación compartido; reservar volumen y evitar recortes | Giro y estructura confirmados |
+| M05 | Imágenes y paneles / scroll y posición en pantalla | Los bordes se curvan hacia fuera; se observó un lienzo compartido superpuesto y elementos de reserva debajo | Retirado temporalmente por el usuario; imágenes HTML sin deformación y sustitución pendiente | Deformación y canvas confirmados en la referencia; fórmula pendiente |
+| M06 | Logotipo grande | SVG de base y lienzo adicional en Home, About y pie; el lienzo puede exceder 28 px el contenedor | Componente aislado de efecto sobre la marca aprobada: nombre tipográfico o SVG opcional, preservando el texto o imagen de respaldo | Capas de la referencia confirmadas; respuesta exacta al puntero pendiente |
+| M07 | Marcas / tiempo en la referencia | Diez rótulos: cinco marcas repetidas. Anillo con giro continuo en Y, perspectiva e inclinación | Sustituido por Circular Carousel de React Bits con fotos de proyectos en Home y About, sin botones, nombres ni contador visibles; reserva de espacio, pausa por teclado y movimiento reducido | La observación describe el original; la sustitución fue solicitada por el usuario |
 | M08 | Rueda de imágenes de Work / tiempo | Diez planos con separaciones de 36°, giro común sobre X e inclinación global sobre Y | CSS 3D; imágenes reales; contenedor adaptable; no es un carrusel horizontal | Giro y estructura confirmados |
 | M09 | Scroll general / rueda y retorno al inicio | Desplazamiento amortiguado; clases y estilos de Lenis presentes; retorno al inicio probado | Un solo controlador de scroll y sincronización con efectos; restauración por ruta | Observado; configuración exacta pendiente |
 | M10 | Cambio de ruta | Cambia la pantalla y se reproducen estados de entrada | Gestionar scroll, montaje y limpieza; verificar atrás/adelante | Navegación confirmada; no se acreditó una transición compartida entre imágenes |
@@ -266,6 +276,8 @@ Esta tabla incluye los efectos detectados y los puntos que deberán cerrarse al 
 No se observaron vídeos con reproducción automática, un cursor personalizado, una pantalla de carga porcentual ni una galería modal. No añadirlos para interpretar el estilo.
 
 ### 11.1 Anillo de marcas: medidas útiles
+
+Esta subsección conserva las observaciones del original. La implementación actual usa Circular Carousel con fotos de proyectos, según el cambio de M07 indicado al principio del documento.
 
 Marcas: Nike, Google, Chanel, Netflix y Framer, repetidas dos veces. Los diez rótulos se distribuyen en pasos de **36°**. Se observaron `preserve-3d` y caras posteriores visibles, por lo que algunos textos se leen invertidos en la parte posterior del anillo.
 
@@ -281,7 +293,7 @@ Se observó un canvas compartido con `pointer-events: none` y nivel visual 5; el
 
 Esto exige tres responsabilidades separadas: geometría de diseño, representación visual deformada e interacción/accesibilidad. La biblioteca de animación puede controlar valores, pero **no genera por sí sola la deformación gráfica**.
 
-La presencia de canvas no basta para afirmar si el motor original usa Canvas 2D, WebGL o una combinación. Esa elección interna se resolverá con una prueba técnica breve y comparación visual dentro de la arquitectura ya aprobada.
+La presencia de canvas no basta para afirmar si el motor original usa Canvas 2D, WebGL o una combinación. Esta sección documenta la referencia: M05 está retirado temporalmente de la implementación. Si el usuario solicita otro efecto gráfico, deberá evaluarse con una prueba técnica y comparación visual.
 
 ### 11.4 Valores iniciales de calibración — propuestos, no medidos
 
@@ -334,7 +346,7 @@ Los destinos originales de correo, teléfono, CV y redes quedan documentados com
 
 ## 14. Arquitectura aprobada y alternativas evaluadas
 
-La base aprobada, actualizada según la última indicación del usuario, es: JavaScript, React, Vite y pnpm, con React Router para el prerenderizado, CSS Modules, datos JSON locales y animación aislada con GSAP/Lenis. Las tablas conservan la comparación de alternativas; la opción elegida se identifica debajo. El alcance comprende las nueve páginas y el contenido propio.
+La base aprobada, actualizada según la última indicación del usuario, es: JavaScript, React, Vite y pnpm, con React Router para el prerenderizado, CSS Modules, datos JSON locales y animación aislada con GSAP/Lenis. Las tablas conservan la comparación de alternativas; la opción elegida se identifica debajo. El alcance comprende las siete páginas y el contenido propio.
 
 ### 14.1 Renderizado y publicación
 
@@ -352,7 +364,7 @@ React Router documenta renderizado cliente, servidor y prerenderizado; su modo f
 
 | Opción | Resultado | Recomendación condicionada |
 |---|---|---|
-| Datos locales con validación | Proyectos, biografía, enlaces y recursos en archivos del repositorio | Adecuado para seis proyectos y cambios ocasionales gestionados por desarrollo |
+| Datos locales con validación | Proyectos, biografía, enlaces y recursos en archivos del repositorio | Adecuado para cuatro proyectos y cambios ocasionales gestionados por desarrollo |
 | CMS externo | Editor para actualizar proyectos sin modificar código | Adecuado si tú u otra persona publicaréis contenido con frecuencia |
 
 Un CMS puede combinarse con A o B; no obliga a renderizar en servidor. Añadirlo desde el principio sólo tiene sentido si resuelve una necesidad editorial real.
@@ -369,13 +381,13 @@ Se utilizarán **archivos JSON locales con validaciones escritas en JavaScript**
 
 Motion ofrece efectos ligados al scroll y activados al entrar en pantalla. GSAP permite controlar secuencias y valores de DOM, canvas y otros renderizadores. Lenis resuelve el scroll suavizado y documenta su sincronización con GSAP. Fuentes: [Motion](https://motion.dev/docs/react-scroll-animations), [GSAP con React](https://gsap.com/resources/React/), [ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) y [Lenis](https://github.com/darkroomengineering/lenis).
 
-El anillo y la rueda observados pueden construirse con CSS 3D. No se ha demostrado que necesiten una escena completa con Three.js. Para la deformación, evaluar un módulo Canvas 2D o WebGL con una muestra representativa antes de incorporar una dependencia grande. No animar la misma propiedad simultáneamente con dos motores.
+El anillo y la rueda observados pueden construirse con CSS 3D. No se ha demostrado que necesiten una escena completa con Three.js. M05 está retirado temporalmente; si se solicita su sustitución por un efecto gráfico, evaluar una muestra representativa antes de incorporar una dependencia grande. No animar la misma propiedad simultáneamente con dos motores.
 
 ### 14.4 Organización y estilos
 
 Aplicación modular por páginas y componentes, con datos separados y un módulo de movimiento independiente. Para este tamaño, no hace falta introducir una arquitectura empresarial de múltiples capas, un gestor de estado global ni un backend por defecto.
 
-Se utilizarán JavaScript y CSS Modules con variables CSS. Los estilos específicos vivirán junto al componente correspondiente; los colores, espaciados y escalas compartidos estarán centralizados.
+Se utilizan JavaScript y CSS Modules con variables CSS. Las rutas seleccionan datos, declaran metadatos y componen secciones explícitas. Cada sección mantiene sus estilos junto al componente; los colores, espaciados y escalas compartidos están centralizados. Los nombres de clase siguen BEM dentro de CSS Modules, según las convenciones de la sección 15.
 
 ### 14.5 Gestor de paquetes
 
@@ -386,56 +398,57 @@ Se utilizarán JavaScript y CSS Modules con variables CSS. Los estilos específi
 ```text
 portfolio/
 ├── app/
-│   ├── root.jsx                     Documento y estructura compartida
+│   ├── root.jsx                     Documento HTML, metadatos y límites de error
 │   ├── routes.js                    Mapa de URL y módulos de página
 │   ├── routes/
 │   │   ├── home.jsx                  Inicio
-│   │   ├── work.jsx                  Catálogo de seis proyectos
+│   │   ├── work.jsx                  Catálogo de cuatro proyectos
 │   │   ├── about.jsx                 Biografía
-│   │   ├── project.jsx               Plantilla de las seis fichas
+│   │   ├── project.jsx               Plantilla de las cuatro fichas
 │   │   └── not-found.jsx             Estado de página no encontrada
 │   ├── components/
-│   │   ├── layout/                   Header, Footer, Container
+│   │   ├── layout/                   SiteLayout, PageLayout, Header, Footer
+│   │   ├── sections/
+│   │   │   ├── home/                 HomeHero, FeaturedProjectsSection, AboutSection
+│   │   │   ├── work/                 WorkHero
+│   │   │   ├── about/                AboutHero, BiographySection, ArchitectureSection,
+│   │   │   │                         ExperienceSection
+│   │   │   ├── project/              ProjectHero, ProjectOverview, ProjectGallerySection,
+│   │   │   │                         RelatedProjectsSection
+│   │   │   └── shared/               ProfileHero, ProjectsSection
 │   │   ├── portfolio/                ProjectCard, ProjectGrid, ProjectGallery
-│   │   │                            ProjectDetails, RelatedProjects
-│   │   ├── editorial/                Intro, BioPanel, ExperienceList
-│   │   └── ui/                       Media, Placeholder, Button
+│   │   ├── editorial/                InfoPanel
+│   │   └── ui/                       Media, ErrorState
 │   ├── motion/
 │   │   ├── MotionProvider.jsx        Ciclo de vida y preferencias de movimiento
-│   │   ├── ScrollController.jsx      Lenis, sincronización y política de scroll
 │   │   ├── AnimatedLink.jsx          Sustitución de letras
 │   │   ├── Reveal.jsx                Aparición de bloques
-│   │   ├── BrandRing.jsx             Anillo de marcas con CSS 3D
+│   │   ├── CircularCarousel.jsx      Carrusel 3D de fotos, adaptado de React Bits
+│   │   ├── circularCarouselMotion.js Avance, inercia y detención; independiente del DOM
+│   │   ├── circularCarouselMotion.test.js Pausa, ciclo, selección y movimiento reducido
 │   │   ├── ImageWheel.jsx            Rueda de diez imágenes con CSS 3D
 │   │   ├── WordmarkEffect.jsx        Logotipo y su efecto
-│   │   ├── motionConfig.js          Tiempos, curvas, amplitudes y variantes
-│   │   └── deformation/
-│   │       ├── DeformationProvider.jsx   Registro de superficies y canvas compartido
-│   │       ├── DeformableMedia.jsx       Imagen/panel con respaldo HTML
-│   │       └── renderer.client.js       Motor gráfico, exclusivo del navegador
+│   │   └── motionConfig.js           Parámetros de las animaciones activas
 │   ├── content/
 │   │   ├── site.json                Perfil, biografía, experiencia y enlaces
-│   │   ├── projects.json            Seis proyectos, galerías y relacionados
+│   │   ├── projects.json            Cuatro proyectos, galerías y relacionados
 │   │   ├── media.json               Rutas/URL, texto alternativo y encuadre
+│   │   ├── MEDIA-GUIDE.md           Guía de carpetas e identificadores de imágenes
 │   │   ├── validate.js              Validación de campos y referencias
+│   │   ├── validate.test.js         Casos válidos y errores de contenido
 │   │   └── index.js                 Acceso y comprobación de contenido
 │   └── styles/
 │       ├── tokens.css               Colores, espaciados, tipografía y radios
 │       ├── fonts.css                Declaraciones de fuentes
-│       └── globals.css              Base, foco y movimiento reducido
+│       └── globals.css              Base, utilidades u-, foco y movimiento reducido
 ├── public/
-│   ├── images/
-│   │   ├── profile/
-│   │   ├── projects/
-│   │   │   ├── proyecto-01/
-│   │   │   └── ...                  Hasta proyecto-06
-│   │   └── placeholders/
-│   ├── fonts/
-│   └── documents/                   CV u otros documentos propios
+│   ├── favicon.svg
+│   └── images/                     Fotografías propias; rutas editables en media.json
 ├── scripts/
 │   ├── format-html.js               Formato del HTML generado sin alterar el DOM
-│   └── format-html.test.js          Conservación de texto, scripts y marcas de React
-├── react-router.config.js           Prerenderizado de las nueve rutas
+│   ├── format-html.test.js          Conservación de texto, scripts y marcas de React
+│   └── check-pages.js               Semántica, metadatos y enlaces de las siete páginas
+├── react-router.config.js           Prerenderizado de las siete rutas
 ├── vite.config.js                   Integración de Vite con React Router
 ├── jsconfig.json                    Configuración del editor para JavaScript
 ├── prettier.config.js               Formato compartido de los archivos fuente
@@ -445,7 +458,7 @@ portfolio/
 └── README.md                        Diseño, instalación y guía de edición
 ```
 
-Este árbol describe la organización aprobada; la implementación actual crea los archivos que necesita y todavía no todas las piezas propuestas. `app/` agrupa el código y sigue las convenciones de React Router en modo framework. Cada componente con estilos propios tiene su archivo adyacente `Nombre.module.css`; no se enumeran todos para mantener legible el árbol. Los módulos de rutas componen las pantallas y definen sus metadatos, mientras los componentes resuelven las piezas visuales. Referencia: [configuración de rutas de React Router](https://reactrouter.com/start/framework/routing).
+Este árbol refleja la organización implementada; omite los archivos CSS adyacentes y algunos archivos de configuración para facilitar la lectura. `app/` sigue las convenciones de React Router en modo framework. Cada componente con estilos propios tiene su archivo `Nombre.module.css`; las rutas no concentran estilos de varias páginas en un archivo común. `public/fonts/` y `public/documents/` se crearán cuando haya fuentes o documentos propios que lo requieran. Referencia: [configuración de rutas de React Router](https://reactrouter.com/start/framework/routing).
 
 Los componentes y las páginas usarán JSX; la lógica y la configuración usarán módulos JavaScript con `import` y `export`. `package.json` declarará `"type": "module"`. `jsconfig.json` servirá al editor y no añadirá una etapa de comprobación de tipos. React Router admite archivos de configuración JavaScript; su [resolución de archivos de entrada](https://github.com/remix-run/react-router/blob/main/packages/react-router-dev/config/config.ts) contempla las extensiones `.js` y `.jsx`.
 
@@ -459,10 +472,12 @@ Estos comandos están disponibles desde la raíz del repositorio, con Node.js y 
 | Iniciar desarrollo | `pnpm dev` | Ejecuta `react-router dev`, integrado con Vite |
 | Formatear los archivos fuente | `pnpm format` | Aplica sangría y saltos de línea consistentes |
 | Comprobar el formato | `pnpm format:check` | Revisa los archivos fuente sin modificarlos |
-| Generar la versión publicable | `pnpm build` | Ejecuta `react-router build` y prerenderiza las nueve rutas |
+| Generar la versión publicable | `pnpm build` | Ejecuta `react-router build` y prerenderiza las siete rutas |
+| Verificar el HTML ya compilado | `pnpm check:pages` | Comprueba regiones, encabezados, identificadores, metadatos y tarjetas |
+| Verificar el proyecto completo | `pnpm check` | Comprueba formato, pruebas, compilación y HTML generado |
 | Instalar en integración continua | `pnpm install --frozen-lockfile` | Instala respetando el archivo de versiones y falla si requiere cambios |
 
-Las tareas previstas en `package.json` serán:
+Las tareas principales de `package.json` son:
 
 ```json
 {
@@ -470,23 +485,52 @@ Las tareas previstas en `package.json` serán:
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build && pnpm format:html",
-    "format:html": "node scripts/format-html.js"
+    "format:html": "node scripts/format-html.js",
+    "check:pages": "node scripts/check-pages.js",
+    "check": "pnpm format:check && pnpm test && pnpm build && pnpm check:pages"
   }
 }
 ```
 
 Es un fragmento de configuración, no un `package.json` completo. La compilación se realizará con Vite a través de React Router, conservando el prerenderizado acordado. Referencias: [inicio de React Router](https://reactrouter.com/tutorials/quickstart) e [instalación con pnpm](https://pnpm.io/cli/install).
 
-### Nueve páginas a partir de cuatro plantillas
+### Siete páginas a partir de cuatro plantillas
 
 | URL | Módulo | Fuente de contenido |
 |---|---|---|
 | `/` | `routes/home.jsx` | Perfil y cuatro proyectos destacados |
-| `/work` | `routes/work.jsx` | Los seis proyectos y las diez imágenes de la rueda |
+| `/work` | `routes/work.jsx` | Los cuatro proyectos y las diez imágenes de la rueda |
 | `/about` | `routes/about.jsx` | Biografía, experiencia, servicios y recursos personales |
-| `/projects/proyecto-01` a `/projects/proyecto-06` | `routes/project.jsx`, mediante `/projects/:slug` | El registro que corresponda al slug |
+| `/projects/proyecto-01` a `/projects/proyecto-04` | `routes/project.jsx`, mediante `/projects/:slug` | El registro que corresponda al slug |
 
-Los slugs de proyecto son provisionales y se editarán en los datos. La lista de rutas que se prerenderiza se derivará de esos registros, junto con las tres rutas principales. El estado 404 es auxiliar y no añade una décima página editorial. Un slug desconocido debe mostrar ese estado, sin reutilizar por defecto el primer proyecto.
+Los slugs de proyecto son provisionales y se editarán en los datos. La lista de rutas que se prerenderiza se derivará de esos registros, junto con las tres rutas principales. El estado 404 es auxiliar y no añade una octava página editorial. Un slug desconocido debe mostrar ese estado, sin reutilizar por defecto el primer proyecto.
+
+### Layout, secciones y semántica
+
+`root.jsx` define el documento HTML y delega el marco compartido a `SiteLayout`: proveedores de movimiento, `Header`, un único `main` y `Footer`. `PageLayout` aplica el margen lateral del contenido; en las fichas utiliza `article`. La navegación principal y la del pie usan `nav` con nombre accesible.
+
+| Plantilla | Secciones en orden |
+|---|---|
+| Inicio | `HomeHero`, `FeaturedProjectsSection`, `AboutSection` |
+| Work | `WorkHero`, `ProjectsSection` |
+| About | `AboutHero`, `BiographySection`, `ArchitectureSection`, `ExperienceSection` |
+| Proyecto | `ProjectHero`, `ProjectOverview`, `ProjectGallerySection`, `RelatedProjectsSection` |
+
+Cada página tiene un único `h1`. Las secciones editoriales usan `section` con un encabezado asociado mediante `aria-labelledby`; el hero de una ficha es el `header` de su `article`. Los encabezados que no forman parte de la composición visible usan `u-visually-hidden`, que los conserva disponibles para lectores de pantalla.
+
+`HomeHero` y `AboutHero` reutilizan `ProfileHero`. Los listados destacados y de Work reutilizan `ProjectsSection`; las tarjetas y galerías permanecen en `portfolio/`. `InfoPanel` comparte la composición oscura, el Circular Carousel y el enlace; las secciones deciden su contenido por propiedades y, cuando corresponde, mediante `children`. Las rutas obtienen las fotos del carrusel mediante `getCarouselItems()`, que resuelve los ocho identificadores de `site.carousel` en `media.json`, sin consultar las portadas. Las secciones no consultan los JSON ni deciden rutas de proyecto.
+
+### Convención de clases: BEM con CSS Modules
+
+- Un bloque representa un componente o sección: `.project-card`, `.work-hero`, `.site-header`.
+- Sus elementos usan dos guiones bajos: `.project-card__title`, `.work-hero__description`.
+- Las variantes y estados usan dos guiones: `.media--dark`, `.project-card__title-text--copy`, `.reveal--visible`. El modificador acompaña a la clase base.
+- En JSX se accede con `styles["project-card__title"]`. CSS Modules conserva el aislamiento y añade un identificador al compilar; las clases generadas del navegador no se editan directamente.
+- `globals.css` contiene reglas base y las utilidades `u-eyebrow`, `u-muted` y `u-visually-hidden`. Los ajustes específicos de una sección pertenecen a su módulo, y los valores compartidos a `tokens.css`.
+
+Los componentes exponen propiedades para variantes visuales, como `tone` en `Media`, y `className` para su encaje en el padre. Evitar selectores que dependan de las clases internas o del orden de elementos de otro componente.
+
+En las tarjetas, `ProjectCard.module.css` define el marco cuadrado, los radios y las capas de título/flecha. `Media.module.css` hace que la imagen HTML cubra ese marco con `width: 100%`, `height: 100%`, `object-fit: cover` y el encuadre de `media.json`. `overflow: hidden` y los radios del contenedor recortan la imagen; no hay una capa de canvas superpuesta.
 
 ### Flujo de contenido y publicación
 
@@ -495,9 +539,9 @@ Archivos JSON + recursos propios
                ↓
 Acceso común al contenido y comprobación de referencias
                ↓
-Módulos de página → componentes visuales + estilos compartidos
+Módulos de ruta → secciones → componentes visuales con estilos locales
                ↓
-Compilación: HTML y metadatos para cada una de las nueve URL
+Compilación: HTML y metadatos para cada una de las siete URL
                ↓
 Alojamiento estático → React activa navegación y animaciones en el navegador
 ```
@@ -507,19 +551,21 @@ Editar contenido o diseño requerirá una nueva compilación para actualizar la 
 ### Límites entre módulos
 
 - **Contenido:** no importa componentes ni herramientas de animación. `index.js` expone la lectura de perfil, proyectos, destacados y recursos; utiliza `validate.js` para comprobar los datos antes de generar y publicar las páginas.
-- **Rutas:** seleccionan los datos y componen la página. Una ficha nueva reutilizaría `project.jsx`; las seis previstas no requieren seis archivos de pantalla distintos.
+- **Rutas:** seleccionan los datos y componen la página. Una ficha nueva reutilizaría `project.jsx`; las cuatro previstas no requieren cuatro archivos de pantalla distintos.
+- **Layout:** `SiteLayout` mantiene el marco compartido y los proveedores; `PageLayout` aplica el margen lateral sin introducir un segundo `main`.
+- **Secciones:** expresan la composición y semántica de cada plantilla. Reciben los datos de la ruta y reutilizan piezas compartidas.
 - **Componentes:** reciben datos y opciones de presentación. La tarjeta usa el mismo título y portada en Home, Work y proyectos relacionados.
 - **Movimiento:** recibe elementos, recursos y parámetros; no contiene información personal ni búsquedas de proyectos. Las animaciones usan un ciclo coordinado y se limpian al desmontarse.
-- **Renderizador:** se inicializa sólo en el navegador. Sus APIs de canvas, `window` y medidas DOM no se ejecutan durante el prerenderizado. La primera renderización mantiene el mismo contenido de respaldo que el HTML generado.
+- **Efectos gráficos futuros:** si el usuario solicita uno, aislarlo del contenido y ejecutarlo sólo en el navegador, conservando el HTML inicial y el respaldo visual. Actualmente M05 está retirado y no hay renderizador de deformación.
 - **Estilos:** las reglas locales quedan junto a cada componente; los valores comunes viven en `tokens.css`. Los límites de pantalla conservan 810 y 1200 px.
 
-La implementación actual confía la restauración de rutas a `ScrollRestoration` de React Router; `MotionProvider` integra Lenis y ScrollTrigger sin añadir una segunda restauración. `DeformationProvider` comparte el canvas entre las superficies que necesitan el efecto; no se crean bucles independientes para cada imagen.
+La implementación actual confía la restauración de rutas a `ScrollRestoration` de React Router; `MotionProvider` integra Lenis y ScrollTrigger sin añadir una segunda restauración. `Media` muestra imágenes HTML y espacios reservados, sin registrar superficies gráficas ni crear bucles de animación.
 
 ### Modelo de contenido
 
 Cada proyecto necesita: identificador estable, `slug`, título, cliente, año, categorías, posición en catálogo, presencia en Home, portada, imagen principal, párrafos, bloques de galería, orden móvil, enlace externo, proyectos relacionados y metadatos sociales. Portadas y galerías referencian identificadores de `media.json`; los proyectos relacionados usan identificadores estables. Así, cambiar un título, una URL de imagen o un slug no exige copiar cambios en varias páginas.
 
-Los bloques de galería deben distinguir **imagen ancha** y **pareja de imágenes**, con encuadre, proporción y orden por tamaño. Evitar seis páginas copiadas manualmente: una plantilla de proyecto puede resolver las seis rutas sin borrar sus diferencias.
+Los bloques de galería deben distinguir **imagen ancha** y **pareja de imágenes**, con encuadre, proporción y orden por tamaño. Evitar cuatro páginas copiadas manualmente: una plantilla de proyecto puede resolver las cuatro rutas sin borrar sus diferencias.
 
 El módulo gráfico debe aceptar recursos y geometría desde los componentes; no debe conocer slugs ni textos editoriales. Si falla o no está habilitado, la imagen de respaldo debe conservar el mismo espacio y encuadre.
 
@@ -551,30 +597,30 @@ Al completar el contenido, `src` podrá ser una ruta local como `/images/proyect
 
 Las rutas locales son URL desde la raíz del sitio: un archivo en `public/images/modelaje.webp` se configura como `"src": "/images/modelaje.webp"`. No se incluye `public/` ni se utilizan rutas relativas al archivo JSON, como `../../public/images/modelaje.webp`.
 
-Si `src` está vacío o la imagen falla, se mostrará un espacio reservado con el mismo tamaño y una etiqueta discreta. No se dejarán iconos de imagen rota ni se colapsará la composición. Los seis proyectos tendrán registros provisionales para que sus seis páginas y los listados puedan revisarse desde el inicio.
+Si `src` está vacío o la imagen falla, se mostrará un espacio reservado con el mismo tamaño y una etiqueta discreta. No se dejarán iconos de imagen rota ni se colapsará la composición. Los cuatro proyectos tendrán registros provisionales para que sus cuatro páginas y los listados puedan revisarse desde el inicio.
 
 Las imágenes remotas utilizadas como texturas necesitan acceso compatible con CORS. Si una URL puede mostrarse como imagen pero no puede usarse en el renderizador, la propuesta contempla mostrarla de forma normal, sin deformación, y señalarlo durante la revisión. Para garantizar el efecto, lo más fiable es alojar el archivo con el sitio.
 
-También habrá referencias editables para las diez imágenes de la rueda, el retrato, la fotografía ancha, el logotipo y las marcas del anillo. Los nombres de clientes del original no se tratarán como clientes reales del usuario. No se necesita entregar todo ese contenido antes de desarrollar la estructura: los espacios reservados permiten avanzar, aunque la aceptación visual final debe hacerse con los recursos reales.
+También hay referencias editables para las diez imágenes de la rueda, el retrato, la fotografía ancha y el logotipo opcional. El Circular Carousel usa ocho recursos propios (`carousel01` a `carousel08`), ordenados mediante `site.carousel`, y las tarjetas utilizan `cover01` a `cover04`; los nombres provisionales de marcas se retiraron de `site.json`. No se necesita entregar todo ese contenido antes de desarrollar la estructura: los espacios reservados permiten avanzar, aunque la aceptación visual final debe hacerse con los recursos reales.
 
 ### Cómo podrá evolucionar la estructura
 
-La cabecera, el pie, las tarjetas y las galerías se reutilizarán. Las seis fichas compartirán una plantilla con bloques de contenido configurables. Una nueva sección podrá incorporarse sin copiar una página completa; los ajustes de diseño se concentrarán en componentes y variables compartidas. El renderizador gráfico y el acceso a contenido permanecerán separados de las rutas. Esto facilita cambios posteriores sin prometer que cualquier ampliación futura carecerá de coste.
+La cabecera, el pie, las tarjetas y las galerías se reutilizarán. Las cuatro fichas compartirán una plantilla con bloques de contenido configurables. Una nueva sección podrá incorporarse sin copiar una página completa; los ajustes de diseño se concentrarán en componentes y variables compartidas. El renderizador gráfico y el acceso a contenido permanecerán separados de las rutas. Esto facilita cambios posteriores sin prometer que cualquier ampliación futura carecerá de coste.
 
 ## 16. Plan de implementación con la arquitectura aprobada
 
-1. Crear la base con JavaScript, React, Vite y React Router, gestionada con pnpm; preparar sus cuatro plantillas, el layout compartido y las nueve rutas derivadas de los datos. La aprobación técnica ya fue recibida.
+1. Crear la base con JavaScript, React, Vite y React Router, gestionada con pnpm; preparar sus cuatro plantillas, el layout compartido y las siete rutas derivadas de los datos. La aprobación técnica ya fue recibida.
 2. Preparar recursos locales, fuentes y datos; comprobar encuadres.
 3. Construir primero las cuatro plantillas estáticas en los tres intervalos de pantalla.
 4. Validar proporciones, tipografía, espacios y orden móvil contra las referencias.
-5. Probar la deformación con una tarjeta, una imagen ancha y un panel oscuro; resolver el renderizador antes de extenderlo.
-6. Incorporar enlaces animados, rueda, anillo, entradas y scroll con parámetros centralizados.
+5. Mantener M05 retirado hasta que el usuario defina su sustitución; entonces probar el nuevo efecto en una muestra representativa antes de extenderlo.
+6. Incorporar enlaces animados, rueda, Circular Carousel, entradas y scroll con parámetros centralizados.
 7. Calibrar amplitudes, velocidades, tiempos y reversión; resolver el efecto del logotipo y los hovers pendientes.
 8. Verificar navegación, acceso directo a rutas, foco, movimiento reducido, carga de recursos y rendimiento; publicar sólo cuando se solicite.
 
 ## 17. Criterios de aceptación de la futura réplica
 
-- Las nueve rutas acordadas existen y se pueden abrir directamente y recargar.
+- Las siete rutas acordadas existen y se pueden abrir directamente y recargar.
 - Las fuentes, pesos, geometría, jerarquía y animaciones siguen la referencia; la identidad, los textos y los recursos corresponden al usuario o están identificados como provisionales.
 - Se pueden reemplazar textos e imágenes desde los archivos de contenido propuestos, sin editar las plantillas de pantalla.
 - Los recursos ausentes conservan sus espacios, y los enlaces sin configurar no dirigen a contactos ni sitios del autor de la referencia.
@@ -582,7 +628,7 @@ La cabecera, el pie, las tarjetas y las galerías se reutilizarán. Las seis fic
 - Los títulos largos no se recortan y no aparece desplazamiento horizontal accidental.
 - Se han comparado fotogramas equivalentes, incluyendo reposo, entrada, hover, scroll rápido, scroll inverso y retorno al inicio.
 - Se han cerrado los pendientes M03, M04 y M06 y calibrado los tiempos de los demás efectos.
-- El giro de la rueda y el anillo se compara por ciclo, no sólo por una captura estática.
+- El giro de la rueda y del Circular Carousel se revisa por ciclo, junto con arrastre, pausa y navegación por teclado; una captura estática no acredita el movimiento.
 - Canvas, texto y enlaces se mantienen alineados al cargar fuentes, redimensionar y navegar.
 - El contenido permanece disponible si se reduce el movimiento o falla el renderizador.
 - No se multiplican los bucles de animación al navegar varias veces entre páginas.
@@ -610,20 +656,20 @@ Las capturas documentan la página original durante la inspección. Algunas cont
 
 ## 19. Registro de la arquitectura aprobada
 
-El usuario aprobó la base técnica después de confirmar: portfolio público en evolución, seis proyectos y nueve páginas, con contenido propio y espacios reservados para completarlo.
+Tras el ajuste de alcance solicitado por el usuario, la base técnica aprobada comprende un portfolio público en evolución, cuatro proyectos y siete páginas, con contenido propio, un anillo de ocho fotos independientes y espacios reservados para completarlo.
 
 | Parte | Elección aprobada | Motivo para este caso |
 |---|---|---|
 | Base | JavaScript + React + Vite | Usar el lenguaje y las herramientas solicitados, con componentes JSX y lógica en JavaScript |
 | Gestor de paquetes | pnpm, con `pnpm-lock.yaml` versionado | Mantener las dependencias y los comandos del proyecto consistentes |
-| Rutas y renderizado | React Router en modo framework, con prerenderizado de las nueve rutas y publicación estática | Entregar HTML por página y conservar navegación interactiva sin servidor de aplicación |
-| Organización | Componentes reutilizables y una plantilla configurable para las seis fichas | Facilitar cambios de diseño sin repetir trabajo |
+| Rutas y renderizado | React Router en modo framework, con prerenderizado de las siete rutas y publicación estática | Entregar HTML por página y conservar navegación interactiva sin servidor de aplicación |
+| Organización | Componentes reutilizables y una plantilla configurable para las cuatro fichas | Facilitar cambios de diseño sin repetir trabajo |
 | Estilos | CSS Modules y variables CSS | Ajustar medidas con precisión y modificar valores compartidos |
 | Contenido | Tres archivos JSON locales para perfil, proyectos y recursos | Sustituir textos, rutas de imagen y URL sin editar componentes |
-| Animación | GSAP/ScrollTrigger, Lenis, CSS 3D y módulo gráfico independiente | Reproducir y calibrar los efectos observados; resolver Canvas 2D/WebGL mediante la prueba técnica descrita |
-| Contenido provisional | Seis registros y espacios reservados con proporciones estables | Construir y revisar las nueve páginas antes de recibir los recursos definitivos |
+| Animación | GSAP/ScrollTrigger, Lenis y CSS 3D; M05 retirado temporalmente | Conservar los demás efectos; el usuario definirá más adelante una sustitución para la deformación |
+| Contenido provisional | Cuatro registros y espacios reservados con proporciones estables | Construir y revisar las siete páginas antes de recibir los recursos definitivos |
 | Identidad de plantilla | Omitir insignia y enlaces comerciales de Framer | Adecuar el portfolio a la identidad del usuario |
 
 Esta arquitectura mantiene el contenido fácil de editar y concentra la complejidad gráfica en un módulo específico. Los nombres definitivos, imágenes, textos y dominio podrán incorporarse después; no es necesario decidirlos para preparar la estructura.
 
-**Estado: primera implementación funcional con contenido provisional.** La prueba del renderizador Canvas 2D es inicial; la comparación visual y la calibración de animaciones siguen pendientes y no requieren volver a elegir la arquitectura general.
+**Estado: primera implementación funcional con contenido provisional.** M05 está retirado temporalmente por indicación del usuario. La comparación visual y la calibración de los efectos activos siguen pendientes y no requieren volver a elegir la arquitectura general.

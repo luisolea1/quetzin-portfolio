@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { useDeformation } from "../../motion/deformation/DeformationProvider.jsx";
+import { useEffect, useState } from "react";
 import styles from "./Media.module.css";
 
 export default function Media({
@@ -7,44 +6,21 @@ export default function Media({
   label = "Imagen pendiente",
   className = "",
   priority = false,
-  deform = false,
+  tone = "light",
 }) {
-  const ref = useRef(null);
-  const imageRef = useRef(null);
   const [failed, setFailed] = useState(false);
-  const renderer = useDeformation();
   const src = media?.src;
 
   useEffect(() => setFailed(false), [src]);
-  useEffect(() => {
-    if (!src || failed || !deform || !renderer || !imageRef.current) return;
-    const remote = src.startsWith("https://");
-    const image = remote ? new Image() : imageRef.current;
-    let unregister;
-    const register = () => {
-      if (image.naturalWidth) unregister = renderer.register(ref.current, image);
-    };
-    if (remote) {
-      image.crossOrigin = "anonymous";
-      image.addEventListener("load", register);
-      image.src = src;
-    } else if (image.complete) register();
-    else image.addEventListener("load", register);
-    return () => {
-      image.removeEventListener("load", register);
-      unregister?.();
-    };
-  }, [src, failed, deform, renderer]);
 
   return (
     <div
-      ref={ref}
-      className={`${styles.media} ${className}`}
+      className={`${styles["media"]} ${tone === "dark" ? styles["media--dark"] : ""} ${className}`}
       style={{ "--media-position": media?.position || "50% 50%" }}
     >
       {src && !failed ? (
         <img
-          ref={imageRef}
+          className={styles["media__image"]}
           src={src}
           alt={media.alt || ""}
           loading={priority ? "eager" : "lazy"}
@@ -52,8 +28,8 @@ export default function Media({
           onError={() => setFailed(true)}
         />
       ) : (
-        <div className={styles.placeholder} role="img" aria-label={media?.alt || label}>
-          <span>{label}</span>
+        <div className={styles["media__placeholder"]} role="img" aria-label={media?.alt || label}>
+          <span className={styles["media__placeholder-label"]}>{label}</span>
         </div>
       )}
     </div>

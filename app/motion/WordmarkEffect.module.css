@@ -8,13 +8,13 @@
   margin: 0;
   overflow: hidden;
 }
-.wordmark img {
+.wordmark__image {
   width: 100%;
   height: auto;
   max-height: 270px;
   object-fit: contain;
 }
-.wordmark span {
+.wordmark__text {
   font-size: clamp(70px, 17vw, 260px);
   font-weight: 600;
   letter-spacing: -0.09em;
@@ -38,7 +38,7 @@
   .wordmark {
     min-height: 85px;
   }
-  .wordmark span {
+  .wordmark__text {
     font-size: clamp(55px, 15vw, 120px);
   }
 }

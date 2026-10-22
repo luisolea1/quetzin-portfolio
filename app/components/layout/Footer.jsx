@@ -5,48 +5,72 @@ import styles from "./Footer.module.css";
 
 export default function Footer({ site }) {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.top}>
+    <footer className={styles["site-footer"]}>
+      <div className={styles["site-footer__columns"]}>
         <div>
-          <span className="eyebrow">Enlaces</span>
-          <div className={styles.links}>
+          <span className="u-eyebrow">Enlaces</span>
+          <div className={styles["site-footer__links"]}>
             {site.socials.length ? (
               site.socials
                 .filter((social) => social.url)
                 .map((social) => (
-                  <a key={social.url} href={social.url} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className={styles["site-footer__link"]}
+                    key={social.url}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {social.label} ↗
                   </a>
                 ))
             ) : (
-              <span className="muted">Redes pendientes</span>
+              <span className="u-muted">Redes pendientes</span>
             )}
           </div>
         </div>
-        <div>
-          <span className="eyebrow">Explorar</span>
-          <div className={styles.links}>
-            <AnimatedLink to="/">Inicio</AnimatedLink>
-            <AnimatedLink to="/work">Proyectos</AnimatedLink>
-            <AnimatedLink to="/about">Sobre mí</AnimatedLink>
+        <nav aria-labelledby="footer-navigation-title">
+          <h2
+            id="footer-navigation-title"
+            className={`${styles["site-footer__heading"]} u-eyebrow`}
+          >
+            Explorar
+          </h2>
+          <div className={styles["site-footer__links"]}>
+            <AnimatedLink className={styles["site-footer__link"]} to="/">
+              Inicio
+            </AnimatedLink>
+            <AnimatedLink className={styles["site-footer__link"]} to="/work">
+              Proyectos
+            </AnimatedLink>
+            <AnimatedLink className={styles["site-footer__link"]} to="/about">
+              Sobre mí
+            </AnimatedLink>
           </div>
-        </div>
-        <div className={styles.details}>
-          <span className="eyebrow">Contacto</span>
-          <div className={styles.links}>
+        </nav>
+        <div className={styles["site-footer__contact"]}>
+          <span className="u-eyebrow">Contacto</span>
+          <div className={styles["site-footer__links"]}>
             {site.email ? (
-              <a href={`mailto:${site.email}`}>{site.email}</a>
+              <a className={styles["site-footer__link"]} href={`mailto:${site.email}`}>
+                {site.email}
+              </a>
             ) : (
-              <span className="muted">Correo pendiente</span>
+              <span className="u-muted">Correo pendiente</span>
             )}
-            {site.phone && <a href={`tel:${site.phone}`}>{site.phone}</a>}
+            {site.phone && (
+              <a className={styles["site-footer__link"]} href={`tel:${site.phone}`}>
+                {site.phone}
+              </a>
+            )}
           </div>
         </div>
       </div>
       <WordmarkEffect site={site} />
-      <div className={styles.bottom}>
+      <div className={styles["site-footer__bottom"]}>
         <span>Portfolio personal</span>
         <button
+          className={styles["site-footer__back-to-top"]}
           type="button"
           onClick={() =>
             window.scrollTo({
