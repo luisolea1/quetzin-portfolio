@@ -8,10 +8,13 @@
   },
   "scripts": {
     "dev": "react-router dev",
-    "build": "react-router build",
+    "build": "react-router build && pnpm format:html",
+    "format": "prettier --write \"app/**/*.{js,jsx,json,css}\" \"scripts/**/*.js\" \"*.{js,json}\"",
+    "format:check": "prettier --check \"app/**/*.{js,jsx,json,css}\" \"scripts/**/*.js\" \"*.{js,json}\"",
+    "format:html": "node scripts/format-html.js",
     "preview": "sirv build/client --single __spa-fallback.html",
-    "test": "node --test app/content/*.test.js",
-    "check": "pnpm test && pnpm build"
+    "test": "node --test app/content/*.test.js app/motion/deformation/*.test.js scripts/*.test.js",
+    "check": "pnpm format:check && pnpm test && pnpm build"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

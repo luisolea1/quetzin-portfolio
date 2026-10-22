@@ -10,12 +10,19 @@ export default function DeformationProvider({ children }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let active = true;
     let instance;
-    import("./renderer.client.js").then(({ DeformationRenderer }) => {
-      if (!active) return;
-      instance = new DeformationRenderer();
-      setRenderer(instance);
-    }).catch(() => { /* El HTML permanece visible sin renderizador. */ });
-    return () => { active = false; instance?.destroy(); };
+    import("./renderer.client.js")
+      .then(({ DeformationRenderer }) => {
+        if (!active) return;
+        instance = new DeformationRenderer();
+        setRenderer(instance);
+      })
+      .catch(() => {
+        /* El HTML permanece visible sin renderizador. */
+      });
+    return () => {
+      active = false;
+      instance?.destroy();
+    };
   }, []);
 
   return <DeformationContext.Provider value={renderer}>{children}</DeformationContext.Provider>;

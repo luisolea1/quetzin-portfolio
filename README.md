@@ -8,9 +8,15 @@ Este documento especifica la apariencia, composición adaptable, navegación, re
 
 ### Ejecutar y editar la implementación actual
 
-Con Node.js 22 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. `pnpm test` valida el modelo de contenido; `pnpm build` genera las nueve páginas en `build/client/`; `pnpm preview` sirve esa compilación en http://localhost:8080. `pnpm check` ejecuta pruebas y compilación. El alojamiento estático debe servir los HTML prerenderizados antes del fallback `__spa-fallback.html` para rutas no generadas; este fallback muestra 404 en el navegador, pero la respuesta HTTP de un servidor estático sin configuración específica puede ser 200.
+Con Node.js 22 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. `pnpm test` valida el modelo de contenido y la conservación del DOM al formatear HTML; `pnpm build` genera las nueve páginas en `build/client/` y aplica sangría al HTML; `pnpm preview` sirve esa compilación en http://localhost:8080. `pnpm check` ejecuta pruebas y compilación. El alojamiento estático debe servir los HTML prerenderizados antes del fallback `__spa-fallback.html` para rutas no generadas; este fallback muestra 404 en el navegador, pero la respuesta HTTP de un servidor estático sin configuración específica puede ser 200.
+
+El documento de inicio generado está en `build/client/index.html`. `pnpm format:html` vuelve a formatear los HTML de una compilación existente. `scripts/format-html.js` utiliza Prettier con sensibilidad estricta a los espacios y verifica con parse5 que el DOM permanezca idéntico. Algunos cierres `>` quedan en la línea siguiente para no introducir nodos de texto que afecten a la hidratación. Los textos, comentarios de React y scripts se conservan literalmente. Los cambios de contenido y estructura se realizan en `app/`; los HTML de `build/` se regeneran al compilar.
+
+Para mantener legibles los archivos fuente, `pnpm format` aplica Prettier al JavaScript, JSX, CSS y JSON de `app/`, a los scripts y a la configuración de la raíz. `pnpm format:check` comprueba el formato sin modificar archivos y se ejecuta al inicio de `pnpm check`. La configuración compartida está en `prettier.config.js`: sangría de dos espacios y un ancho objetivo de 100 caracteres. `.prettierignore` excluye dependencias, compilaciones, recursos de `public/` y el archivo de bloqueo. Los componentes y las reglas CSS conservan su estructura y comportamiento.
 
 Personaliza `app/content/site.json`, `projects.json` y `media.json`; coloca imágenes propias bajo `public/images/` y, si existe, tu logo SVG en `public/images/`. Las seis fichas provisionales están en `/projects/proyecto-01` a `/projects/proyecto-06`. Los recursos y enlaces vacíos muestran espacios reservados o quedan desactivados. Las fuentes Inter e IBM Plex Mono se empaquetan desde Fontsource; Inter Variable aproxima Inter Display hasta contar con el archivo definitivo. La prueba inicial de deformación utiliza Canvas 2D compartido con tiras horizontales para imágenes y panel oscuro; amplitudes, encuadre, logotipo y transiciones M01–M10 requieren comparación animada con la referencia y medios propios. No se han recibido `recursos-referencia.json` ni las capturas mencionadas en este documento.
+
+Las tarjetas omiten las categorías cuando su lista está vacía; no muestran la etiqueta «Proyecto pendiente». En la implementación de M01/M05, la entrada utiliza la imagen HTML mientras el contenedor está animándose. Al terminar o cancelarse, se libera su transformación y el canvas retoma la deformación después de dibujar, conservando nombres, flechas y categorías sobre la imagen. `pnpm test` incluye esta coordinación entre el respaldo HTML y el renderizador.
 
 ### Requisitos confirmados por el usuario
 
@@ -426,9 +432,14 @@ portfolio/
 │   │   └── placeholders/
 │   ├── fonts/
 │   └── documents/                   CV u otros documentos propios
+├── scripts/
+│   ├── format-html.js               Formato del HTML generado sin alterar el DOM
+│   └── format-html.test.js          Conservación de texto, scripts y marcas de React
 ├── react-router.config.js           Prerenderizado de las nueve rutas
 ├── vite.config.js                   Integración de Vite con React Router
 ├── jsconfig.json                    Configuración del editor para JavaScript
+├── prettier.config.js               Formato compartido de los archivos fuente
+├── .prettierignore                  Archivos generados y recursos excluidos del formato
 ├── package.json                     Dependencias y tareas del proyecto
 ├── pnpm-lock.yaml                   Versiones resueltas de dependencias
 └── README.md                        Diseño, instalación y guía de edición
@@ -446,6 +457,8 @@ Estos comandos están disponibles desde la raíz del repositorio, con Node.js y 
 |---|---|---|
 | Instalar dependencias | `pnpm install` | Instala los paquetes y crea o actualiza el archivo de versiones |
 | Iniciar desarrollo | `pnpm dev` | Ejecuta `react-router dev`, integrado con Vite |
+| Formatear los archivos fuente | `pnpm format` | Aplica sangría y saltos de línea consistentes |
+| Comprobar el formato | `pnpm format:check` | Revisa los archivos fuente sin modificarlos |
 | Generar la versión publicable | `pnpm build` | Ejecuta `react-router build` y prerenderiza las nueve rutas |
 | Instalar en integración continua | `pnpm install --frozen-lockfile` | Instala respetando el archivo de versiones y falla si requiere cambios |
 
@@ -456,7 +469,8 @@ Las tareas previstas en `package.json` serán:
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "react-router build"
+    "build": "react-router build && pnpm format:html",
+    "format:html": "node scripts/format-html.js"
   }
 }
 ```
@@ -534,6 +548,8 @@ Ejemplo simplificado de un registro de imagen usado en la implementación:
 ```
 
 Al completar el contenido, `src` podrá ser una ruta local como `/images/proyecto-01/portada.webp` o una URL HTTPS. Se recomienda la ruta local para los recursos definitivos. Los componentes mantienen la proporción correspondiente a cada uso: tarjeta cuadrada, imagen principal ancha o retrato adaptable.
+
+Las rutas locales son URL desde la raíz del sitio: un archivo en `public/images/modelaje.webp` se configura como `"src": "/images/modelaje.webp"`. No se incluye `public/` ni se utilizan rutas relativas al archivo JSON, como `../../public/images/modelaje.webp`.
 
 Si `src` está vacío o la imagen falla, se mostrará un espacio reservado con el mismo tamaño y una etiqueta discreta. No se dejarán iconos de imagen rota ni se colapsará la composición. Los seis proyectos tendrán registros provisionales para que sus seis páginas y los listados puedan revisarse desde el inicio.
 

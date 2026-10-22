@@ -1,1 +1,49 @@
-.wordmark{--pointer-x:50%;position:relative;display:flex;align-items:center;width:100%;min-height:clamp(100px,17vw,270px);margin:0;overflow:hidden}.wordmark img{width:100%;height:auto;max-height:270px;object-fit:contain}.wordmark span{font-size:clamp(70px,17vw,260px);font-weight:600;letter-spacing:-.09em;line-height:.88;white-space:nowrap}.wordmark::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle 110px at var(--pointer-x) 50%,rgba(255,255,255,.32),transparent);mix-blend-mode:screen;transition:background .2s}@media(max-width:809px){.wordmark{min-height:85px}.wordmark span{font-size:clamp(55px,15vw,120px)}}@media(prefers-reduced-motion:reduce){.wordmark::after{display:none}}
+.wordmark {
+  --pointer-x: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: clamp(100px, 17vw, 270px);
+  margin: 0;
+  overflow: hidden;
+}
+.wordmark img {
+  width: 100%;
+  height: auto;
+  max-height: 270px;
+  object-fit: contain;
+}
+.wordmark span {
+  font-size: clamp(70px, 17vw, 260px);
+  font-weight: 600;
+  letter-spacing: -0.09em;
+  line-height: 0.88;
+  white-space: nowrap;
+}
+.wordmark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 110px at var(--pointer-x) 50%,
+    rgba(255, 255, 255, 0.32),
+    transparent
+  );
+  mix-blend-mode: screen;
+  transition: background 0.2s;
+}
+@media (max-width: 809px) {
+  .wordmark {
+    min-height: 85px;
+  }
+  .wordmark span {
+    font-size: clamp(55px, 15vw, 120px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark::after {
+    display: none;
+  }
+}

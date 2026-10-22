@@ -1,2 +1,86 @@
-.panel{border-radius:var(--radius);background:var(--ink);color:white;padding:40px;overflow:hidden}.panel>*{position:relative;z-index:6}.columns{display:grid;grid-template-columns:1.15fr .85fr;gap:8%}.description{font-size:clamp(27px,3.7vw,58px);font-weight:500;letter-spacing:-.04em;line-height:1.1;max-width:650px;margin:38px 0 0}.lists{display:grid;grid-template-columns:1fr 1fr;gap:25px}.lists p{color:rgba(255,255,255,.8);margin:22px 0 0;font-size:20px}.experience{list-style:none;padding:0;margin:35px 0 0}.experience li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #454545}.link{border-top:1px solid #454545;display:flex;justify-content:space-between;color:white;text-decoration:none;padding-top:20px;font-size:25px}.link span{border-radius:50%;background:#2a2a2a;width:46px;height:46px;display:grid;place-items:center}
-@media(max-width:1199px){.panel{padding:30px}}@media(max-width:809px){.columns{grid-template-columns:1fr;gap:35px}.description{font-size:30px}.lists p{font-size:16px}.panel{padding:30px}.link{font-size:20px}}
+.panel {
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: white;
+  padding: 40px;
+  overflow: hidden;
+}
+.panel > * {
+  position: relative;
+  z-index: 6;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 8%;
+}
+.description {
+  font-size: clamp(27px, 3.7vw, 58px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  max-width: 650px;
+  margin: 38px 0 0;
+}
+.lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+.lists p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 22px 0 0;
+  font-size: 20px;
+}
+.experience {
+  list-style: none;
+  padding: 0;
+  margin: 35px 0 0;
+}
+.experience li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #454545;
+}
+.link {
+  border-top: 1px solid #454545;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  text-decoration: none;
+  padding-top: 20px;
+  font-size: 25px;
+}
+.link span {
+  border-radius: 50%;
+  background: #2a2a2a;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+}
+@media (max-width: 1199px) {
+  .panel {
+    padding: 30px;
+  }
+}
+@media (max-width: 809px) {
+  .columns {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .description {
+    font-size: 30px;
+  }
+  .lists p {
+    font-size: 16px;
+  }
+  .panel {
+    padding: 30px;
+  }
+  .link {
+    font-size: 20px;
+  }
+}

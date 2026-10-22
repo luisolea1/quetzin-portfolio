@@ -4,7 +4,10 @@
   "intro": "Un espacio para presentar tu trabajo, tu mirada y tus proyectos.",
   "approach": "Aquí podrás contar qué haces y cómo te gusta trabajar.",
   "aboutIntro": "Este espacio está reservado para tu presentación personal.",
-  "bio": ["Añade aquí una breve biografía sobre ti y tu práctica.", "Explica qué te inspira y qué tipo de colaboraciones buscas."],
+  "bio": [
+    "Añade aquí una breve biografía sobre ti y tu práctica.",
+    "Explica qué te inspira y qué tipo de colaboraciones buscas."
+  ],
   "description": "Una selección de proyectos y procesos, lista para tomar tu forma.",
   "workIntro": "Seis proyectos listos para sustituirse por tus propios trabajos.",
   "services": [],
@@ -18,5 +21,16 @@
   "logo": null,
   "portrait": "portrait",
   "architecture": "architecture",
-  "wheel": ["wheel01", "wheel02", "wheel03", "wheel04", "wheel05", "wheel06", "wheel07", "wheel08", "wheel09", "wheel10"]
+  "wheel": [
+    "wheel01",
+    "wheel02",
+    "wheel03",
+    "wheel04",
+    "wheel05",
+    "wheel06",
+    "wheel07",
+    "wheel08",
+    "wheel09",
+    "wheel10"
+  ]
 }

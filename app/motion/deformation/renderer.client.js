@@ -4,10 +4,20 @@ export class DeformationRenderer {
   constructor() {
     this.canvas = document.createElement("canvas");
     this.canvas.setAttribute("aria-hidden", "true");
-    Object.assign(this.canvas.style, { position: "fixed", inset: "0", width: "100%", height: "100%", pointerEvents: "none", zIndex: "5" });
+    Object.assign(this.canvas.style, {
+      position: "fixed",
+      inset: "0",
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+      zIndex: "5",
+    });
     document.body.append(this.canvas);
     this.context = this.canvas.getContext("2d");
-    if (!this.context) { this.canvas.remove(); throw new Error("Canvas 2D no disponible"); }
+    if (!this.context) {
+      this.canvas.remove();
+      throw new Error("Canvas 2D no disponible");
+    }
     this.surfaces = new Set();
     this.lastScroll = window.scrollY;
     this.velocity = 0;
@@ -15,14 +25,17 @@ export class DeformationRenderer {
     this.resize = this.resize.bind(this);
     this.render = this.render.bind(this);
     this.visibility = this.visibility.bind(this);
-    this.observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        for (const surface of this.surfaces) {
-          if (surface.element === entry.target) surface.visible = entry.isIntersecting;
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          for (const surface of this.surfaces) {
+            if (surface.element === entry.target) surface.visible = entry.isIntersecting;
+          }
         }
-      }
-      this.visibility();
-    }, { rootMargin: "100px" });
+        this.visibility();
+      },
+      { rootMargin: "100px" },
+    );
     window.addEventListener("resize", this.resize);
     document.addEventListener("visibilitychange", this.visibility);
     this.resize();
@@ -45,12 +58,25 @@ export class DeformationRenderer {
 
   register(element, image = null) {
     if (!element || (image && !image.naturalWidth)) return () => {};
-    const position = getComputedStyle(element).getPropertyValue("--media-position").trim().split(/\s+/);
-    const surface = { element, image, visible: false, horizontal: Number.parseFloat(position[0]), vertical: Number.parseFloat(position[1]) };
+    const position = getComputedStyle(element)
+      .getPropertyValue("--media-position")
+      .trim()
+      .split(/\s+/);
+    const surface = {
+      element,
+      image,
+      visible: false,
+      horizontal: Number.parseFloat(position[0]),
+      vertical: Number.parseFloat(position[1]),
+    };
     this.surfaces.add(surface);
     this.observer.observe(element);
-    if (image) element.dataset.rendered = "true";
-    return () => { this.observer.unobserve(element); this.surfaces.delete(surface); delete element.dataset.rendered; this.visibility(); };
+    return () => {
+      this.observer.unobserve(element);
+      this.surfaces.delete(surface);
+      delete element.dataset.rendered;
+      this.visibility();
+    };
   }
 
   render() {
@@ -65,29 +91,53 @@ export class DeformationRenderer {
     for (const surface of this.surfaces) {
       const { element, image, visible, horizontal, vertical } = surface;
       if (!visible) continue;
+      // M01 temporarily creates a stacking context. Keep the HTML image visible
+      // during that entrance so the shared M05 canvas cannot cover its labels.
+      if (element.closest('[data-deformation-paused="true"]')) {
+        delete element.dataset.rendered;
+        continue;
+      }
       const rect = element.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > window.innerHeight || rect.width === 0) continue;
       const steps = Math.max(24, Math.ceil(rect.height / 9));
       const slice = rect.height / steps;
       const strength = Math.min(motionConfig.bendStrength, Math.abs(this.velocity) * 1.7);
-      const scale = image ? Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight) : 1;
+      const scale = image
+        ? Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight)
+        : 1;
       const sourceWidth = image ? rect.width / scale : 0;
       const sourceHeight = image ? rect.height / scale : 0;
-      const sourceX = image ? (image.naturalWidth - sourceWidth) * (Number.isFinite(horizontal) ? horizontal / 100 : .5) : 0;
-      const sourceY = image ? (image.naturalHeight - sourceHeight) * (Number.isFinite(vertical) ? vertical / 100 : .5) : 0;
+      const sourceX = image
+        ? (image.naturalWidth - sourceWidth) *
+          (Number.isFinite(horizontal) ? horizontal / 100 : 0.5)
+        : 0;
+      const sourceY = image
+        ? (image.naturalHeight - sourceHeight) * (Number.isFinite(vertical) ? vertical / 100 : 0.5)
+        : 0;
 
       try {
         for (let index = 0; index < steps; index++) {
-          const progress = (index + .5) / steps;
+          const progress = (index + 0.5) / steps;
           const bend = strength * Math.sin(progress * Math.PI) * (this.velocity < 0 ? -1 : 1);
           const top = rect.top + index * slice;
           if (image) {
-            context.drawImage(image, sourceX, sourceY + progress * sourceHeight - sourceHeight / (2 * steps), sourceWidth, sourceHeight / steps, rect.left - bend, top, rect.width + 2 * bend, slice + 1);
+            context.drawImage(
+              image,
+              sourceX,
+              sourceY + progress * sourceHeight - sourceHeight / (2 * steps),
+              sourceWidth,
+              sourceHeight / steps,
+              rect.left - bend,
+              top,
+              rect.width + 2 * bend,
+              slice + 1,
+            );
           } else {
             context.fillStyle = "#111111";
             context.fillRect(rect.left - bend, top, rect.width + 2 * bend, slice + 1);
           }
         }
+        if (image && element.dataset.rendered !== "true") element.dataset.rendered = "true";
       } catch {
         delete element.dataset.rendered;
         this.observer.unobserve(element);
