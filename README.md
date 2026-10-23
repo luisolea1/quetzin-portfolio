@@ -129,6 +129,8 @@ La referencia declara estilos fluidos y variantes por anchura. Las medidas anter
 
 El SVG del logotipo de referencia tiene proporción de origen **1470:250**, aproximadamente `5.88:1`, y ajuste `contain`. Sus trazados explican por qué escribir el mismo nombre con Inter Display no produce una copia exacta. La identidad aprobada del portfolio es el nombre tipográfico «Quetzin Cuevas», definido en `site.name`; es contenido definitivo y no se etiqueta como logotipo pendiente. `site.logo` permite usar una imagen de marca opcional; si está vacío o la imagen falla, se muestra el nombre. Conservar la importancia visual, el contenedor y el efecto; adaptar el encaje a la longitud del nombre real. No presentar el nombre de Paul Michel como identidad del usuario.
 
+Para que el nombre completo quepa en escritorio, desde 1200 px `WordmarkEffect.module.css` utiliza `clamp(70px, 14.8vw, 260px)` en el texto. Es un ajuste propio para esta identidad; los tamaños de móvil y tableta se conservan. Se aplica a la marca compartida en Home, About y el pie.
+
 ### 4.3 Espaciado y geometría
 
 | Elemento | Escritorio | Tableta | Móvil |

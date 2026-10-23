@@ -10,7 +10,7 @@
   ],
   "description": "Una selección de proyectos y procesos, lista para tomar tu forma.",
   "workIntro": "Cuatro proyectos listos para sustituirse por tus propios trabajos.",
-  "services": [],
+  "services": ["Fotografia", "Edición", "Video", "Música"],
   "industries": [],
   "experience": [],
   "email": null,

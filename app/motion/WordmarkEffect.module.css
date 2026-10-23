@@ -34,6 +34,11 @@
   mix-blend-mode: screen;
   transition: background 0.2s;
 }
+@media (min-width: 1200px) {
+  .wordmark__text {
+    font-size: clamp(70px, 14.8vw, 260px);
+  }
+}
 @media (max-width: 809px) {
   .wordmark {
     min-height: 85px;
