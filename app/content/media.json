@@ -44,17 +44,18 @@
   },
   "hero02": {
     "_comment": "Imagen principal de Paisajes en /projects/proyecto-02, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-02/hero.webp.",
-    "src": "/images/projects/modelaje/model02.webp",
+    "src": "/images/projects/paisajes/paisaje0.webp",
     "alt": "Imagen principal del proyecto 02 pendiente"
   },
   "hero03": {
     "_comment": "Imagen principal de Producto en /projects/proyecto-03, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-03/hero.webp.",
-    "src": null,
+    "src": "/images/projects/producto/producto0.webp",
     "alt": "Imagen principal del proyecto 03 pendiente"
   },
+
   "hero04": {
     "_comment": "Imagen principal de Música en /projects/proyecto-04, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-04/hero.webp.",
-    "src": "/images/projects/modelaje/model02.webp",
+    "src": "/images/projects/musica/musica0.webp",
     "alt": "Imagen principal del proyecto 04 pendiente"
   },
 
@@ -85,7 +86,8 @@
   "gallery02b": {
     "_comment": "Galería de Paisajes: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-02/gallery-02.webp.",
     "src": "/images/projects/paisajes/paisaje02.webp",
-    "alt": "Paisaje derecho"
+    "alt": "Paisaje derecho",
+    "position": "50% 70%"
   },
   "gallery02wide": {
     "_comment": "Galería de Paisajes: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-02/gallery-wide.webp.",
@@ -93,34 +95,40 @@
     "alt": "Paisaje ancho"
   },
 
+
+
   "gallery03a": {
     "_comment": "Galería de Producto: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-03/gallery-01.webp.",
-    "src": null,
+    "src": "/images/projects/producto/producto01.webp",
     "alt": "Imagen de galería pendiente"
   },
   "gallery03b": {
     "_comment": "Galería de Producto: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-03/gallery-02.webp.",
-    "src": null,
+    "src": "/images/projects/producto/producto02.webp",
     "alt": "Imagen de galería pendiente"
   },
   "gallery03wide": {
     "_comment": "Galería de Producto: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-03/gallery-wide.webp.",
-    "src": null,
-    "alt": "Imagen de galería pendiente"
+    "src": "/images/projects/producto/producto04.webp",
+    "alt": "Imagen de galería pendiente",
+    "position": "50% 63%"
   },
+
+
   "gallery04a": {
     "_comment": "Galería de Música: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-04/gallery-01.webp.",
-    "src": null,
-    "alt": "Imagen de galería pendiente"
+    "src": "/images/projects/musica/musica01.webp",
+    "alt": "Imagen de galería pendiente",
+    "position": "50% 85%"
   },
   "gallery04b": {
     "_comment": "Galería de Música: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-04/gallery-02.webp.",
-    "src": null,
+    "src": "/images/projects/musica/musica02.webp",
     "alt": "Imagen de galería pendiente"
   },
   "gallery04wide": {
     "_comment": "Galería de Música: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-04/gallery-wide.webp.",
-    "src": null,
+    "src": "/images/projects/musica/musica03.webp",
     "alt": "Imagen de galería pendiente"
   },
 
