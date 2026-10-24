@@ -13,24 +13,26 @@
   "services": ["Fotografia", "Edición", "Video", "Música"],
   "industries": [],
   "experience": [],
-  "email": null,
-  "phone": null,
-  "resume": null,
-  "socials": [],
+  "email": "quetzincuevas@gmail.com",
+  "phone": "+ 52  77 7367 0427",
+  "socials": [
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/ragnarl10/"
+    }
+  ],
   "logo": null,
   "portrait": "portrait",
   "architecture": "architecture",
-  "wheel": [
-    "wheel01",
-    "wheel02",
-    "wheel03",
-    "wheel04",
-    "wheel05",
-    "wheel06",
-    "wheel07",
-    "wheel08",
-    "wheel09",
-    "wheel10"
+  "workCarousel": [
+    "workCarousel01",
+    "workCarousel02",
+    "workCarousel03",
+    "workCarousel04",
+    "workCarousel05",
+    "workCarousel06",
+    "workCarousel07",
+    "workCarousel08"
   ],
   "carousel": [
     "carousel01",

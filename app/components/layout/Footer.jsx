@@ -21,7 +21,7 @@ export default function Footer({ site }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {social.label} ↗
+                    {social.label}
                   </a>
                 ))
             ) : (

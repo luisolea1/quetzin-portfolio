@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { findProject, getCarouselItems, media, projects, site, validateContent } from "./index.js";
+import {
+  findProject,
+  getCarouselItems,
+  getWorkCarouselItems,
+  media,
+  projects,
+  site,
+  validateContent,
+} from "./index.js";
 import { validate } from "./validate.js";
 
 test("the four editable projects have valid references and removed slugs return no project", () => {
@@ -55,6 +63,44 @@ test("carousel references must be eight distinct existing resources independent 
   broken.carousel[0] = "missing";
   assert.throws(() => validate(broken, projects, media), /recurso inexistente/);
   broken.carousel[0] = projects[0].cover;
+  assert.throws(() => validate(broken, projects, media), /independientes de las portadas/);
+});
+
+test("Work carousel photos stay independent and follow their editable order", () => {
+  const homeItems = getCarouselItems();
+  const workItems = getWorkCarouselItems();
+  assert.equal(workItems.length, 8);
+  assert.deepEqual(
+    workItems.map(({ id }) => id),
+    site.workCarousel,
+  );
+  const edited = structuredClone(media);
+  edited[site.workCarousel[0]].src = "/images/work/carousel/01.webp";
+  assert.equal(getWorkCarouselItems(site, edited)[0].src, "/images/work/carousel/01.webp");
+  assert.deepEqual(getCarouselItems(site, edited), homeItems);
+  edited[site.carousel[0]].src = "/images/carousel/otra-foto.webp";
+  assert.equal(getWorkCarouselItems(site, edited)[0].src, "/images/work/carousel/01.webp");
+  assert.deepEqual(
+    getWorkCarouselItems({ ...site, workCarousel: [...site.workCarousel].reverse() }).map(
+      ({ id }) => id,
+    ),
+    [...site.workCarousel].reverse(),
+  );
+});
+
+test("Work requires eight distinct existing photos separate from Home and covers", () => {
+  const broken = structuredClone(site);
+  broken.workCarousel.pop();
+  assert.throws(() => validate(broken, projects, media), /Work requiere ocho referencias/);
+  broken.workCarousel = [...site.workCarousel];
+  broken.workCarousel[1] = broken.workCarousel[0];
+  assert.throws(() => validate(broken, projects, media), /Work requiere ocho referencias/);
+  broken.workCarousel = [...site.workCarousel];
+  broken.workCarousel[0] = "missing";
+  assert.throws(() => validate(broken, projects, media), /recurso inexistente/);
+  broken.workCarousel[0] = site.carousel[0];
+  assert.throws(() => validate(broken, projects, media), /independientes del anillo/);
+  broken.workCarousel[0] = projects[0].cover;
   assert.throws(() => validate(broken, projects, media), /independientes de las portadas/);
 });
 

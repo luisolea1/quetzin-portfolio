@@ -95,8 +95,6 @@
     "alt": "Paisaje ancho"
   },
 
-
-
   "gallery03a": {
     "_comment": "Galería de Producto: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-03/gallery-01.webp.",
     "src": "/images/projects/producto/producto01.webp",
@@ -113,7 +111,6 @@
     "alt": "Imagen de galería pendiente",
     "position": "50% 63%"
   },
-
 
   "gallery04a": {
     "_comment": "Galería de Música: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-04/gallery-01.webp.",
@@ -181,54 +178,52 @@
     "position": "50% 50%"
   },
 
-  "wheel01": {
-    "_comment": "Fotografía 01 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-01.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel01": {
+    "_comment": "Foto 01 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/01.webp y usa /images/work/carousel/01.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work01.webp",
+    "alt": "Fotografía de Work 01 pendiente",
+    "position": "50% 50%"
   },
-  "wheel02": {
-    "_comment": "Fotografía 02 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-02.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel02": {
+    "_comment": "Foto 02 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/02.webp y usa /images/work/carousel/02.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work02.webp",
+    "alt": "Fotografía de Work 02 pendiente",
+    "position": "50% 50%"
   },
-  "wheel03": {
-    "_comment": "Fotografía 03 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-03.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel03": {
+    "_comment": "Foto 03 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/03.webp y usa /images/work/carousel/03.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work03.webp",
+    "alt": "Fotografía de Work 03 pendiente",
+    "position": "50% 50%"
   },
-  "wheel04": {
-    "_comment": "Fotografía 04 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-04.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel04": {
+    "_comment": "Foto 04 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/04.webp y usa /images/work/carousel/04.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work04.webp",
+    "alt": "Fotografía de Work 04 pendiente",
+    "position": "50% 50%"
   },
-  "wheel05": {
-    "_comment": "Fotografía 05 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-05.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel05": {
+    "_comment": "Foto 05 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/05.webp y usa /images/work/carousel/05.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work05.webp",
+    "alt": "Fotografía de Work 05 pendiente",
+    "position": "50% 70%"
   },
-  "wheel06": {
-    "_comment": "Fotografía 06 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-06.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel06": {
+    "_comment": "Foto 06 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/06.webp y usa /images/work/carousel/06.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work06.webp",
+    "alt": "Fotografía de Work 06 pendiente",
+    "position": "50% 60%"
   },
-  "wheel07": {
-    "_comment": "Fotografía 07 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-07.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel07": {
+    "_comment": "Foto 07 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/07.webp y usa /images/work/carousel/07.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work07.webp",
+    "alt": "Fotografía de Work 07 pendiente",
+    "position": "50% 50%"
   },
-  "wheel08": {
-    "_comment": "Fotografía 08 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-08.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
-  },
-  "wheel09": {
-    "_comment": "Fotografía 09 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-09.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
-  },
-  "wheel10": {
-    "_comment": "Fotografía 10 de la rueda 3D del hero de Work. Es una colección independiente del Circular Carousel y de las portadas. Ejemplo de src: /images/work/wheel-10.webp.",
-    "src": null,
-    "alt": "Fotografía de la rueda pendiente"
+  "workCarousel08": {
+    "_comment": "Foto 08 del Circular Carousel en el hero de /work. Es independiente del anillo de Home/About y de las portadas. Coloca la foto en public/images/work/carousel/08.webp y usa /images/work/carousel/08.webp como src. El orden se configura en site.json > workCarousel.",
+    "src": "/images/work/carousel/work08.webp",
+    "alt": "Fotografía de Work 08 pendiente",
+    "position": "50% 50%"
   }
 }

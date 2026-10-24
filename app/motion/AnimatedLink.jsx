@@ -2,18 +2,19 @@ import { Link } from "react-router";
 import { motionConfig } from "./motionConfig.js";
 import styles from "./AnimatedLink.module.css";
 
-export default function AnimatedLink({ to, children, className = "" }) {
+export default function AnimatedLink({ to, children, className = "", suffix, ariaLabel }) {
   const label = typeof children === "string" ? children : null;
   if (!label)
     return (
-      <Link to={to} className={`${styles["animated-link"]} ${className}`}>
+      <Link to={to} aria-label={ariaLabel} className={`${styles["animated-link"]} ${className}`}>
         {children}
+        {suffix != null && <> {suffix}</>}
       </Link>
     );
   return (
     <Link
       to={to}
-      aria-label={label}
+      aria-label={ariaLabel ?? label}
       className={`${styles["animated-link"]} ${className}`}
       style={{
         "--letter-duration": `${motionConfig.letterDuration}s`,
@@ -32,6 +33,7 @@ export default function AnimatedLink({ to, children, className = "" }) {
           </span>
         ))}
       </span>
+      {suffix != null && <> {suffix}</>}
     </Link>
   );
 }

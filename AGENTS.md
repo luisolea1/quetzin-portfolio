@@ -45,7 +45,7 @@ Seguir el árbol de la sección 15 del README. Crear archivos cuando su función
 - `app/components/sections/`: secciones de `home/`, `work/`, `about/` y `project/`, con composiciones reutilizables en `shared/`. Reciben datos de las rutas y no importan los JSON.
 - `app/content/`: `site.json`, `projects.json`, `media.json`, `index.js` y `validate.js`. No importa componentes ni motores de animación.
 - `app/motion/`: componentes de movimiento y parámetros comunes en `motionConfig.js`.
-- `app/motion/CircularCarousel.jsx`: adaptación JavaScript/CSS de React Bits que sustituye el anillo de marcas en Home y About. Recibe fotos por propiedades, usa BEM con CSS Modules y conserva su licencia en `licenses/react-bits-LICENSE.md`.
+- `app/motion/CircularCarousel.jsx`: adaptación JavaScript/CSS de React Bits que sustituye el anillo de marcas en Home/About y la rueda de Work. Recibe fotos por propiedades, usa BEM con CSS Modules y conserva su licencia en `licenses/react-bits-LICENSE.md`.
 - `app/styles/`: `tokens.css`, `fonts.css` y `globals.css` para valores compartidos, fuentes y reglas base.
 - `public/images/`, `public/fonts/` y `public/documents/`: recursos definitivos del usuario.
 
@@ -60,7 +60,7 @@ Evitar copiar cuatro páginas de proyecto, introducir un estado global sin neces
 ## Contenido, imágenes y enlaces
 
 - Centralizar perfil, biografía, experiencia, contacto y redes en `site.json`; proyectos y galerías en `projects.json`; rutas o URL de imágenes, texto alternativo y encuadres en `media.json`.
-- Conservar las notas `_comment` de `media.json` para orientar la edición; JSON estándar no admite `//`. Mantener [MEDIA-GUIDE.md](./app/content/MEDIA-GUIDE.md) coherente con los usos y carpetas. El Circular Carousel usa ocho recursos propios (`carousel01` a `carousel08`) de `media.json`, ordenados mediante `site.carousel`. Sus imágenes son independientes de `cover01` a `cover04` y de la rueda de Work; no vincularlo de nuevo a las portadas.
+- Conservar las notas `_comment` de `media.json` para orientar la edición; JSON estándar no admite `//`. Mantener [MEDIA-GUIDE.md](./app/content/MEDIA-GUIDE.md) coherente con los usos y carpetas. El Circular Carousel usa ocho recursos propios (`carousel01` a `carousel08`) para Home/About, ordenados mediante `site.carousel`, y otros ocho (`workCarousel01` a `workCarousel08`) para Work, ordenados mediante `site.workCarousel`. Las dos colecciones son independientes entre sí y de `cover01` a `cover04`. La rueda y sus registros `wheel01` a `wheel10` se retiraron por petición del usuario.
 - Usar identificadores estables para proyectos relacionados y recursos. Derivar las rutas prerenderizadas de los slugs de los cuatro registros, junto con las tres páginas principales.
 - Validar campos necesarios, slugs duplicados y referencias inexistentes antes de generar las páginas. Distinguir un recurso pendiente admitido de una referencia incorrecta.
 - Conservar la configuración individual de galerías: imagen ancha, pareja de imágenes, encuadre y orden móvil. No eliminar apariciones repetidas de una imagen automáticamente.
@@ -73,7 +73,7 @@ Evitar copiar cuatro páginas de proyecto, introducir un estado global sin neces
 
 Tomar las medidas, colores, tipografías, proporciones y jerarquías del README como punto de partida. Centralizar los valores compartidos en `tokens.css`; conservar los ajustes particulares necesarios para cada composición.
 
-Respetar los tres intervalos documentados: móvil por debajo de 810 px, tableta desde 810 px hasta menos de 1200 px y escritorio desde 1200 px. Comprobar especialmente el apilado de tarjetas, la rueda sobre el título de Work, el retrato antes del texto en About y el orden de las parejas de imágenes en móvil.
+Respetar los tres intervalos documentados: móvil por debajo de 810 px, tableta desde 810 px hasta menos de 1200 px y escritorio desde 1200 px. Comprobar especialmente el apilado de tarjetas, el carrusel sobre el título de Work, el retrato antes del texto en About y el orden de las parejas de imágenes en móvil.
 
 La identidad del usuario sustituye a la de la referencia. El nombre tipográfico «Quetzin Cuevas», definido en `site.name`, es la marca aprobada del portfolio y no debe etiquetarse como logotipo pendiente. `site.logo` admite una imagen opcional; su ausencia no implica contenido pendiente. Conservar la función compositiva de la marca sin presentar el nombre tipográfico como una reproducción exacta del SVG de referencia.
 
@@ -92,13 +92,13 @@ Seguir el inventario de la sección 11 del README. Mantener estos identificadore
 | M05 | Retirado temporalmente por el usuario; imágenes HTML sin deformación y sustitución pendiente |
 | M06 | Efecto sobre la marca tipográfica o el SVG opcional; verificar la respuesta al puntero |
 | M07 | Circular Carousel de React Bits con ocho fotos independientes en Home y About; sustituye el anillo de marcas por petición del usuario |
-| M08 | Rueda de diez imágenes de Work con CSS 3D; no convertirla en carrusel horizontal |
+| M08 | Circular Carousel reutilizado en el hero de Work con ocho fotos propias; sustituye la rueda de diez imágenes por petición del usuario |
 | M09 | Scroll amortiguado, enlaces internos, retorno al inicio y restauración de posición |
 | M10 | Navegación, entradas, montaje y limpieza al cambiar de ruta |
 
 Los tiempos, curvas y fórmulas aún no medidos deben seguir identificados como provisionales. Comparar el movimiento con la referencia antes de afirmar fidelidad exacta. No sustituir la deformación por una simple escala o inclinación ni dar por confirmada una transición compartida entre imágenes.
 
-M07 es una desviación aprobada de la referencia: mantener arrastre con inercia, ajuste y selección de tarjeta, teclado, foco visible y respaldo HTML. El usuario pidió retirar los botones, nombres y contador visibles; no reintroducirlos. Conservar los nombres accesibles y las instrucciones para lectores de pantalla, así como Espacio para pausar o reanudar y flechas e Inicio/Fin para navegar. Con movimiento reducido no girar automáticamente ni interpolar la navegación. Pausar el carrusel fuera de pantalla, con foco dentro o con la pestaña oculta. Este carrusel usa CSS 3D y no reactiva M05.
+M07 y M08 son desviaciones aprobadas de la referencia: mantener arrastre con inercia, ajuste y selección de tarjeta, teclado, foco visible y respaldo HTML. El usuario pidió retirar los botones, nombres y contador visibles; no reintroducirlos. Conservar los nombres accesibles y las instrucciones para lectores de pantalla, así como Espacio para pausar o reanudar y flechas e Inicio/Fin para navegar. Con movimiento reducido no girar automáticamente ni interpolar la navegación. Pausar el carrusel fuera de pantalla, con foco dentro o con la pestaña oculta. Este carrusel usa CSS 3D y no reactiva M05.
 
 Mantener un solo controlador de scroll. Sincronizar Lenis y ScrollTrigger, coordinar la restauración con el router y evitar que dos motores animen simultáneamente la misma propiedad.
 
@@ -141,7 +141,7 @@ Al completar las pantallas y sus efectos, verificar:
 1. Las siete rutas mediante navegación, acceso directo y recarga; también un slug desconocido y la navegación atrás/adelante.
 2. El HTML generado, los metadatos de cada proyecto y la ausencia de errores de hidratación o de consola relacionados con el cambio.
 3. La comparación visual a 1440, 1024 y 390 px; añadir 360, 768, 809/810, 1199/1200 y 1920 px para comprobar extremos y cambios de distribución.
-4. Reposo, entrada, hover, scroll lento, rápido e inverso, retorno al inicio y ciclos completos de rueda y carrusel; comprobar también arrastre, pausa y teclado del carrusel. Una captura estática no valida una animación.
+4. Reposo, entrada, hover, scroll lento, rápido e inverso, retorno al inicio y ciclos completos de ambos carruseles; comprobar también arrastre, pausa y teclado. Una captura estática no valida una animación.
 5. La alineación entre canvas y DOM al cargar fuentes, redimensionar y navegar repetidamente; comprobar que no se acumulen bucles o eventos.
 6. Teclado, foco, movimiento reducido, contenido pendiente, imágenes fallidas y respaldo al desactivar el renderizador.
 

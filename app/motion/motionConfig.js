@@ -4,5 +4,4 @@ export const motionConfig = {
   letterStagger: 0.025,
   carouselSpeed: 14,
   carouselCardWidth: 220,
-  wheelRotationSeconds: 26,
 };

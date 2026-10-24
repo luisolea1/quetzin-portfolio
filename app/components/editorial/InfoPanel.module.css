@@ -38,6 +38,9 @@
   margin: 22px 0 0;
   font-size: 20px;
 }
+.info-panel__list-item + .info-panel__list-item {
+  margin-top: 4px;
+}
 .info-panel__link {
   border-top: 1px solid #454545;
   display: flex;

@@ -78,8 +78,7 @@ for (const page of pages) {
     (node) => node.tagName === "a" && attribute(node, "href") === "/work",
   );
   expect(
-    text(workLink).replace(/\s+/g, " ").trim() ===
-      `Work (${String(projects.length).padStart(2, "0")})`,
+    attribute(workLink, "aria-label") === `Work (${String(projects.length).padStart(2, "0")})`,
     "el contador de Work no coincide con el catálogo",
   );
 
@@ -97,7 +96,7 @@ for (const page of pages) {
   }
 
   const carousels = nodes.filter((node) => attribute(node, "aria-roledescription") === "carrusel");
-  const hasCarousel = page.route === "/" || page.route === "/about";
+  const hasCarousel = ["/", "/about", "/work"].includes(page.route);
   expect(carousels.length === (hasCarousel ? 1 : 0), "el carrusel no corresponde a esta plantilla");
   if (hasCarousel) {
     const carousel = carousels[0];
@@ -111,7 +110,8 @@ for (const page of pages) {
     expect(fallback, "falta el respaldo HTML del carrusel");
     const cards = fallback.childNodes.filter((node) => node.tagName === "div");
     expect(cards.length === 8, "el respaldo debe conservar las ocho fotos del anillo");
-    for (const [index, id] of site.carousel.entries()) {
+    const carouselIds = page.route === "/work" ? site.workCarousel : site.carousel;
+    for (const [index, id] of carouselIds.entries()) {
       const resource = media[id];
       expect(
         attribute(cards[index], "aria-label") === resource.alt,

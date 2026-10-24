@@ -1,4 +1,4 @@
-import { media, projects, site } from "../content/index.js";
+import { getWorkCarouselItems, media, projects, site } from "../content/index.js";
 import PageLayout from "../components/layout/PageLayout.jsx";
 import WorkHero from "../components/sections/work/WorkHero.jsx";
 import ProjectsSection from "../components/sections/shared/ProjectsSection.jsx";
@@ -8,10 +8,9 @@ export function meta() {
 }
 
 export default function Work() {
-  const wheelImages = site.wheel.map((id) => media[id]);
   return (
     <PageLayout>
-      <WorkHero intro={site.workIntro} images={wheelImages} />
+      <WorkHero intro={site.workIntro} carouselItems={getWorkCarouselItems()} />
       <ProjectsSection
         projects={projects}
         media={media}

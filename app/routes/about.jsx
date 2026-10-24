@@ -13,11 +13,7 @@ export default function About() {
   return (
     <PageLayout>
       <AboutHero site={site} />
-      <BiographySection
-        paragraphs={site.bio}
-        resume={site.resume}
-        portrait={media[site.portrait]}
-      />
+      <BiographySection paragraphs={site.bio} portrait={media[site.portrait]} />
       <ArchitectureSection image={media[site.architecture]} />
       <ExperienceSection site={site} carouselItems={getCarouselItems()} />
     </PageLayout>

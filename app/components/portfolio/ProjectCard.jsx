@@ -1,3 +1,4 @@
+import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { Link } from "react-router";
 import Media from "../ui/Media.jsx";
 import styles from "./ProjectCard.module.css";
@@ -25,14 +26,19 @@ export default function ProjectCard({ project, media }) {
             {project.title}
           </span>
         </span>
-        <span className={styles["project-card__arrow"]}>
-          <span className={styles["project-card__arrow-icon"]}>↗</span>
-          <span
+        <span className={styles["project-card__arrow"]} aria-hidden="true">
+          <ArrowUpRightIcon
+            className={styles["project-card__arrow-icon"]}
+            size={36}
+            color="#ffffff"
+            focusable="false"
+          />
+          <ArrowUpRightIcon
             className={`${styles["project-card__arrow-icon"]} ${styles["project-card__arrow-icon--copy"]}`}
-            aria-hidden="true"
-          >
-            ↗
-          </span>
+            size={36}
+            color="#ffffff"
+            focusable="false"
+          />
         </span>
       </div>
       {project.categories.length > 0 && (

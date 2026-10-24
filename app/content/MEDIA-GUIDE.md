@@ -8,7 +8,7 @@ Edita `media.json` para asignar cada fotografía. Los campos `_comment` explican
 | --------------------------- | ----------------------------------------------------------------- | ------------------------ |
 | `cover01` a `cover04`       | Portadas de Modelaje, Paisajes, Producto y Música en las tarjetas | `projects.json`          |
 | `carousel01` a `carousel08` | Ocho fotos propias del anillo de Home y About                     | `site.json` → `carousel` |
-| `wheel01` a `wheel10`       | Diez fotos de la rueda del hero de Work                           | `site.json` → `wheel`    |
+| `workCarousel01` a `workCarousel08` | Ocho fotos propias del carrusel del hero de Work             | `site.json` → `workCarousel` |
 
 Cambiar una portada no modifica el anillo. Cambiar una foto del anillo no modifica las tarjetas ni las fichas. Cada colección tiene sus propios identificadores y rutas; puedes elegir fotografías diferentes para cada una.
 
@@ -32,9 +32,28 @@ La carpeta `public/images/carousel/` ya está preparada. Los ocho registros comi
 
 Este ejemplo muestra un registro: edítalo dentro del archivo existente sin borrar los demás. No incluyas `public/` en `src`. Si prefieres otros nombres de archivo, actualiza las rutas para que coincidan.
 
-Para cambiar el orden, reorganiza los ocho identificadores de `site.carousel` en `site.json`. Deben ser ocho referencias distintas existentes en `media.json`. El anillo no usa los identificadores `cover`, `hero` ni `wheel`.
+Para cambiar el orden, reorganiza los ocho identificadores de `site.carousel` en `site.json`. Deben ser ocho referencias distintas existentes en `media.json`. El anillo no usa los identificadores `cover`, `hero` ni `workCarousel`.
 
 El carrusel muestra las fotos y los espacios reservados pendientes, sin botones, nombre ni contador inferior. Puedes arrastrarlo o navegar con flechas e Inicio/Fin al enfocarlo; Espacio cambia la pausa. Las descripciones accesibles se conservan.
+
+## Cómo colocar las ocho fotos del carrusel de Work
+
+El hero de `/work` usa el mismo Circular Carousel, con una colección propia. Sus ocho espacios están pendientes y se editan en `workCarousel01` a `workCarousel08`; cambiar estas fotos no modifica Home, About ni las tarjetas de proyecto.
+
+Guarda las imágenes en `public/images/work/carousel/`. Para la primera, completa el registro existente así:
+
+```json
+{
+  "workCarousel01": {
+    "_comment": "Primera fotografía del carrusel de Work.",
+    "src": "/images/work/carousel/01.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%"
+  }
+}
+```
+
+Repite el proceso hasta `workCarousel08`. Mantén `src: null` para conservar un espacio reservado. Ordena las ocho fotos mediante `site.workCarousel` en `site.json`. Los antiguos registros `wheel01` a `wheel10` se retiraron junto con la rueda.
 
 ## Carpetas recomendadas para el resto de las imágenes
 
@@ -58,9 +77,10 @@ public/images/
 │   ├── portrait.webp
 │   └── architecture.webp
 ├── work/
-│   ├── wheel-01.webp
-│   ├── …
-│   └── wheel-10.webp
+│   └── carousel/             Fotos exclusivas del carrusel de Work
+│       ├── 01.webp
+│       ├── …
+│       └── 08.webp
 └── brand/
     └── logo.svg              Sólo si usas una imagen de marca
 ```

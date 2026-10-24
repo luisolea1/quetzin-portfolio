@@ -18,6 +18,12 @@ Personaliza `app/content/site.json`, `projects.json` y `media.json`; coloca imá
 
 Las tarjetas omiten las categorías cuando su lista está vacía; no muestran la etiqueta «Proyecto pendiente». Los nombres y las flechas conservan sus capas sobre la imagen.
 
+Las flechas de todas las tarjetas de proyecto utilizan `ArrowUpRightIcon` de [Phosphor Icons para React](https://github.com/phosphor-icons/react), como SVG blanco de 36 px. Se importa únicamente ese icono desde su módulo SSR, compatible con el prerenderizado. M04 conserva el intercambio de las dos capas en hover y foco, dentro del mismo círculo; se retiraron los caracteres tipográficos y su tamaño de fuente. Los SVG son decorativos y el nombre accesible continúa en el enlace de cada tarjeta.
+
+Por indicación del usuario, About omite el botón de CV y su estado pendiente; se retiraron su propiedad de contenido, su validación y sus estilos. Las listas de servicios y sectores de `InfoPanel` mantienen 4 px entre elementos consecutivos y conservan la separación inicial respecto a su etiqueta.
+
+Contacto en la cabecera y los enlaces de redes del pie muestran sólo su texto, sin la flecha tipográfica final. En la navegación principal, Work utiliza la misma sustitución de letras M02 que Home y About. `AnimatedLink` admite un `suffix` estático para el contador y un `ariaLabel` que conserva el nombre completo `Work (04)`; texto y contador siguen formando un único enlace.
+
 **Cambio de alcance solicitado el 22 de octubre de 2026:** se retiró temporalmente M05, la deformación de imágenes y paneles al hacer scroll. Se eliminaron el motor Canvas 2D, su proveedor, registros, parámetros y pruebas exclusivas. Las imágenes se muestran directamente en HTML con `object-fit: cover`, el encuadre de `media.json` y recorte dentro de su contenedor. Las entradas de bloques M01 y las demás animaciones permanecen activas. El usuario definirá una animación sustituta más adelante; no reintroducir M05 sin una nueva indicación.
 
 **Cambio de M07 solicitado el 22 de octubre de 2026:** el anillo de nombres de marcas se sustituyó en Home y About por [Circular Carousel de React Bits](https://reactbits.dev/components/circular-carousel), con ocho fotografías independientes de las portadas, configuradas como `carousel01` a `carousel08` en `media.json` y ordenadas mediante `site.carousel`. Por indicación posterior del usuario se retiraron los botones visibles, los nombres y el contador inferior, junto con sus estilos y espacio reservado; las fotos quedan centradas en toda la altura del carrusel. La adaptación JavaScript/CSS conserva la geometría 3D, arrastre con inercia, ajuste a tarjetas y enfoque al pulsar una foto. Mantiene navegación con flechas e Inicio/Fin, pausa o reanudación con Espacio, pausa durante el foco y movimiento reducido sin giro ni interpolación. Las instrucciones, los nombres y la posición activa permanecen disponibles para lectores de pantalla. Mantiene HTML visible durante la carga, espacios reservados para fotos pendientes o fallidas y detiene el ciclo fuera de pantalla o con la pestaña oculta. Utiliza CSS 3D, sin canvas ni dependencias nuevas, y no reactiva M05. Los parámetros iniciales no son medidas de la referencia.
@@ -26,7 +32,9 @@ La fuente adaptada es [CircularCarousel.jsx de React Bits](https://github.com/Da
 
 Los registros de `media.json` incluyen una nota `_comment` con su ubicación, proporción y ejemplo de ruta. JSON estándar no admite comentarios `//`; estas notas son campos de edición y no se muestran en el sitio. Consulta [la guía de imágenes](./app/content/MEDIA-GUIDE.md) para organizar carpetas y completar cada registro. Las fotos existentes conservan su ubicación hasta que se decida moverlas y actualizar sus rutas.
 
-**Ajuste de contenido solicitado el 22 de octubre de 2026:** Work muestra cuatro proyectos y la navegación deriva su contador del catálogo (`Work (04)`). Se retiraron los registros provisionales 05 y 06, sus recursos vacíos y sus rutas prerenderizadas; sus URL muestran 404. El anillo de Home/About pasa a ocho recursos propios, inicialmente pendientes, que no comparten identificadores con las portadas. La rueda de Work conserva sus diez imágenes independientes.
+**Ajuste de contenido solicitado el 22 de octubre de 2026:** Work muestra cuatro proyectos y la navegación deriva su contador del catálogo (`Work (04)`). Se retiraron los registros provisionales 05 y 06, sus recursos vacíos y sus rutas prerenderizadas; sus URL muestran 404. El anillo de Home/About pasa a ocho recursos propios, inicialmente pendientes, que no comparten identificadores con las portadas.
+
+**Cambio de M08 solicitado el 23 de octubre de 2026:** se retiró la rueda de diez imágenes de Work y se reutilizó `CircularCarousel` en el mismo espacio del hero. Usa ocho fotos independientes (`workCarousel01` a `workCarousel08` en `media.json`), inicialmente con `src: null` y ordenadas mediante `site.workCarousel`. La carpeta preparada es `public/images/work/carousel/`. Conserva los ocho espacios reservados, el arrastre, el teclado, la pausa y el movimiento reducido del carrusel existente, sin botones, nombres ni contador visibles. El fondo y el foco se adaptan al hero blanco; el carrusel permanece a la derecha en escritorio y encima del título en móvil. Se eliminaron `ImageWheel`, su CSS y el parámetro de giro anterior. Las medidas y la geometría descritas en la inspección de la rueda original son referencias históricas y ya no forman parte de la implementación actual.
 
 ### Requisitos confirmados por el usuario
 
@@ -36,7 +44,7 @@ Los registros de `media.json` incluyen una nota `_comment` con su ubicación, pr
 - Se implementan **siete páginas**: inicio, catálogo, biografía y cuatro fichas de proyecto.
 - El catálogo tendrá cuatro proyectos: Modelaje, Paisajes, Producto y Música. No se ha solicitado un editor administrativo.
 - Se utilizará **contenido propio**. Las imágenes y los textos podrán quedar pendientes mediante espacios reservados y referencias editables.
-- El diseño adaptable y las animaciones de la referencia siguen formando parte del alcance, con M05 retirado temporalmente y M07 sustituido por Circular Carousel con fotos de proyectos por indicación del usuario.
+- El diseño adaptable y las animaciones de la referencia siguen formando parte del alcance, con M05 retirado temporalmente y M07/M08 sustituidos por Circular Carousel con colecciones de ocho fotos independientes por indicación del usuario.
 
 Las secciones de inspección describen el sitio original. Sus nombres, imágenes, marcas, datos de contacto y textos son referencias de análisis, no contenido aprobado para el portfolio personal. La arquitectura acordada se detalla en las secciones 14, 15 y 19. Las propuestas gráficas se conservan como referencia para una futura revisión de M05; actualmente no se ejecuta un renderizador de deformación.
 
@@ -428,7 +436,6 @@ portfolio/
 │   │   ├── CircularCarousel.jsx      Carrusel 3D de fotos, adaptado de React Bits
 │   │   ├── circularCarouselMotion.js Avance, inercia y detención; independiente del DOM
 │   │   ├── circularCarouselMotion.test.js Pausa, ciclo, selección y movimiento reducido
-│   │   ├── ImageWheel.jsx            Rueda de diez imágenes con CSS 3D
 │   │   ├── WordmarkEffect.jsx        Logotipo y su efecto
 │   │   └── motionConfig.js           Parámetros de las animaciones activas
 │   ├── content/
@@ -520,7 +527,7 @@ Los slugs de proyecto son provisionales y se editarán en los datos. La lista de
 
 Cada página tiene un único `h1`. Las secciones editoriales usan `section` con un encabezado asociado mediante `aria-labelledby`; el hero de una ficha es el `header` de su `article`. Los encabezados que no forman parte de la composición visible usan `u-visually-hidden`, que los conserva disponibles para lectores de pantalla.
 
-`HomeHero` y `AboutHero` reutilizan `ProfileHero`. Los listados destacados y de Work reutilizan `ProjectsSection`; las tarjetas y galerías permanecen en `portfolio/`. `InfoPanel` comparte la composición oscura, el Circular Carousel y el enlace; las secciones deciden su contenido por propiedades y, cuando corresponde, mediante `children`. Las rutas obtienen las fotos del carrusel mediante `getCarouselItems()`, que resuelve los ocho identificadores de `site.carousel` en `media.json`, sin consultar las portadas. Las secciones no consultan los JSON ni deciden rutas de proyecto.
+`HomeHero` y `AboutHero` reutilizan `ProfileHero`. Los listados destacados y de Work reutilizan `ProjectsSection`; las tarjetas y galerías permanecen en `portfolio/`. `InfoPanel` comparte la composición oscura, el Circular Carousel y el enlace; las secciones deciden su contenido por propiedades y, cuando corresponde, mediante `children`. Home y About obtienen las fotos mediante `getCarouselItems()`, que resuelve los ocho identificadores de `site.carousel` en `media.json`. Work reutiliza el mismo componente mediante `getWorkCarouselItems()` y sus ocho registros de `site.workCarousel`. Ambas colecciones son independientes entre sí y de las portadas. Las secciones no consultan los JSON ni deciden rutas de proyecto.
 
 ### Convención de clases: BEM con CSS Modules
 
@@ -577,7 +584,7 @@ La estructura permitirá cambiar contenido sin editar los componentes de pantall
 
 | Cambio | Archivo de edición | Consecuencia |
 |---|---|---|
-| Nombre, biografía, contacto, CV y redes | `site.json` | Se actualizan todas las zonas que comparten ese dato |
+| Nombre, biografía, contacto y redes | `site.json` | Se actualizan todas las zonas que comparten ese dato |
 | Título, resumen, cliente, año y categorías de un proyecto | `projects.json` | Se actualizan tarjeta y ficha desde un mismo registro |
 | Imagen, descripción o encuadre | `media.json` | Se actualizan sus apariciones por identificador |
 | Colores, separación o escala tipográfica | `tokens.css` | Se modifica el sistema visual compartido |
