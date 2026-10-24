@@ -28,11 +28,11 @@ Las instrucciones actuales del usuario prevalecen sobre este documento. Si una d
 | Publicación | Prerenderizar las siete rutas y publicar archivos estáticos |
 | Estilos | BEM dentro de CSS Modules junto a los componentes y variables CSS compartidas |
 | Contenido | Archivos JSON locales, acceso común y validación en JavaScript |
-| Movimiento | GSAP/ScrollTrigger, Lenis y CSS 3D; M05 retirado temporalmente |
+| Movimiento | GSAP/ScrollTrigger, Lenis y CSS 3D; prueba M05 con Three.js en Home y Work |
 
 No introducir TypeScript, archivos `.ts` o `.tsx`, `tsconfig.json` ni tareas de `tsc`. `jsconfig.json` puede configurar el editor para JavaScript. Usar `"type": "module"` en `package.json`.
 
-La arquitectura general ya está aprobada: avanzar con las decisiones locales necesarias para implementarla. Consultar al usuario antes de sustituir tecnologías principales, cambiar la estrategia de renderizado o ampliar el alcance funcional. M05 se retiró temporalmente por indicación del usuario: no reintroducir la deformación de imágenes y paneles al hacer scroll hasta que defina su sustitución. Si solicita un efecto gráfico nuevo, evaluar su implementación mediante la prueba técnica prevista en el README.
+La arquitectura general ya está aprobada: avanzar con las decisiones locales necesarias para implementarla. Consultar al usuario antes de sustituir tecnologías principales, cambiar la estrategia de renderizado o ampliar el alcance funcional. La prueba M05 solicitada el 24 de octubre de 2026 utiliza Three.js 0.180.0 en las cuatro portadas de Home y en las cuatro tarjetas de Work, mediante `Media` con `scrollEffect="curve"`. Mantener el resto de imágenes, textos, paneles y carruseles fuera de la prueba. Conservar curvatura `0.05` desde 810 px y `0.04` en móvil; siguen siendo valores propuestos para calibración.
 
 ## Organización y límites del código
 
@@ -89,7 +89,7 @@ Seguir el inventario de la sección 11 del README. Mantener estos identificadore
 | M02 | Sustitución vertical de letras en enlaces, con desfase por carácter |
 | M03 | Intercambio de capas del título de tarjeta; verificar trayectoria y reversión |
 | M04 | Movimiento de las flechas de tarjeta; verificar recorrido sin desplazar el círculo |
-| M05 | Retirado temporalmente por el usuario; imágenes HTML sin deformación y sustitución pendiente |
+| M05 | Prueba WebGL de curvatura por posición y velocidad en las cuatro tarjetas de Home y las cuatro de Work; menor intensidad móvil y respaldo HTML |
 | M06 | Efecto sobre la marca tipográfica o el SVG opcional; verificar la respuesta al puntero |
 | M07 | Circular Carousel de React Bits con ocho fotos independientes en Home y About; sustituye el anillo de marcas por petición del usuario |
 | M08 | Circular Carousel reutilizado en el hero de Work con ocho fotos propias; sustituye la rueda de diez imágenes por petición del usuario |
@@ -98,7 +98,9 @@ Seguir el inventario de la sección 11 del README. Mantener estos identificadore
 
 Los tiempos, curvas y fórmulas aún no medidos deben seguir identificados como provisionales. Comparar el movimiento con la referencia antes de afirmar fidelidad exacta. No sustituir la deformación por una simple escala o inclinación ni dar por confirmada una transición compartida entre imágenes.
 
-M07 y M08 son desviaciones aprobadas de la referencia: mantener arrastre con inercia, ajuste y selección de tarjeta, teclado, foco visible y respaldo HTML. El usuario pidió retirar los botones, nombres y contador visibles; no reintroducirlos. Conservar los nombres accesibles y las instrucciones para lectores de pantalla, así como Espacio para pausar o reanudar y flechas e Inicio/Fin para navegar. Con movimiento reducido no girar automáticamente ni interpolar la navegación. Pausar el carrusel fuera de pantalla, con foco dentro o con la pestaña oculta. Este carrusel usa CSS 3D y no reactiva M05.
+M07 y M08 son desviaciones aprobadas de la referencia: mantener arrastre con inercia, ajuste y selección de tarjeta, teclado, foco visible y respaldo HTML. El usuario pidió retirar los botones, nombres y contador visibles; no reintroducirlos. Conservar los nombres accesibles y las instrucciones para lectores de pantalla, así como Espacio para pausar o reanudar y flechas e Inicio/Fin para navegar. Con movimiento reducido no girar automáticamente ni interpolar la navegación. Pausar el carrusel fuera de pantalla, con foco dentro o con la pestaña oculta. Este carrusel usa CSS 3D y no participa en M05.
+
+Por petición posterior del usuario, los carruseles de Home, About y Work vuelven a cargar sus ocho fotos completas desde el inicio. Mantener su representación 3D en el HTML inicial, precargar todas las fuentes al montar y conservar el respaldo hasta preparar el conjunto o alcanzar 2400 ms. No reintroducir la cola de dos cargas, la selección de vecinas ni el montaje diferido por proximidad. La pausa fuera de pantalla o con pestaña oculta sigue afectando al movimiento, sin aplazar las descargas. `Media` conserva la decodificación asíncrona y la carga diferida fuera de las imágenes prioritarias de los heroes de proyecto. Las cuatro tarjetas de cada listado y la curvatura M05 de Home/Work permanecen. No añadir Motion/LazyMotion: los motores actuales ya usan importaciones dinámicas.
 
 Mantener un solo controlador de scroll. Sincronizar Lenis y ScrollTrigger, coordinar la restauración con el router y evitar que dos motores animen simultáneamente la misma propiedad.
 
@@ -130,7 +132,7 @@ Antes de ejecutar una tarea, revisar `package.json` y usar los comandos realment
 
 Fijar la versión exacta de pnpm mediante `packageManager` al inicializar el proyecto y documentar una versión compatible de Node.js. Usar pnpm para instalar, añadir o retirar dependencias; no generar archivos de bloqueo de otros gestores ni editar manualmente `pnpm-lock.yaml`.
 
-Incorporar dependencias sólo cuando resuelvan una necesidad concreta. El prototipo Canvas 2D se eliminó al retirar M05; no reintroducirlo ni dar la deformación por calibrada. Actualizar el README cuando cambien los comandos o la estructura real.
+Incorporar dependencias sólo cuando resuelvan una necesidad concreta. El prototipo Canvas 2D anterior se eliminó; no reintroducirlo. La prueba actual usa un único canvas Three.js, recibe fotogramas del ticker existente y conserva HTML ante fallos. No dar la deformación por calibrada. Actualizar el README cuando cambien los comandos o la estructura real.
 
 ## Verificación y entrega de cambios
 

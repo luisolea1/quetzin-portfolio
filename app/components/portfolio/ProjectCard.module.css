@@ -13,6 +13,19 @@
   height: 100%;
   border-radius: inherit;
 }
+.project-card--scroll-curve {
+  background: transparent;
+}
+.project-card--scroll-curve:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  z-index: 7;
+  border: 2px solid white;
+  outline: 2px solid var(--ink);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
 .project-card__overlay {
   position: absolute;
   z-index: 6;

@@ -31,3 +31,14 @@
   background: linear-gradient(135deg, #777, #393939);
   color: #ddd;
 }
+.media[data-scroll-curve-ready] {
+  background: transparent;
+}
+.media[data-scroll-curve-ready] .media__image {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .media[data-scroll-curve-ready] .media__image {
+    opacity: 1;
+  }
+}

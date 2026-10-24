@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <PageLayout>
       <HomeHero site={site} />
-      <FeaturedProjectsSection projects={featuredProjects} media={media} />
+      <FeaturedProjectsSection projects={featuredProjects} media={media} scrollEffect="curve" />
       <AboutSection site={site} carouselItems={getCarouselItems()} />
     </PageLayout>
   );

@@ -51,6 +51,27 @@ for (const page of pages) {
   const find = (tag) => nodes.filter((node) => node.tagName === tag);
   const expect = (condition, message) => assert.ok(condition, `${page.route}: ${message}`);
 
+  const curvedImages = find("img").filter(
+    (node) => attribute(node, "data-scroll-image") !== undefined,
+  );
+  expect(
+    curvedImages.length ===
+      (["/", "/work"].includes(page.route)
+        ? page.cards.filter((project) => media[project.cover]?.src).length
+        : 0),
+    "M05 sólo debe marcar las cuatro portadas de Home y Work",
+  );
+  expect(!find("canvas").length, "el canvas debe crearse únicamente en el navegador");
+  expect(
+    !nodes.some((node) => attribute(node, "data-scroll-curve-ready") !== undefined),
+    "el HTML inicial debe conservar visibles las imágenes originales",
+  );
+  for (const image of curvedImages)
+    expect(
+      attribute(image, "src") && attribute(image, "alt"),
+      "falta el respaldo de una portada M05",
+    );
+
   expect(attribute(find("html")[0], "lang") === "es", "falta el idioma del documento");
   expect(find("main").length === 1, "debe existir un único contenido principal");
   expect(find("h1").length === 1 && text(find("h1")[0]).trim(), "debe existir un único h1");
@@ -108,6 +129,11 @@ for (const page of pages) {
       attribute(node, "class")?.includes("circular-carousel__fallback_"),
     );
     expect(fallback, "falta el respaldo HTML del carrusel");
+    expect(
+      elements(carousel).filter((node) => attribute(node, "data-cc-index") !== undefined).length ===
+        8,
+      "el carrusel debe incluir las ocho superficies 3D desde el HTML inicial",
+    );
     const cards = fallback.childNodes.filter((node) => node.tagName === "div");
     expect(cards.length === 8, "el respaldo debe conservar las ocho fotos del anillo");
     const carouselIds = page.route === "/work" ? site.workCarousel : site.carousel;
@@ -124,6 +150,28 @@ for (const page of pages) {
           `imagen incorrecta en el carrusel: ${id}`,
         );
         expect(attribute(images[0], "alt") === resource.alt, `falta la descripción de ${id}`);
+        expect(attribute(images[0], "loading") === "lazy", `carga incorrecta de ${id}`);
+        expect(
+          attribute(images[0], "fetchpriority") === undefined,
+          `prioridad incorrecta de ${id}`,
+        );
+        const preloads = find("link").filter(
+          (node) =>
+            attribute(node, "rel") === "preload" &&
+            attribute(node, "as") === "image" &&
+            attribute(node, "href") === resource.src,
+        );
+        expect(preloads.length === 1, `falta la precarga completa de ${id}`);
+        const fragments = elements(carousel).filter(
+          (node) =>
+            node.tagName === "img" &&
+            attribute(node, "src") === resource.src &&
+            attribute(node, "alt") === "",
+        );
+        expect(
+          fragments.length > 0 && fragments.every((node) => attribute(node, "loading") !== "lazy"),
+          `los fragmentos de ${id} deben cargar desde el inicio`,
+        );
       } else {
         expect(
           elements(cards[index]).some((node) => attribute(node, "role") === "img"),
@@ -132,6 +180,27 @@ for (const page of pages) {
       }
     }
   }
+
+  for (const image of find("img").filter((node) =>
+    attribute(node, "class")?.includes("media__image_"),
+  ))
+    expect(
+      attribute(image, "decoding") === "async",
+      "las imágenes deben decodificarse de forma asíncrona",
+    );
+  const project = projects.find((item) => page.route === `/projects/${item.slug}`);
+  const prioritized = find("img").filter((node) => attribute(node, "fetchpriority") === "high");
+  const prioritySrc = project ? media[project.hero]?.src : null;
+  expect(
+    prioritized.length === (prioritySrc ? 1 : 0),
+    "debe conservarse una única imagen prioritaria en los heroes",
+  );
+  if (prioritySrc)
+    expect(
+      attribute(prioritized[0], "src") === prioritySrc &&
+        attribute(prioritized[0], "loading") === "eager",
+      "la prioridad debe corresponder al hero",
+    );
 
   for (const node of nodes) {
     const references = attribute(node, "aria-labelledby")?.split(/\s+/u) ?? [];

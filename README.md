@@ -8,7 +8,7 @@ Este documento especifica la apariencia, composición adaptable, navegación, re
 
 ### Ejecutar y editar la implementación actual
 
-Con Node.js 22 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. `pnpm test` valida el modelo de contenido, el avance y la detención del carrusel y la conservación del DOM al formatear HTML; `pnpm build` genera las siete páginas en `build/client/` y aplica sangría al HTML; `pnpm preview` sirve esa compilación en http://localhost:8080. `pnpm check` comprueba el formato, ejecuta pruebas, compila y verifica la estructura del HTML generado, incluido el respaldo del carrusel. El alojamiento estático debe servir los HTML prerenderizados antes del fallback `__spa-fallback.html` para rutas no generadas; este fallback muestra 404 en el navegador, pero la respuesta HTTP de un servidor estático sin configuración específica puede ser 200.
+Con Node.js 22 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. `pnpm test` valida el modelo de contenido, el avance y la detención del carrusel, los cálculos y el ciclo de vida de la curvatura y la conservación del DOM al formatear HTML; `pnpm build` genera las siete páginas en `build/client/` y aplica sangría al HTML; `pnpm preview` sirve esa compilación en http://localhost:8080. `pnpm check` comprueba el formato, ejecuta pruebas, compila y verifica la estructura del HTML generado, incluido el respaldo del carrusel. El alojamiento estático debe servir los HTML prerenderizados antes del fallback `__spa-fallback.html` para rutas no generadas; este fallback muestra 404 en el navegador, pero la respuesta HTTP de un servidor estático sin configuración específica puede ser 200.
 
 El documento de inicio generado está en `build/client/index.html`. `pnpm format:html` vuelve a formatear los HTML de una compilación existente. `scripts/format-html.js` utiliza Prettier con sensibilidad estricta a los espacios y verifica con parse5 que el DOM permanezca idéntico. Algunos cierres `>` quedan en la línea siguiente para no introducir nodos de texto que afecten a la hidratación. Los textos, comentarios de React y scripts se conservan literalmente. Los cambios de contenido y estructura se realizan en `app/`; los HTML de `build/` se regeneran al compilar.
 
@@ -24,9 +24,25 @@ Por indicación del usuario, About omite el botón de CV y su estado pendiente; 
 
 Contacto en la cabecera y los enlaces de redes del pie muestran sólo su texto, sin la flecha tipográfica final. En la navegación principal, Work utiliza la misma sustitución de letras M02 que Home y About. `AnimatedLink` admite un `suffix` estático para el contador y un `ariaLabel` que conserva el nombre completo `Work (04)`; texto y contador siguen formando un único enlace.
 
-**Cambio de alcance solicitado el 22 de octubre de 2026:** se retiró temporalmente M05, la deformación de imágenes y paneles al hacer scroll. Se eliminaron el motor Canvas 2D, su proveedor, registros, parámetros y pruebas exclusivas. Las imágenes se muestran directamente en HTML con `object-fit: cover`, el encuadre de `media.json` y recorte dentro de su contenedor. Las entradas de bloques M01 y las demás animaciones permanecen activas. El usuario definirá una animación sustituta más adelante; no reintroducir M05 sin una nueva indicación.
+**Cambio de alcance solicitado el 22 de octubre de 2026:** se retiró temporalmente M05, la deformación de imágenes y paneles al hacer scroll. Se eliminaron el motor Canvas 2D, su proveedor, registros, parámetros y pruebas exclusivas. Las imágenes se muestran directamente en HTML con `object-fit: cover`, el encuadre de `media.json` y recorte dentro de su contenedor. Las entradas de bloques M01 y las demás animaciones permanecen activas. Esta retirada se mantiene como registro histórico; la prueba aprobada el 24 de octubre se describe a continuación.
 
-**Cambio de M07 solicitado el 22 de octubre de 2026:** el anillo de nombres de marcas se sustituyó en Home y About por [Circular Carousel de React Bits](https://reactbits.dev/components/circular-carousel), con ocho fotografías independientes de las portadas, configuradas como `carousel01` a `carousel08` en `media.json` y ordenadas mediante `site.carousel`. Por indicación posterior del usuario se retiraron los botones visibles, los nombres y el contador inferior, junto con sus estilos y espacio reservado; las fotos quedan centradas en toda la altura del carrusel. La adaptación JavaScript/CSS conserva la geometría 3D, arrastre con inercia, ajuste a tarjetas y enfoque al pulsar una foto. Mantiene navegación con flechas e Inicio/Fin, pausa o reanudación con Espacio, pausa durante el foco y movimiento reducido sin giro ni interpolación. Las instrucciones, los nombres y la posición activa permanecen disponibles para lectores de pantalla. Mantiene HTML visible durante la carga, espacios reservados para fotos pendientes o fallidas y detiene el ciclo fuera de pantalla o con la pestaña oculta. Utiliza CSS 3D, sin canvas ni dependencias nuevas, y no reactiva M05. Los parámetros iniciales no son medidas de la referencia.
+**Prueba de M05 solicitada el 24 de octubre de 2026, extendida a Work por petición del usuario:** la retirada anterior se sustituye por una prueba en las cuatro portadas de Home y las cuatro tarjetas de Work. Se adapta la demo local de scroll curvo mediante Three.js 0.180.0 y un shader: las imágenes se ensanchan hacia los lados cerca del borde inferior, tomando el centro del viewport como referencia. La velocidad añade un refuerzo acotado. El motor, los shaders y los cálculos se separan en `app/motion/scrollCurveEngine.js`, `scrollCurveShaders.js` y `scrollCurveMath.js`; `useScrollImages.js` conecta el registro React con el ticker existente de `MotionProvider`. Three.js se importa sólo en el navegador cuando hay participantes y no se solicita movimiento reducido. No se añade otro Lenis ni otro ciclo de fotogramas.
+
+`Media` acepta `scrollEffect="none"` (predeterminado) o `"curve"`. Home y Work transmiten la activación a sus cuatro tarjetas; las fichas, About y los carruseles no participan. Un canvas fijo se añade directamente a `body`, con `pointer-events: none`. Conserva encuadres porcentuales, recorte `cover`, radios y color sRGB. El relevo desde HTML espera a un dibujo válido y a que `Reveal` comunique `data-reveal-state="done"`; títulos, flechas y foco permanecen en HTML por encima. El área de enlace mantiene su geometría rectangular. Si el encuadre no es compatible, la textura falla, WebGL no está disponible o se pierde el contexto, vuelve a verse HTML; un fallo global desactiva el motor hasta el siguiente montaje del listado. El renderizador libera sus recursos al abandonar cada listado, también entre Home y Work, y no dibuja con la pestaña oculta, sin imágenes cercanas o con la escena estable.
+
+Parámetros actuales **propuestos, no medidos de la referencia**, centralizados en `motionConfig.scrollCurve`: curvatura `0.05` desde 810 px y `0.04` por debajo; deformación progresiva desde el 48 % de altura; refuerzo máximo del 45 % a 1800 px/s y suavizado exponencial de factor `10`; DPR máximo `1.5` en tableta/escritorio y `1` en móvil. Por petición del usuario, la curvatura desde 810 px se redujo de `0.10` a `0.05` para una apertura lateral más sutil, cercana a la móvil. Con movimiento reducido se usa HTML y se desactiva Lenis, también al cambiar la preferencia durante la sesión. La prueba no implica fidelidad exacta ni amplía el efecto a textos o paneles.
+
+Verificación inicial de la prueba sólo en Home el 24 de octubre (anterior a esta extensión): `pnpm check` supera 25 pruebas, compila las siete rutas y comprueba que sólo Home marca las portadas configuradas, con HTML visible y sin canvas prerenderizado. Chrome se revisó a 1440, 1024, 810, 809, 390 y 360 px y en orientación 844 × 390: scroll, navegación, historial, retorno arriba y foco visible; se comprobó un único canvas activo tras varios ciclos Home/Work. Una página temporal de pruebas permitió simular movimiento reducido inicial y durante la sesión, pérdida real del contexto WebGL e imagen fallida; no forma parte del sitio publicable. Las pruebas automatizadas con adaptadores DOM/GPU cubren además pausa de dibujo, errores de textura/shader, liberación y cargas tardías. No se ha probado un teléfono físico ni se ha acreditado fidelidad animada con la referencia.
+
+**Cambio de M07 solicitado el 22 de octubre de 2026:** el anillo de nombres de marcas se sustituyó en Home y About por [Circular Carousel de React Bits](https://reactbits.dev/components/circular-carousel), con ocho fotografías independientes de las portadas, configuradas como `carousel01` a `carousel08` en `media.json` y ordenadas mediante `site.carousel`. Por indicación posterior del usuario se retiraron los botones visibles, los nombres y el contador inferior, junto con sus estilos y espacio reservado; las fotos quedan centradas en toda la altura del carrusel. La adaptación JavaScript/CSS conserva la geometría 3D, arrastre con inercia, ajuste a tarjetas y enfoque al pulsar una foto. Mantiene navegación con flechas e Inicio/Fin, pausa o reanudación con Espacio, pausa durante el foco y movimiento reducido sin giro ni interpolación. Las instrucciones, los nombres y la posición activa permanecen disponibles para lectores de pantalla. Mantiene HTML visible durante la carga, espacios reservados para fotos pendientes o fallidas y detiene el ciclo fuera de pantalla o con la pestaña oculta. Utiliza CSS 3D, sin canvas ni dependencias nuevas, y no participa en M05. Los parámetros iniciales no son medidas de la referencia.
+
+**Restauración de la carga completa de M07/M08, por petición posterior del usuario:** se retira la carga progresiva introducida el 24 de octubre. Home, About y Work vuelven al componente anterior: las ocho fotos y sus fragmentos 3D están presentes desde el HTML inicial, todas las fuentes se precargan al montar y el respaldo HTML permanece hasta que termina la preparación del conjunto o transcurren 2400 ms. Las copias decorativas cargan inmediatamente y conservan `decoding="async"`. Se eliminan la cola de dos cargas, la preparación por vecinas y el montaje a 400 px del viewport. La pausa fuera de pantalla o con la pestaña oculta conserva su función sobre el movimiento. No cambian la geometría, el arrastre, el teclado, las colecciones de fotos ni el respaldo ante errores.
+
+La curvatura M05 permanece en las cuatro tarjetas de Home y las cuatro de Work, con valores `0.05` / `0.04`. Fuera de los carruseles se conservan las mejoras de `Media`: decodificación asíncrona, carga diferida para imágenes secundarias, prioridad alta en los cuatro heroes de proyecto y detección de fallos previos a la hidratación. Se retira la prioridad especial de la primera foto de Work al restaurar el comportamiento anterior del carrusel. Las cuatro tarjetas completas de cada listado siguen en el HTML inicial. Continúan las importaciones dinámicas de GSAP, Lenis y Three.js.
+
+Las mediciones de carga progresiva de la entrega anterior ya no describen esta configuración y se retiraron de este documento. Las comprobaciones de HTML exigen ahora ocho superficies 3D y la precarga de cada foto configurada por carrusel, además del respaldo de ocho fotos, M05 sólo en Home/Work y la prioridad de los heroes de proyecto.
+
+Verificación de esta restauración: `pnpm check` supera 25 pruebas, compila las siete rutas y confirma en el HTML las ocho fotos completas de cada carrusel desde el inicio, las cuatro tarjetas de cada listado, las marcas M05 sólo en Home/Work y la prioridad de las imágenes principales de proyecto. El componente del carrusel vuelve a la versión anterior a la carga progresiva.
 
 La fuente adaptada es [CircularCarousel.jsx de React Bits](https://github.com/DavidHDev/react-bits/blob/e12c22192ac7b4b452c5e2feb9b586d74765d696/src/content/Components/CircularCarousel/CircularCarousel.jsx), revisión `e12c22192ac7b4b452c5e2feb9b586d74765d696`. Su aviso de autoría y licencia se conserva en [licenses/react-bits-LICENSE.md](./licenses/react-bits-LICENSE.md). El CSS se integra mediante BEM y CSS Modules.
 
@@ -44,9 +60,9 @@ Los registros de `media.json` incluyen una nota `_comment` con su ubicación, pr
 - Se implementan **siete páginas**: inicio, catálogo, biografía y cuatro fichas de proyecto.
 - El catálogo tendrá cuatro proyectos: Modelaje, Paisajes, Producto y Música. No se ha solicitado un editor administrativo.
 - Se utilizará **contenido propio**. Las imágenes y los textos podrán quedar pendientes mediante espacios reservados y referencias editables.
-- El diseño adaptable y las animaciones de la referencia siguen formando parte del alcance, con M05 retirado temporalmente y M07/M08 sustituidos por Circular Carousel con colecciones de ocho fotos independientes por indicación del usuario.
+- El diseño adaptable y las animaciones de la referencia siguen formando parte del alcance, con M05 en prueba sobre las cuatro tarjetas de Home y las cuatro de Work y M07/M08 sustituidos por Circular Carousel con colecciones de ocho fotos independientes por indicación del usuario.
 
-Las secciones de inspección describen el sitio original. Sus nombres, imágenes, marcas, datos de contacto y textos son referencias de análisis, no contenido aprobado para el portfolio personal. La arquitectura acordada se detalla en las secciones 14, 15 y 19. Las propuestas gráficas se conservan como referencia para una futura revisión de M05; actualmente no se ejecuta un renderizador de deformación.
+Las secciones de inspección describen el sitio original. Sus nombres, imágenes, marcas, datos de contacto y textos son referencias de análisis, no contenido aprobado para el portfolio personal. La arquitectura acordada se detalla en las secciones 14, 15 y 19. M05 utiliza ahora la prueba WebGL limitada a los listados de Home y Work descrita arriba; las observaciones del original no acreditan igualdad con ese efecto.
 
 ## 1. Alcance y grado de certeza
 
@@ -276,7 +292,7 @@ Esta tabla incluye los efectos detectados y los puntos que deberán cerrarse al 
 | M02 | Enlaces de navegación, pie y CTA / puntero | Dos juegos de letras dentro de una máscara. La segunda línea parte en `translateY(110%)`. Se midieron letras de Work con desplazamientos diferentes durante la interacción | Sustitución vertical por caracteres, con desfase; conservar un solo nombre accesible | Estructura y movimiento confirmados |
 | M03 | Nombre de tarjeta / hover | Dos títulos superpuestos; uno visible y otro inicialmente con opacidad 0 | Preparar intercambio de capas dentro de máscara; confirmar trayectoria y reversión antes de fijarlas | Estructura confirmada; transición exacta pendiente |
 | M04 | Flecha de tarjeta / hover | Dos flechas dentro de círculo de cristal; segunda con opacidad 0 | Animar las capas sin desplazar el círculo ni alterar el área del enlace | Estructura confirmada; recorrido exacto pendiente |
-| M05 | Imágenes y paneles / scroll y posición en pantalla | Los bordes se curvan hacia fuera; se observó un lienzo compartido superpuesto y elementos de reserva debajo | Retirado temporalmente por el usuario; imágenes HTML sin deformación y sustitución pendiente | Deformación y canvas confirmados en la referencia; fórmula pendiente |
+| M05 | Imágenes y paneles / scroll y posición en pantalla | Los bordes se curvan hacia fuera; se observó un lienzo compartido superpuesto y elementos de reserva debajo | Prueba WebGL solicitada el 24 de octubre: las cuatro tarjetas de Home y las cuatro de Work, con respaldo HTML; paneles y demás imágenes quedan fuera | Deformación y canvas confirmados en la referencia; fórmula pendiente |
 | M06 | Logotipo grande | SVG de base y lienzo adicional en Home, About y pie; el lienzo puede exceder 28 px el contenedor | Componente aislado de efecto sobre la marca aprobada: nombre tipográfico o SVG opcional, preservando el texto o imagen de respaldo | Capas de la referencia confirmadas; respuesta exacta al puntero pendiente |
 | M07 | Marcas / tiempo en la referencia | Diez rótulos: cinco marcas repetidas. Anillo con giro continuo en Y, perspectiva e inclinación | Sustituido por Circular Carousel de React Bits con fotos de proyectos en Home y About, sin botones, nombres ni contador visibles; reserva de espacio, pausa por teclado y movimiento reducido | La observación describe el original; la sustitución fue solicitada por el usuario |
 | M08 | Rueda de imágenes de Work / tiempo | Diez planos con separaciones de 36°, giro común sobre X e inclinación global sobre Y | CSS 3D; imágenes reales; contenedor adaptable; no es un carrusel horizontal | Giro y estructura confirmados |
@@ -303,7 +319,7 @@ Se observó un canvas compartido con `pointer-events: none` y nivel visual 5; el
 
 Esto exige tres responsabilidades separadas: geometría de diseño, representación visual deformada e interacción/accesibilidad. La biblioteca de animación puede controlar valores, pero **no genera por sí sola la deformación gráfica**.
 
-La presencia de canvas no basta para afirmar si el motor original usa Canvas 2D, WebGL o una combinación. Esta sección documenta la referencia: M05 está retirado temporalmente de la implementación. Si el usuario solicita otro efecto gráfico, deberá evaluarse con una prueba técnica y comparación visual.
+La presencia de canvas no basta para afirmar si el motor original usa Canvas 2D, WebGL o una combinación. Esta sección documenta la referencia. La prueba actual de M05 utiliza Three.js y un shader de ensanchamiento lateral sobre cuatro tarjetas en cada listado de Home y Work; su geometría y tiempos son propuestos y requieren calibración visual.
 
 ### 11.4 Valores iniciales de calibración — propuestos, no medidos
 
@@ -391,7 +407,7 @@ Se utilizarán **archivos JSON locales con validaciones escritas en JavaScript**
 
 Motion ofrece efectos ligados al scroll y activados al entrar en pantalla. GSAP permite controlar secuencias y valores de DOM, canvas y otros renderizadores. Lenis resuelve el scroll suavizado y documenta su sincronización con GSAP. Fuentes: [Motion](https://motion.dev/docs/react-scroll-animations), [GSAP con React](https://gsap.com/resources/React/), [ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) y [Lenis](https://github.com/darkroomengineering/lenis).
 
-El anillo y la rueda observados pueden construirse con CSS 3D. No se ha demostrado que necesiten una escena completa con Three.js. M05 está retirado temporalmente; si se solicita su sustitución por un efecto gráfico, evaluar una muestra representativa antes de incorporar una dependencia grande. No animar la misma propiedad simultáneamente con dos motores.
+El anillo y la rueda observados pueden construirse con CSS 3D. No se ha demostrado que necesiten una escena completa con Three.js. La muestra aprobada para M05 son las cuatro tarjetas de Home y las cuatro de Work: usa Three.js 0.180.0, cargado de forma diferida, y un shader personalizado. No animar la misma propiedad simultáneamente con dos motores.
 
 ### 14.4 Organización y estilos
 
@@ -430,7 +446,13 @@ portfolio/
 │   │   ├── editorial/                InfoPanel
 │   │   └── ui/                       Media, ErrorState
 │   ├── motion/
-│   │   ├── MotionProvider.jsx        Ciclo de vida y preferencias de movimiento
+│   │   ├── MotionProvider.jsx        Lenis, ticker compartido y preferencias de movimiento
+│   │   ├── ScrollImageContext.js    Registro de imágenes participantes
+│   │   ├── useScrollImages.js       Integración React y carga diferida de M05
+│   │   ├── scrollCurveEngine.js     Renderizador compartido y respaldo HTML
+│   │   ├── scrollCurveShaders.js    Curvatura y recorte de texturas
+│   │   ├── scrollCurveMath.js       Encuadres y parámetros de movimiento
+│   │   ├── useReducedMotion.js      Preferencia de movimiento reactiva
 │   │   ├── AnimatedLink.jsx          Sustitución de letras
 │   │   ├── Reveal.jsx                Aparición de bloques
 │   │   ├── CircularCarousel.jsx      Carrusel 3D de fotos, adaptado de React Bits
@@ -539,7 +561,7 @@ Cada página tiene un único `h1`. Las secciones editoriales usan `section` con 
 
 Los componentes exponen propiedades para variantes visuales, como `tone` en `Media`, y `className` para su encaje en el padre. Evitar selectores que dependan de las clases internas o del orden de elementos de otro componente.
 
-En las tarjetas, `ProjectCard.module.css` define el marco cuadrado, los radios y las capas de título/flecha. `Media.module.css` hace que la imagen HTML cubra ese marco con `width: 100%`, `height: 100%`, `object-fit: cover` y el encuadre de `media.json`. `overflow: hidden` y los radios del contenedor recortan la imagen; no hay una capa de canvas superpuesta.
+En las tarjetas, `ProjectCard.module.css` define el marco cuadrado, los radios y las capas de título/flecha. `Media.module.css` hace que la imagen HTML cubra ese marco con `width: 100%`, `height: 100%`, `object-fit: cover` y el encuadre de `media.json`. `overflow: hidden` y los radios del contenedor recortan la imagen; en Home y Work, `scrollEffect="curve"` permite sustituir únicamente la presentación visual por el canvas compartido después de un fotograma válido; el HTML se conserva.
 
 ### Flujo de contenido y publicación
 
@@ -565,10 +587,10 @@ Editar contenido o diseño requerirá una nueva compilación para actualizar la 
 - **Secciones:** expresan la composición y semántica de cada plantilla. Reciben los datos de la ruta y reutilizan piezas compartidas.
 - **Componentes:** reciben datos y opciones de presentación. La tarjeta usa el mismo título y portada en Home, Work y proyectos relacionados.
 - **Movimiento:** recibe elementos, recursos y parámetros; no contiene información personal ni búsquedas de proyectos. Las animaciones usan un ciclo coordinado y se limpian al desmontarse.
-- **Efectos gráficos futuros:** si el usuario solicita uno, aislarlo del contenido y ejecutarlo sólo en el navegador, conservando el HTML inicial y el respaldo visual. Actualmente M05 está retirado y no hay renderizador de deformación.
+- **Efectos gráficos futuros:** si el usuario solicita uno, aislarlo del contenido y ejecutarlo sólo en el navegador, conservando el HTML inicial y el respaldo visual. M05 está limitado a los listados de Home y Work, sin deformar paneles, textos, carruseles ni fotografías de otras páginas.
 - **Estilos:** las reglas locales quedan junto a cada componente; los valores comunes viven en `tokens.css`. Los límites de pantalla conservan 810 y 1200 px.
 
-La implementación actual confía la restauración de rutas a `ScrollRestoration` de React Router; `MotionProvider` integra Lenis y ScrollTrigger sin añadir una segunda restauración. `Media` muestra imágenes HTML y espacios reservados, sin registrar superficies gráficas ni crear bucles de animación.
+La implementación actual confía la restauración de rutas a `ScrollRestoration` de React Router; `MotionProvider` integra Lenis y ScrollTrigger sin añadir una segunda restauración: después de los layout effects del router sincroniza Lenis con el scroll real para cancelar la inercia de la ruta anterior. `Media` muestra imágenes HTML y espacios reservados; sólo con `scrollEffect="curve"` registra la imagen en el motor compartido, sin crear bucles propios.
 
 ### Modelo de contenido
 
@@ -622,7 +644,7 @@ La cabecera, el pie, las tarjetas y las galerías se reutilizarán. Las cuatro f
 2. Preparar recursos locales, fuentes y datos; comprobar encuadres.
 3. Construir primero las cuatro plantillas estáticas en los tres intervalos de pantalla.
 4. Validar proporciones, tipografía, espacios y orden móvil contra las referencias.
-5. Mantener M05 retirado hasta que el usuario defina su sustitución; entonces probar el nuevo efecto en una muestra representativa antes de extenderlo.
+5. Revisar la prueba M05 de Home y Work en escritorio, tableta y móvil; calibrarla antes de extender el efecto a otras superficies.
 6. Incorporar enlaces animados, rueda, Circular Carousel, entradas y scroll con parámetros centralizados.
 7. Calibrar amplitudes, velocidades, tiempos y reversión; resolver el efecto del logotipo y los hovers pendientes.
 8. Verificar navegación, acceso directo a rutas, foco, movimiento reducido, carga de recursos y rendimiento; publicar sólo cuando se solicite.
@@ -675,10 +697,10 @@ Tras el ajuste de alcance solicitado por el usuario, la base técnica aprobada c
 | Organización | Componentes reutilizables y una plantilla configurable para las cuatro fichas | Facilitar cambios de diseño sin repetir trabajo |
 | Estilos | CSS Modules y variables CSS | Ajustar medidas con precisión y modificar valores compartidos |
 | Contenido | Tres archivos JSON locales para perfil, proyectos y recursos | Sustituir textos, rutas de imagen y URL sin editar componentes |
-| Animación | GSAP/ScrollTrigger, Lenis y CSS 3D; M05 retirado temporalmente | Conservar los demás efectos; el usuario definirá más adelante una sustitución para la deformación |
+| Animación | GSAP/ScrollTrigger, Lenis, CSS 3D y prueba M05 con Three.js en Home y Work | Conservar los demás efectos y calibrar la curvatura en las cuatro tarjetas de cada listado |
 | Contenido provisional | Cuatro registros y espacios reservados con proporciones estables | Construir y revisar las siete páginas antes de recibir los recursos definitivos |
 | Identidad de plantilla | Omitir insignia y enlaces comerciales de Framer | Adecuar el portfolio a la identidad del usuario |
 
 Esta arquitectura mantiene el contenido fácil de editar y concentra la complejidad gráfica en un módulo específico. Los nombres definitivos, imágenes, textos y dominio podrán incorporarse después; no es necesario decidirlos para preparar la estructura.
 
-**Estado: primera implementación funcional con contenido provisional.** M05 está retirado temporalmente por indicación del usuario. La comparación visual y la calibración de los efectos activos siguen pendientes y no requieren volver a elegir la arquitectura general.
+**Estado: primera implementación funcional con contenido provisional.** M05 está en prueba en las cuatro tarjetas de Home y las cuatro de Work por indicación del usuario. La comparación visual y la calibración de los efectos activos siguen pendientes y no requieren volver a elegir la arquitectura general.

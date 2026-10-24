@@ -16,6 +16,7 @@ export default function Work() {
         media={media}
         headingId="work-projects-title"
         title="Proyectos"
+        scrollEffect="curve"
       />
     </PageLayout>
   );
