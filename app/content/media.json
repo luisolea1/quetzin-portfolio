@@ -1,15 +1,15 @@
 {
   "portrait": {
     "_comment": "Retrato de la página About. Se muestra antes de la biografía en móvil. Ejemplo de src: /images/about/portrait.webp. El contenedor es cuadrado en móvil y vertical en escritorio.",
-    "src": null,
+    "src": "/images/about/about0.webp",
     "alt": "Retrato pendiente",
     "position": "50% 50%"
   },
   "architecture": {
     "_comment": "Fotografía ancha de About, después de la biografía. Ejemplo de src: /images/about/architecture.webp. Contenedor aproximado 2:1.",
-    "src": null,
+    "src": "/images/about/about01.webp",
     "alt": "Fotografía de arquitectura pendiente",
-    "position": "50% 50%"
+    "position": "50% 80%"
   },
 
   "cover01": {

@@ -18,24 +18,10 @@ export default function ProjectCard({ project, media, scrollEffect = "none" }) {
         scrollEffect={scrollEffect}
       />
       <div className={styles["project-card__overlay"]}>
-        <span className={styles["project-card__title"]}>
-          <span className={styles["project-card__title-text"]}>{project.title}</span>
-          <span
-            className={`${styles["project-card__title-text"]} ${styles["project-card__title-text--copy"]}`}
-            aria-hidden="true"
-          >
-            {project.title}
-          </span>
-        </span>
+        <span className={styles["project-card__title"]}>{project.title}</span>
         <span className={styles["project-card__arrow"]} aria-hidden="true">
           <ArrowUpRightIcon
             className={styles["project-card__arrow-icon"]}
-            size={36}
-            color="#ffffff"
-            focusable="false"
-          />
-          <ArrowUpRightIcon
-            className={`${styles["project-card__arrow-icon"]} ${styles["project-card__arrow-icon--copy"]}`}
             size={36}
             color="#ffffff"
             focusable="false"

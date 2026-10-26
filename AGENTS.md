@@ -87,8 +87,8 @@ Seguir el inventario de la sección 11 del README. Mantener estos identificadore
 |---|---|
 | M01 | Entradas de página por bloques, sin alterar el espacio reservado |
 | M02 | Sustitución vertical de letras en enlaces, con desfase por carácter |
-| M03 | Intercambio de capas del título de tarjeta; verificar trayectoria y reversión |
-| M04 | Movimiento de las flechas de tarjeta; verificar recorrido sin desplazar el círculo |
+| M03 | Retirado por el usuario el 25 de octubre de 2026; un título estático por tarjeta |
+| M04 | Retirado por el usuario el 25 de octubre de 2026; una flecha SVG estática por tarjeta |
 | M05 | Prueba WebGL de curvatura por posición y velocidad en las cuatro tarjetas de Home y las cuatro de Work; menor intensidad móvil y respaldo HTML |
 | M06 | Efecto sobre la marca tipográfica o el SVG opcional; verificar la respuesta al puntero |
 | M07 | Circular Carousel de React Bits con ocho fotos independientes en Home y About; sustituye el anillo de marcas por petición del usuario |
@@ -97,6 +97,8 @@ Seguir el inventario de la sección 11 del README. Mantener estos identificadore
 | M10 | Navegación, entradas, montaje y limpieza al cambiar de ruta |
 
 Los tiempos, curvas y fórmulas aún no medidos deben seguir identificados como provisionales. Comparar el movimiento con la referencia antes de afirmar fidelidad exacta. No sustituir la deformación por una simple escala o inclinación ni dar por confirmada una transición compartida entre imágenes.
+
+M03 y M04 se retiraron en todas las instancias de `ProjectCard`, incluidos Home, Work y los proyectos relacionados de las fichas. Mantener un solo título y un solo SVG, sin copias decorativas ni transformaciones o transiciones de hover/foco. Conservar el indicador de foco del enlace, el círculo de la flecha y la curvatura M05.
 
 M07 y M08 son desviaciones aprobadas de la referencia: mantener arrastre con inercia, ajuste y selección de tarjeta, teclado, foco visible y respaldo HTML. El usuario pidió retirar los botones, nombres y contador visibles; no reintroducirlos. Conservar los nombres accesibles y las instrucciones para lectores de pantalla, así como Espacio para pausar o reanudar y flechas e Inicio/Fin para navegar. Con movimiento reducido no girar automáticamente ni interpolar la navegación. Pausar el carrusel fuera de pantalla, con foco dentro o con la pestaña oculta. Este carrusel usa CSS 3D y no participa en M05.
 

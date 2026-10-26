@@ -16,9 +16,11 @@ Para mantener legibles los archivos fuente, `pnpm format` aplica Prettier al Jav
 
 Personaliza `app/content/site.json`, `projects.json` y `media.json`; coloca imágenes propias bajo `public/images/` y, si existe, tu logo SVG en `public/images/`. Las cuatro fichas están en `/projects/proyecto-01` a `/projects/proyecto-04`. Los recursos y enlaces vacíos muestran espacios reservados o quedan desactivados. Las fuentes Inter e IBM Plex Mono se empaquetan desde Fontsource; Inter Variable aproxima Inter Display hasta contar con el archivo definitivo. Los efectos activos requieren comparación animada con la referencia y medios propios. No se han recibido `recursos-referencia.json` ni las capturas mencionadas en este documento.
 
-Las tarjetas omiten las categorías cuando su lista está vacía; no muestran la etiqueta «Proyecto pendiente». Los nombres y las flechas conservan sus capas sobre la imagen.
+Las tarjetas omiten las categorías cuando su lista está vacía; no muestran la etiqueta «Proyecto pendiente». Los nombres y las flechas se representan en HTML sobre la imagen.
 
-Las flechas de todas las tarjetas de proyecto utilizan `ArrowUpRightIcon` de [Phosphor Icons para React](https://github.com/phosphor-icons/react), como SVG blanco de 36 px. Se importa únicamente ese icono desde su módulo SSR, compatible con el prerenderizado. M04 conserva el intercambio de las dos capas en hover y foco, dentro del mismo círculo; se retiraron los caracteres tipográficos y su tamaño de fuente. Los SVG son decorativos y el nombre accesible continúa en el enlace de cada tarjeta.
+Las flechas de todas las tarjetas de proyecto utilizan `ArrowUpRightIcon` de [Phosphor Icons para React](https://github.com/phosphor-icons/react), como SVG blanco de 36 px. Se importa únicamente ese icono desde su módulo SSR, compatible con el prerenderizado. Cada tarjeta conserva una flecha estática dentro del círculo. Los SVG son decorativos y el nombre accesible continúa en el enlace de cada tarjeta.
+
+**Retirada de M03/M04 solicitada el 25 de octubre de 2026:** los títulos y las flechas de todas las tarjetas quedan estáticos, tanto en Home y Work como en los proyectos relacionados de las fichas. Se eliminan las copias de texto y SVG, las máscaras exclusivas del intercambio y sus reglas de transformación, opacidad y transición para hover/foco. Cada tarjeta muestra una sola vez su título y su flecha; mantiene el foco visible del enlace y la curvatura de la fotografía M05. Las observaciones de M03/M04 en la sección 11 corresponden a la referencia y ya no son requisitos de animación para este portfolio.
 
 Por indicación del usuario, About omite el botón de CV y su estado pendiente; se retiraron su propiedad de contenido, su validación y sus estilos. Las listas de servicios y sectores de `InfoPanel` mantienen 4 px entre elementos consecutivos y conservan la separación inicial respecto a su etiqueta.
 
@@ -290,8 +292,8 @@ Esta tabla incluye los efectos detectados y los puntos que deberán cerrarse al 
 |---|---|---|---|---|
 | M01 | Entrada de página | En las capturas iniciales aparecen estados intermedios antes del contenido estable; hay elementos con identificadores de aparición | Orquestar entradas por bloques sin cambiar su espacio reservado; medir orden, desplazamiento y opacidad | Aparición observada; tiempos pendientes |
 | M02 | Enlaces de navegación, pie y CTA / puntero | Dos juegos de letras dentro de una máscara. La segunda línea parte en `translateY(110%)`. Se midieron letras de Work con desplazamientos diferentes durante la interacción | Sustitución vertical por caracteres, con desfase; conservar un solo nombre accesible | Estructura y movimiento confirmados |
-| M03 | Nombre de tarjeta / hover | Dos títulos superpuestos; uno visible y otro inicialmente con opacidad 0 | Preparar intercambio de capas dentro de máscara; confirmar trayectoria y reversión antes de fijarlas | Estructura confirmada; transición exacta pendiente |
-| M04 | Flecha de tarjeta / hover | Dos flechas dentro de círculo de cristal; segunda con opacidad 0 | Animar las capas sin desplazar el círculo ni alterar el área del enlace | Estructura confirmada; recorrido exacto pendiente |
+| M03 | Nombre de tarjeta / hover | Dos títulos superpuestos en la referencia; uno visible y otro inicialmente con opacidad 0 | Retirado por el usuario el 25 de octubre: un título estático, sin duplicados ni animación | La observación corresponde a la referencia; retirada aprobada |
+| M04 | Flecha de tarjeta / hover | Dos flechas dentro de círculo de cristal en la referencia; segunda con opacidad 0 | Retirado por el usuario el 25 de octubre: un SVG estático dentro del círculo | La observación corresponde a la referencia; retirada aprobada |
 | M05 | Imágenes y paneles / scroll y posición en pantalla | Los bordes se curvan hacia fuera; se observó un lienzo compartido superpuesto y elementos de reserva debajo | Prueba WebGL solicitada el 24 de octubre: las cuatro tarjetas de Home y las cuatro de Work, con respaldo HTML; paneles y demás imágenes quedan fuera | Deformación y canvas confirmados en la referencia; fórmula pendiente |
 | M06 | Logotipo grande | SVG de base y lienzo adicional en Home, About y pie; el lienzo puede exceder 28 px el contenedor | Componente aislado de efecto sobre la marca aprobada: nombre tipográfico o SVG opcional, preservando el texto o imagen de respaldo | Capas de la referencia confirmadas; respuesta exacta al puntero pendiente |
 | M07 | Marcas / tiempo en la referencia | Diez rótulos: cinco marcas repetidas. Anillo con giro continuo en Y, perspectiva e inclinación | Sustituido por Circular Carousel de React Bits con fotos de proyectos en Home y About, sin botones, nombres ni contador visibles; reserva de espacio, pausa por teclado y movimiento reducido | La observación describe el original; la sustitución fue solicitada por el usuario |
@@ -555,13 +557,13 @@ Cada página tiene un único `h1`. Las secciones editoriales usan `section` con 
 
 - Un bloque representa un componente o sección: `.project-card`, `.work-hero`, `.site-header`.
 - Sus elementos usan dos guiones bajos: `.project-card__title`, `.work-hero__description`.
-- Las variantes y estados usan dos guiones: `.media--dark`, `.project-card__title-text--copy`, `.reveal--visible`. El modificador acompaña a la clase base.
+- Las variantes y estados usan dos guiones: `.media--dark`, `.project-card--scroll-curve`, `.reveal--visible`. El modificador acompaña a la clase base.
 - En JSX se accede con `styles["project-card__title"]`. CSS Modules conserva el aislamiento y añade un identificador al compilar; las clases generadas del navegador no se editan directamente.
 - `globals.css` contiene reglas base y las utilidades `u-eyebrow`, `u-muted` y `u-visually-hidden`. Los ajustes específicos de una sección pertenecen a su módulo, y los valores compartidos a `tokens.css`.
 
 Los componentes exponen propiedades para variantes visuales, como `tone` en `Media`, y `className` para su encaje en el padre. Evitar selectores que dependan de las clases internas o del orden de elementos de otro componente.
 
-En las tarjetas, `ProjectCard.module.css` define el marco cuadrado, los radios y las capas de título/flecha. `Media.module.css` hace que la imagen HTML cubra ese marco con `width: 100%`, `height: 100%`, `object-fit: cover` y el encuadre de `media.json`. `overflow: hidden` y los radios del contenedor recortan la imagen; en Home y Work, `scrollEffect="curve"` permite sustituir únicamente la presentación visual por el canvas compartido después de un fotograma válido; el HTML se conserva.
+En las tarjetas, `ProjectCard.module.css` define el marco cuadrado, los radios y la presentación estática de título y flecha. `Media.module.css` hace que la imagen HTML cubra ese marco con `width: 100%`, `height: 100%`, `object-fit: cover` y el encuadre de `media.json`. `overflow: hidden` y los radios del contenedor recortan la imagen; en Home y Work, `scrollEffect="curve"` permite sustituir únicamente la presentación visual por el canvas compartido después de un fotograma válido; el HTML se conserva.
 
 ### Flujo de contenido y publicación
 
@@ -658,7 +660,7 @@ La cabecera, el pie, las tarjetas y las galerías se reutilizarán. Las cuatro f
 - Las cuadrículas y los cambios de orden en móvil coinciden con el original.
 - Los títulos largos no se recortan y no aparece desplazamiento horizontal accidental.
 - Se han comparado fotogramas equivalentes, incluyendo reposo, entrada, hover, scroll rápido, scroll inverso y retorno al inicio.
-- Se han cerrado los pendientes M03, M04 y M06 y calibrado los tiempos de los demás efectos.
+- Los títulos y las flechas de tarjeta permanecen estáticos según la retirada de M03/M04; se ha cerrado el pendiente M06 y calibrado los tiempos de los demás efectos.
 - El giro de la rueda y del Circular Carousel se revisa por ciclo, junto con arrastre, pausa y navegación por teclado; una captura estática no acredita el movimiento.
 - Canvas, texto y enlaces se mantienen alineados al cargar fuentes, redimensionar y navegar.
 - El contenido permanece disponible si se reduce el movimiento o falla el renderizador.
