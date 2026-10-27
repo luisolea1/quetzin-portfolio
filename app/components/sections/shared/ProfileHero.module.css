@@ -30,6 +30,9 @@
     text-align: center;
     max-width: 320px;
   }
+  .profile-hero--compact-mobile .profile-hero__intro {
+    margin: 44px auto;
+  }
   .profile-hero__paragraph + .profile-hero__paragraph {
     margin-top: 8px;
   }

@@ -38,6 +38,8 @@ export default function Media({
           className={styles["media__image"]}
           src={src}
           alt={media.alt || ""}
+          width={media.width}
+          height={media.height}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
           fetchPriority={priority ? "high" : undefined}

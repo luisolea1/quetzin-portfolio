@@ -1,34 +1,39 @@
 import Media from "../ui/Media.jsx";
+import Reveal from "../../motion/Reveal.jsx";
 import styles from "./ProjectGallery.module.css";
 
-export default function ProjectGallery({ blocks, media }) {
+export default function ProjectGallery({ items }) {
+  const columns = [
+    items.filter((_, index) => index % 2 === 0),
+    items.filter((_, index) => index % 2 === 1),
+  ];
+
   return (
-    <div className={styles["project-gallery"]}>
-      {blocks.map((block, index) =>
-        block.type === "wide" ? (
-          <Media
-            key={index}
-            className={`${styles["project-gallery__image"]} ${styles["project-gallery__image--wide"]}`}
-            media={media[block.media]}
-            label="Imagen del proyecto pendiente"
-          />
-        ) : (
-          <div key={index} className={styles["project-gallery__pair"]}>
-            {block.items.map((id, position) => (
-              <div
-                key={`${index}-${position}`}
-                className={`${styles["project-gallery__item"]} ${styles[block.mobileOrder[0] === position ? "project-gallery__item--first" : "project-gallery__item--second"]}`}
+    <div className={styles["project-gallery"]} data-project-gallery>
+      <div className={styles["project-gallery__columns"]}>
+        {columns.map((column, index) => (
+          <div key={index} className={styles["project-gallery__column"]}>
+            {column.map((item) => (
+              <figure
+                key={item.key}
+                className={styles["project-gallery__item"]}
+                style={{
+                  "--gallery-aspect-ratio": item.aspectRatio,
+                  "--gallery-mobile-order": item.mobileOrder,
+                }}
               >
-                <Media
-                  className={`${styles["project-gallery__image"]} ${styles["project-gallery__image--square"]}`}
-                  media={media[id]}
-                  label="Imagen del proyecto pendiente"
-                />
-              </div>
+                <Reveal className={styles["project-gallery__entry"]}>
+                  <Media
+                    className={styles["project-gallery__image"]}
+                    media={item.media}
+                    label="Imagen del proyecto pendiente"
+                  />
+                </Reveal>
+              </figure>
             ))}
           </div>
-        ),
-      )}
+        ))}
+      </div>
     </div>
   );
 }

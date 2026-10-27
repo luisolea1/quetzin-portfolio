@@ -64,15 +64,15 @@ public/images/
 │   ├── …
 │   └── 08.webp
 ├── projects/
-│   ├── proyecto-01/           Modelaje
+│   ├── modelaje/             Modelaje
 │   │   ├── cover.webp        Portada de las tarjetas
 │   │   ├── hero.webp         Foto principal de la ficha
 │   │   ├── gallery-01.webp   Primera imagen de la pareja
 │   │   ├── gallery-02.webp   Segunda imagen de la pareja
 │   │   └── gallery-wide.webp Imagen ancha posterior
-│   ├── proyecto-02/           Paisajes
-│   ├── proyecto-03/           Producto
-│   └── proyecto-04/           Música
+│   ├── paisajes/             Paisajes
+│   ├── producto/             Producto
+│   └── musica/               Música
 ├── about/
 │   ├── portrait.webp
 │   └── architecture.webp
@@ -85,7 +85,7 @@ public/images/
     └── logo.svg              Sólo si usas una imagen de marca
 ```
 
-Los nombres del árbol son ejemplos de archivos que puedes colocar. Las cuatro fotografías actuales mantienen sus rutas. Para mover `public/images/modelaje.webp` a `public/images/projects/proyecto-01/cover.webp`, actualiza `cover01.src` a `/images/projects/proyecto-01/cover.webp` en el mismo cambio. Se actualizarán las tarjetas de Modelaje; el anillo conservará sus ocho fotos independientes.
+Los nombres del árbol son ejemplos de archivos que puedes colocar. Las cuatro fotografías actuales mantienen sus rutas. Para mover `public/images/modelaje.webp` a `public/images/projects/modelaje/cover.webp`, actualiza `cover01.src` a `/images/projects/modelaje/cover.webp` en el mismo cambio. Se actualizarán las tarjetas de Modelaje; el anillo conservará sus ocho fotos independientes.
 
 Usa nombres en minúsculas, sin espacios ni acentos, separados por guiones. Mover un archivo no requiere cambiar su identificador de `media.json`.
 
@@ -95,19 +95,58 @@ Usa nombres en minúsculas, sin espacios ni acentos, separados por guiones. Move
 | -------------------------------- | ------------------------------------------------- | ------------------------------------------ |
 | `cover01` a `cover04`            | Tarjetas de Home, Work y proyectos relacionados   | Cuadrado                                   |
 | `hero01` a `hero04`              | Foto grande debajo del título de la ficha         | 16:9                                       |
-| `gallery01a`, `gallery01b`, etc. | Pareja de imágenes de la galería correspondiente  | Cuadrados; se apilan en móvil              |
-| `gallery01wide`, etc.            | Imagen ancha después de la pareja                 | 16:9                                       |
+| `gallery01a`, `gallery01b`, etc. | Pareja de imágenes de la galería correspondiente  | Patrón 3:4 / 1:1; se apilan en móvil              |
+| `gallery01wide`, etc.            | Imagen independiente después de la pareja        | Patrón 3:4 / 1:1                                       |
 | `portrait`                       | Retrato de About                                  | Cuadrado en móvil y vertical en escritorio |
 | `architecture`                   | Fotografía ancha después de la biografía de About | 2:1                                        |
 
-Los números identifican el proyecto: `01` es Modelaje, `02` Paisajes, `03` Producto y `04` Música. `projects.json` decide el orden de las galerías y su orden móvil; las notas describen la configuración actual. Los registros provisionales 05 y 06 se retiraron al reducir el catálogo a cuatro proyectos.
+Las fichas se abren en `/projects/modelaje`, `/projects/paisajes`, `/projects/producto` y `/projects/musica`. Los números de los identificadores siguen siendo estables: `01` es Modelaje, `02` Paisajes, `03` Producto y `04` Música. `projects.json` decide el orden de las galerías y su orden móvil; las notas describen la configuración actual. Los registros provisionales 05 y 06 se retiraron al reducir el catálogo a cuatro proyectos.
 
-Para completar `hero01`, guarda una foto en `public/images/projects/proyecto-01/hero.webp` y cambia su `src` a `/images/projects/proyecto-01/hero.webp`. Es independiente de `cover01` y de las ocho fotos del anillo. Cuando un `hero` tiene imagen, su ruta también se usa en el metadato `og:image` de esa ficha.
+Para completar `hero01`, guarda una foto en `public/images/projects/modelaje/hero.webp` y cambia su `src` a `/images/projects/modelaje/hero.webp`. Es independiente de `cover01` y de las ocho fotos del anillo. Cuando un `hero` tiene imagen, su ruta también se usa en el metadato `og:image` de esa ficha.
+
+## Cómo ampliar una galería hasta diez fotos
+
+Modelaje tiene cuatro fotos y las otras fichas tres. Cada una admite hasta **diez apariciones en la galería**, aparte de su hero. **Importante:** crear un registro en `media.json` no añade la foto automáticamente: también debe estar referenciada en `gallery` de su proyecto en `projects.json`. No hay que completar las diez. Una foto repetida cuenta como otra aparición; los recursos pendientes (`src: null`) también cuentan y conservan su espacio.
+
+1. Guarda la foto en la carpeta de su proyecto, por ejemplo `public/images/projects/modelaje/gallery-04.webp`.
+2. Añade un registro propio a `media.json`, o edítalo si ya existe (no borres los demás):
+
+```json
+{
+  "modelajeGallery04": {
+    "_comment": "Cuarta fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/gallery-04.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 1800,
+    "height": 2400
+  }
+}
+```
+
+3. En el registro de Modelaje de `projects.json`, añade este bloque al final de `gallery` (ya está incorporado para `modelajeGallery04`; no lo dupliques):
+
+```json
+{ "type": "image", "media": "modelajeGallery04" }
+```
+
+Repite con identificadores nuevos hasta diez fotos. Puedes usar el nombre del proyecto en los identificadores nuevos; no renombres los antiguos sin actualizar sus referencias. El undécimo elemento provoca un error de validación en `pnpm check`. Una pareja (`pair`) cuenta como **dos fotos**.
+
+Desde 810 px, las apariciones se distribuyen alternadamente en dos columnas independientes (1, 3, 5… a la izquierda; 2, 4, 6… a la derecha). Toda la ficha comparte el mismo scroll de página, desde el título hasta el pie: no hay un panel desplazable dentro de la galería. Por debajo de 810 px, las fotos pasan a una columna y se respeta `mobileOrder` de cada pareja. No se duplican las imágenes para construir las dos composiciones.
+
+`width` y `height` deben contener las dimensiones reales del archivo, como enteros positivos. La galería reserva un recorte editorial: vertical 3:4, salvo las fotos 2 y 8, cuadradas en la columna derecha. Después de la primera pareja vertical/cuadrado hay dos parejas verticales antes de repetir. Para un recorte distinto, añade al bloque un `aspectRatio` numérico (ancho dividido entre alto):
+
+```json
+{ "type": "image", "media": "modelajeGallery04", "aspectRatio": 0.75 }
+```
+
+Ese ejemplo fuerza 3:4; `1` fuerza un cuadrado y `1.5` equivale a 3:2. El encuadre se sigue ajustando mediante `position` en `media.json`. Los bloques anteriores `pair` y `wide` siguen siendo válidos: cada imagen aparece dentro de su columna y adopta el patrón anterior, salvo que su bloque declare `aspectRatio`. Las proporciones ya están reservadas antes de descargar las fotos.
 
 ## Campos comunes
 
 - `src`: ruta desde `/images/` o URL HTTPS. Mantén `null` mientras no tengas la foto.
 - `alt`: descripción de lo que aparece en la foto para quien no puede verla; no es una instrucción de edición ni un título visible.
+- `width` y `height`: dimensiones originales opcionales, siempre juntas; describen el archivo, mientras que `aspectRatio` y el patrón de la galería definen el recorte visible.
 - `position`: punto de recorte. `50% 50%` centra la foto y `50% 30%` acerca el encuadre a su parte superior. `object-fit: cover` conserva la proporción y recorta para cubrir el contenedor.
 
 Una foto pendiente o fallida conserva su espacio reservado. Puedes repetir una misma ruta si lo necesitas; las colecciones siguen teniendo registros separados.

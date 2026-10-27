@@ -1,4 +1,5 @@
 import {
+  Color,
   Mesh,
   OrthographicCamera,
   PlaneGeometry,
@@ -19,6 +20,7 @@ import {
 import { fragmentShader, vertexShader } from "./scrollCurveShaders.js";
 
 const defaultThree = {
+  Color,
   Mesh,
   OrthographicCamera,
   PlaneGeometry,
@@ -98,8 +100,8 @@ export function createScrollCurveEngine({
     canvas.removeEventListener("webglcontextlost", onContextLost);
     for (const entry of entries) {
       entry.version += 1;
-      entry.image.removeEventListener("load", entry.onLoad);
-      entry.image.removeEventListener("error", entry.onError);
+      entry.image?.removeEventListener("load", entry.onLoad);
+      entry.image?.removeEventListener("error", entry.onError);
       removeVisual(entry);
     }
     geometry.dispose();
@@ -139,9 +141,48 @@ export function createScrollCurveEngine({
     }
   }
 
+  function createVisual(entry, texture = null) {
+    entry.texture = texture;
+    entry.material = new three.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      uniforms: {
+        uImage: { value: texture },
+        uSolid: { value: !entry.image },
+        uColor: { value: new three.Color(entry.color || "#ffffff") },
+        uViewport: { value: new three.Vector2(width, height) },
+        uBoxSize: { value: new three.Vector2(1, 1) },
+        uUvScale: { value: new three.Vector2(1, 1) },
+        uUvOffset: { value: new three.Vector2() },
+        uRadius: { value: 0 },
+        uBend: { value: bend },
+        uEdgeStart: { value: settings.edgeStart },
+      },
+    });
+    entry.mesh = new three.Mesh(geometry, entry.material);
+    entry.mesh.frustumCulled = false;
+    entry.mesh.visible = false;
+    scene.add(entry.mesh);
+    invalidate();
+  }
+
   function refresh(entry) {
     if (disposed) return;
     const { image } = entry;
+    if (!image) {
+      // La variable conserva el color aunque el fondo HTML ya sea transparente.
+      const color = getComputedStyle(entry.surface)
+        .getPropertyValue("--scroll-surface-color")
+        .trim();
+      if (!color || (entry.color === color && entry.mesh)) return;
+      removeVisual(entry);
+      entry.color = color;
+      createVisual(entry);
+      return;
+    }
     const source = image.currentSrc || image.src;
     if (entry.source === source && image.complete && image.naturalWidth) return;
     const version = ++entry.version;
@@ -164,29 +205,7 @@ export function createScrollCurveEngine({
           texture.dispose();
           return;
         }
-        entry.texture = texture;
-        entry.material = new three.ShaderMaterial({
-          vertexShader,
-          fragmentShader,
-          transparent: true,
-          depthTest: false,
-          depthWrite: false,
-          uniforms: {
-            uImage: { value: texture },
-            uViewport: { value: new three.Vector2(width, height) },
-            uBoxSize: { value: new three.Vector2(1, 1) },
-            uUvScale: { value: new three.Vector2(1, 1) },
-            uUvOffset: { value: new three.Vector2() },
-            uRadius: { value: 0 },
-            uBend: { value: bend },
-            uEdgeStart: { value: settings.edgeStart },
-          },
-        });
-        entry.mesh = new three.Mesh(geometry, entry.material);
-        entry.mesh.frustumCulled = false;
-        entry.mesh.visible = false;
-        scene.add(entry.mesh);
-        invalidate();
+        createVisual(entry, texture);
       },
       undefined,
       invalidate,
@@ -195,15 +214,19 @@ export function createScrollCurveEngine({
 
   function measure(entry) {
     const { image, surface } = entry;
-    if (!image.isConnected) return null;
-    const reveal = image.closest("[data-reveal-state]");
+    const element = image ?? surface;
+    if (!element.isConnected) return null;
+    const reveal = element.closest("[data-reveal-state]");
     if (reveal && reveal.dataset.revealState !== "done") return null;
-    const rect = image.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     if (!rect.width || !rect.height || rect.bottom <= -100 || rect.top >= height + 100) return null;
-    const imageStyle = getComputedStyle(image);
-    if (imageStyle.objectFit !== "cover" || imageStyle.visibility === "hidden") return null;
-    const position = parseObjectPosition(imageStyle.objectPosition);
-    if (!position) return null;
+    let position;
+    if (image) {
+      const imageStyle = getComputedStyle(image);
+      if (imageStyle.objectFit !== "cover" || imageStyle.visibility === "hidden") return null;
+      position = parseObjectPosition(imageStyle.objectPosition);
+      if (!position) return null;
+    }
     const surfaceStyle = getComputedStyle(surface);
     const radius = surfaceStyle.borderTopLeftRadius;
     if (
@@ -229,13 +252,9 @@ export function createScrollCurveEngine({
       )
         return null;
     }
-    const uv = getCoverUv(
-      image.naturalWidth,
-      image.naturalHeight,
-      rect.width,
-      rect.height,
-      position,
-    );
+    const uv = image
+      ? getCoverUv(image.naturalWidth, image.naturalHeight, rect.width, rect.height, position)
+      : { scale: [1, 1], offset: [0, 0] };
     return uv ? { rect, uv, radius: Number.parseFloat(radius) } : null;
   }
 
@@ -312,7 +331,11 @@ export function createScrollCurveEngine({
   document.body.appendChild(canvas);
   resize();
   if (disposed) return { dispose };
-  for (const [image, surface] of targets) {
+  for (const [element, target] of targets) {
+    if (disposed) break;
+    const solid = target.kind === "color";
+    const image = solid ? null : element;
+    const surface = solid ? target.surface : target;
     const entry = { image, surface, source: "", version: 0, mesh: null };
     entry.onLoad = () => refresh(entry);
     entry.onError = () => {
@@ -320,15 +343,15 @@ export function createScrollCurveEngine({
       removeVisual(entry);
       invalidate();
     };
-    image.addEventListener("load", entry.onLoad);
-    image.addEventListener("error", entry.onError);
+    image?.addEventListener("load", entry.onLoad);
+    image?.addEventListener("error", entry.onError);
     entries.push(entry);
     resizeObserver?.observe(surface);
-    mutationObserver.observe(image, {
+    mutationObserver.observe(image ?? surface, {
       attributes: true,
-      attributeFilter: ["src", "srcset", "sizes"],
+      attributeFilter: image ? ["src", "srcset", "sizes"] : ["class", "style"],
     });
-    const reveal = image.closest("[data-reveal-state]");
+    const reveal = element.closest("[data-reveal-state]");
     if (reveal)
       mutationObserver.observe(reveal, {
         attributes: true,

@@ -3,11 +3,11 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
   align-items: center;
   gap: 20px;
-  min-height: 520px;
-  margin-bottom: 65px;
+  min-height: 440px;
+  margin-bottom: 32px;
 }
 .work-hero__title {
-  font-size: clamp(75px, 11.35vw, 180px);
+  font-size: clamp(65px, 9.5vw, 150px);
   font-weight: 600;
   line-height: 0.87;
   letter-spacing: -0.06em;
@@ -31,7 +31,7 @@
     min-height: 0;
     min-width: 0;
     width: 100%;
-    margin-bottom: 43px;
+    margin-bottom: 28px;
   }
   .work-hero__content,
   .work-hero__carousel {

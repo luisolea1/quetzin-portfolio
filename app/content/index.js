@@ -6,6 +6,8 @@ import { validate } from "./validate.js";
 export { site, projects, media };
 export const validateContent = () => validate(site, projects, media);
 export const findProject = (slug) => projects.find((project) => project.slug === slug);
+export const findLegacyProject = (slug) =>
+  projects.find((project) => project.legacySlugs?.includes(slug));
 const resolveCarouselItems = (ids, mediaContent) =>
   ids.map((id) => ({
     ...mediaContent[id],

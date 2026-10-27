@@ -1,3 +1,5 @@
+import { MAX_GALLERY_IMAGES } from "./gallery.js";
+
 function requireText(value, label) {
   if (typeof value !== "string" || !value.trim()) throw new Error(`${label} debe contener texto`);
 }
@@ -73,7 +75,15 @@ export function validate(site, projects, media) {
     if (!Array.isArray(project.gallery) || !Array.isArray(project.related))
       throw new Error(`Galería o relacionados inválidos: ${project.slug}`);
     for (const block of project.gallery) {
-      if (block.type === "wide") requireMedia(block.media, media, project.slug);
+      if (!block || typeof block !== "object")
+        throw new Error(`Bloque de galería inválido: ${project.slug}`);
+      if (
+        block.aspectRatio !== undefined &&
+        (!Number.isFinite(block.aspectRatio) || block.aspectRatio <= 0)
+      )
+        throw new Error(`Proporción de galería inválida: ${project.slug}`);
+      if (block.type === "wide" || block.type === "image")
+        requireMedia(block.media, media, project.slug);
       else if (block.type === "pair") {
         if (!Array.isArray(block.items) || block.items.length !== 2)
           throw new Error(`Bloque de galería inválido: ${project.slug}`);
@@ -87,8 +97,20 @@ export function validate(site, projects, media) {
       if (block.type === "pair")
         for (const id of block.items) requireMedia(id, media, project.slug);
     }
+    if (
+      project.gallery.reduce((count, block) => count + (block.type === "pair" ? 2 : 1), 0) >
+      MAX_GALLERY_IMAGES
+    )
+      throw new Error(`La galería admite hasta ${MAX_GALLERY_IMAGES} fotos: ${project.slug}`);
   }
   for (const project of projects) {
+    if (project.legacySlugs !== undefined && !Array.isArray(project.legacySlugs))
+      throw new Error(`Slugs anteriores inválidos: ${project.slug}`);
+    for (const slug of project.legacySlugs ?? []) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || slugs.has(slug))
+        throw new Error(`Slug anterior inválido o duplicado: ${slug}`);
+      slugs.add(slug);
+    }
     if (
       project.related.length !== 2 ||
       new Set(project.related).size !== 2 ||
@@ -107,6 +129,14 @@ export function validate(site, projects, media) {
       throw new Error(`Ruta de imagen inválida: ${id}`);
     }
     if (resource.src && !resource.alt.trim()) throw new Error(`Falta texto alternativo: ${id}`);
+    if (
+      (resource.width !== undefined || resource.height !== undefined) &&
+      (!Number.isInteger(resource.width) ||
+        resource.width <= 0 ||
+        !Number.isInteger(resource.height) ||
+        resource.height <= 0)
+    )
+      throw new Error(`Dimensiones de imagen inválidas: ${id}`);
   }
   return true;
 }

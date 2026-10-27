@@ -7,7 +7,13 @@ import { createScrollCurveEngine } from "./scrollCurveEngine.js";
 // incluidos errores que no dependen de que el equipo de CI disponga de WebGL.
 function fixture(
   t,
-  { textureFails = false, delayed = false, renderFails = false, shaderFails = false } = {},
+  {
+    textureFails = false,
+    delayed = false,
+    renderFails = false,
+    shaderFails = false,
+    includeColor = false,
+  } = {},
 ) {
   const names = ["window", "document", "getComputedStyle", "ResizeObserver", "MutationObserver"];
   const originals = names.map((name) => Object.getOwnPropertyDescriptor(globalThis, name));
@@ -43,6 +49,14 @@ function fixture(
     closest: () => reveal,
     getBoundingClientRect: () => rect,
   });
+  const colorRect = { left: 40, top: 400, width: 600, height: 900, bottom: 1300 };
+  const colorSurface = {
+    ...surface,
+    attributes: new Map(),
+    isConnected: true,
+    closest: () => reveal,
+    getBoundingClientRect: () => colorRect,
+  };
   globalThis.window = Object.assign(new EventTarget(), {
     innerWidth: 1440,
     innerHeight: 900,
@@ -65,6 +79,7 @@ function fixture(
           transform: "none",
           filter: "none",
           opacity: "1",
+          getPropertyValue: () => "#111111",
         };
   class Observer {
     constructor(callback) {
@@ -134,7 +149,10 @@ function fixture(
   let subscribers = 0;
   const failures = [];
   const engine = createScrollCurveEngine({
-    targets: new Map([[image, surface]]),
+    targets: new Map([
+      [image, surface],
+      ...(includeColor ? [[colorSurface, { kind: "color", surface: colorSurface }]] : []),
+    ]),
     subscribeFrame(callback) {
       subscribers++;
       frame = callback;
@@ -150,6 +168,8 @@ function fixture(
     engine,
     image,
     surface,
+    colorSurface,
+    colorRect,
     renderer,
     rect,
     reveal,
@@ -158,6 +178,7 @@ function fixture(
     canvases,
     tick: (scroll = 0) => frame({ delta: 1 / 60, scroll }),
     ready: () => surface.attributes.has("data-scroll-curve-ready"),
+    colorReady: () => colorSurface.attributes.has("data-scroll-curve-ready"),
     load: () => load(),
     subscribers: () => subscribers,
     textureDisposed: () => textureDisposed,
@@ -198,12 +219,14 @@ test("a failed texture keeps HTML visible without disabling the scroll runtime",
 });
 
 test("context loss restores HTML and releases the one renderer and its frame subscription", (t) => {
-  const f = fixture(t);
+  const f = fixture(t, { includeColor: true });
   f.tick();
+  assert.equal(f.colorReady(), true);
   const event = new Event("webglcontextlost", { cancelable: true });
   f.renderer.domElement.dispatchEvent(event);
   assert.equal(event.defaultPrevented, true);
   assert.equal(f.ready(), false);
+  assert.equal(f.colorReady(), false);
   assert.equal(f.canvases.size, 0);
   assert.equal(f.subscribers(), 0);
   assert.equal(f.textureDisposed(), 1);
@@ -215,11 +238,51 @@ test("context loss restores HTML and releases the one renderer and its frame sub
 });
 
 test("a GPU draw failure cannot hide the HTML image", (t) => {
-  const f = fixture(t, { renderFails: true });
+  const f = fixture(t, { renderFails: true, includeColor: true });
   f.tick();
   assert.equal(f.ready(), false);
+  assert.equal(f.colorReady(), false);
   assert.equal(f.failures.length, 1);
   assert.equal(f.canvases.size, 0);
+});
+
+test("a full-height color panel shares the canvas and ticker, then restores HTML outside the viewport", (t) => {
+  const f = fixture(t, { includeColor: true });
+  assert.equal(f.colorReady(), false);
+  f.tick();
+  assert.equal(f.ready(), true);
+  assert.equal(f.colorReady(), true);
+  assert.equal(f.canvases.size, 1);
+  assert.equal(f.subscribers(), 1);
+  assert.equal(f.renderer.scene.children.length, 2);
+  const mesh = f.renderer.scene.children.find((item) => item.material.uniforms.uSolid.value);
+  assert.equal(mesh.scale.y, 900);
+  assert.equal(mesh.material.uniforms.uImage.value, null);
+  assert.equal(mesh.material.uniforms.uColor.value.getHex(), 0x111111);
+  assert.equal(mesh.material.uniforms.uRadius.value, 7);
+  const draws = f.renderer.draws;
+  f.tick();
+  assert.equal(f.renderer.draws, draws);
+  f.rect.top = 2000;
+  f.rect.bottom = 2500;
+  f.tick(100);
+  assert.equal(f.ready(), false);
+  assert.equal(f.colorReady(), true);
+  f.colorRect.top = 2000;
+  f.colorRect.bottom = 2900;
+  f.tick(200);
+  assert.equal(f.colorReady(), false);
+  assert.equal(f.renderer.clears, 1);
+});
+
+test("the color panel renders even if a photograph texture fails", (t) => {
+  const f = fixture(t, { includeColor: true, textureFails: true });
+  f.tick();
+  assert.equal(f.ready(), false);
+  assert.equal(f.colorReady(), true);
+  assert.equal(f.failures.length, 0);
+  assert.equal(f.renderer.scene.children.length, 1);
+  assert.equal(f.renderer.scene.children[0].material.uniforms.uSolid.value, true);
 });
 
 test("late textures are discarded after navigation disposes the engine", (t) => {

@@ -5,8 +5,8 @@ export default function AboutSection({ site, carouselItems }) {
   return (
     <InfoPanel
       className={styles["about-section"]}
-      heading="Acerca de / 01"
-      headingId="home-about-title"
+      ariaLabel={`Acerca de ${site.name}`}
+      scrollEffect="curve"
       description={site.description}
       services={site.services}
       industries={site.industries}

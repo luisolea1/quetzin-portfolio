@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { parse } from "parse5";
 import { media, projects, site } from "../app/content/index.js";
+import { getGalleryItems } from "../app/content/gallery.js";
 
 const pages = [
   {
@@ -71,10 +72,57 @@ for (const page of pages) {
       attribute(image, "src") && attribute(image, "alt"),
       "falta el respaldo de una portada M05",
     );
+  const curvedPanels = nodes.filter((node) => attribute(node, "data-scroll-surface") === "color");
+  expect(
+    curvedPanels.length === (page.route === "/" ? 1 : 0),
+    "M05 sólo debe extenderse al panel oscuro de Home",
+  );
+  if (curvedPanels.length) {
+    const panel = curvedPanels[0];
+    expect(
+      panel.tagName === "section" && attribute(panel, "aria-label"),
+      "el fondo curvado debe abarcar la sección completa y conservar su nombre accesible",
+    );
+    expect(
+      elements(panel).some((node) => node.tagName === "a" && attribute(node, "href") === "/about"),
+      "la superficie M05 debe incluir el enlace final del panel",
+    );
+    expect(
+      !find("h2").some((node) => attribute(node, "id") === "home-about-title"),
+      "el título Acerca de / 01 se retiró de Home",
+    );
+  }
 
   expect(attribute(find("html")[0], "lang") === "es", "falta el idioma del documento");
   expect(find("main").length === 1, "debe existir un único contenido principal");
   expect(find("h1").length === 1 && text(find("h1")[0]).trim(), "debe existir un único h1");
+  const foldedNames = nodes.filter((node) => attribute(node, "data-fold-root") !== undefined);
+  expect(
+    foldedNames.length === (page.route === "/" && !site.logo ? 1 : 0),
+    "FoldText sólo debe aparecer en el nombre principal de Home",
+  );
+  if (foldedNames.length) {
+    const fold = foldedNames[0];
+    expect(
+      attribute(fold, "data-fold-ready") === undefined,
+      "FoldText debe prerenderizarse estático",
+    );
+    const visual = fold.childNodes.find((node) => attribute(node, "aria-hidden") === "true");
+    const accessible = fold.childNodes.find(
+      (node) => attribute(node, "class") === "u-visually-hidden",
+    );
+    expect(
+      visual && accessible && text(accessible) === site.name,
+      "el nombre debe tener un único texto accesible",
+    );
+    const pieces = elements(visual).filter(
+      (node) => attribute(node, "data-fold-piece") !== undefined,
+    );
+    expect(
+      pieces.length > 0 && pieces.every((node) => !attribute(node, "style")?.includes("opacity:0")),
+      "el nombre debe ser visible sin JavaScript",
+    );
+  }
   expect(text(find("title")[0]) === page.title, "el título no corresponde a la ruta");
   expect(
     find("meta").some(
@@ -189,6 +237,45 @@ for (const page of pages) {
       "las imágenes deben decodificarse de forma asíncrona",
     );
   const project = projects.find((item) => page.route === `/projects/${item.slug}`);
+  if (project) {
+    const gallery = nodes.find((node) => attribute(node, "data-project-gallery") !== undefined);
+    expect(gallery, "falta la galería accesible en el HTML inicial");
+    expect(
+      attribute(gallery, "tabindex") === undefined,
+      "la galería debe seguir el scroll de página",
+    );
+    expect(
+      attribute(gallery, "data-lenis-prevent") === undefined,
+      "la galería debe compartir el controlador de scroll de la página",
+    );
+    const figures = elements(gallery).filter((node) => node.tagName === "figure");
+    const items = getGalleryItems(project.gallery, media);
+    const columnOrder = [
+      ...items.filter((_, index) => index % 2 === 0),
+      ...items.filter((_, index) => index % 2 === 1),
+    ];
+    expect(figures.length === items.length, "deben estar todas las fotos sin duplicar apariciones");
+    for (const [index, figure] of figures.entries()) {
+      const item = columnOrder[index];
+      const image = elements(figure).find((node) => node.tagName === "img");
+      expect(
+        attribute(figure, "style")?.includes("--gallery-aspect-ratio:"),
+        "falta la proporción reservada",
+      );
+      if (item.media.src)
+        expect(
+          image &&
+            attribute(image, "src") === item.media.src &&
+            attribute(image, "loading") === "lazy",
+          "la foto de galería debe estar en HTML con carga diferida",
+        );
+      else
+        expect(
+          elements(figure).some((node) => attribute(node, "role") === "img"),
+          "falta el espacio reservado",
+        );
+    }
+  }
   const prioritized = find("img").filter((node) => attribute(node, "fetchpriority") === "high");
   const prioritySrc = project ? media[project.hero]?.src : null;
   expect(

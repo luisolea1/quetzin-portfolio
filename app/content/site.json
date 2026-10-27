@@ -1,16 +1,17 @@
 {
   "name": "Quetzin Cuevas",
-  "role": "Tu disciplina / especialidad",
-  "intro": "Un espacio para presentar tu trabajo, tu mirada y tus proyectos.",
-  "approach": "Aquí podrás contar qué haces y cómo te gusta trabajar.",
+  "role": "Gestión de redes sociales enfocada en la estrategia publicitaria",
+  "intro": "Desarrollo propuestas visuales que ayudan a las marcas a construir su identidad y destacar en el entorno digital.",
+  "approach": "Me apaciona contar historias a través de la fotografía y video, explorando la creatividad y el lenguaje visual.",
   "aboutIntro": "Este espacio está reservado para tu presentación personal.",
   "bio": [
-    "Añade aquí una breve biografía sobre ti y tu práctica.",
-    "Explica qué te inspira y qué tipo de colaboraciones buscas."
+    "Soy licenciado en Ciencias de la Comunicación, especializado en producción audiovisual.",
+    "Cada proyecto tiene una identidad y una historia que contar. Te invito a explorar mi portafolio para conocer mi estilo visual, mi enfoque creativo y la manera en que puedo ayudarte a dar vida a tus ideas.",
+    "Si conectas con mi trabajo, me encantaria colaborar contigo y crear contenido para tu marca."
   ],
-  "description": "Una selección de proyectos y procesos, lista para tomar tu forma.",
-  "workIntro": "Cuatro proyectos listos para sustituirse por tus propios trabajos.",
-  "services": ["Fotografia", "Edición", "Video", "Música"],
+  "description": "Una selección de proyectos",
+  "workIntro": "Una cuidada selección de proyectos basados en ideas creativas y soluciones visuales que reflejan la identidad de cada uno.",
+  "services": ["Fotografia", "Edición", "Video"],
   "industries": [],
   "experience": [],
   "email": "quetzincuevas@gmail.com",
@@ -19,6 +20,10 @@
     {
       "label": "Instagram",
       "url": "https://www.instagram.com/ragnarl10/"
+    },
+    {
+      "label": "Youtube",
+      "url": "https://www.youtube.com/@quetzincuevas3954"
     }
   ],
   "logo": null,

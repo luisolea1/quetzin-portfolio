@@ -1,7 +1,8 @@
 [
   {
     "id": "project01",
-    "slug": "proyecto-01",
+    "slug": "modelaje",
+    "legacySlugs": ["proyecto-01"],
     "title": "Modelaje",
     "year": null,
     "client": null,
@@ -19,15 +20,44 @@
       {
         "type": "wide",
         "media": "gallery01wide"
+      },
+      {
+        "type": "image",
+        "media": "modelajeGallery04"
+      },
+      {
+        "type": "image",
+        "media": "modelajeGallery05"
+      },
+      {
+        "type": "image",
+        "media": "modelajeGallery06"
+      },
+      {
+        "type": "image",
+        "media": "modelajeGallery07"
+      },
+      {
+        "type": "image",
+        "media": "modelajeGallery08"
+      },
+      {
+        "type": "image",
+        "media": "modelajeGallery09"
+      },
+      {
+        "type": "image",
+        "media": "modelajeGallery10"
       }
     ],
     "related": ["project02", "project03"],
     "url": null,
-    "description": "Ficha provisional del proyecto 01."
+    "description": "Ficha provisional de Modelaje."
   },
   {
     "id": "project02",
-    "slug": "proyecto-02",
+    "slug": "paisajes",
+    "legacySlugs": ["proyecto-02"],
     "title": "Paisajes",
     "year": null,
     "client": null,
@@ -49,11 +79,12 @@
     ],
     "related": ["project01", "project03"],
     "url": null,
-    "description": "Ficha provisional del proyecto 02."
+    "description": "Ficha provisional de Paisajes."
   },
   {
     "id": "project03",
-    "slug": "proyecto-03",
+    "slug": "producto",
+    "legacySlugs": ["proyecto-03"],
     "title": "Producto",
     "year": null,
     "client": null,
@@ -71,15 +102,36 @@
       {
         "type": "wide",
         "media": "gallery03wide"
+      },
+      {
+        "type": "image",
+        "media": "productoGallery04"
+      },
+      {
+        "type": "image",
+        "media": "productoGallery05"
+      },
+      {
+        "type": "image",
+        "media": "productoGallery06"
+      },
+      {
+        "type": "image",
+        "media": "productoGallery07"
+      },
+      {
+        "type": "image",
+        "media": "productoGallery08"
       }
     ],
     "related": ["project01", "project02"],
     "url": null,
-    "description": "Ficha provisional del proyecto 03."
+    "description": "Ficha provisional de Producto."
   },
   {
     "id": "project04",
-    "slug": "proyecto-04",
+    "slug": "musica",
+    "legacySlugs": ["proyecto-04"],
     "title": "Música",
     "year": null,
     "client": null,
@@ -97,10 +149,14 @@
       {
         "type": "wide",
         "media": "gallery04wide"
+      },
+      {
+        "type": "image",
+        "media": "musicaGallery04"
       }
     ],
     "related": ["project01", "project02"],
     "url": null,
-    "description": "Ficha provisional del proyecto 04."
+    "description": "Ficha provisional de Música."
   }
 ]

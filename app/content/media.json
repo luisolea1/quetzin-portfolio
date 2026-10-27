@@ -13,120 +13,249 @@
   },
 
   "cover01": {
-    "_comment": "Portada de Modelaje: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-01/cover.webp.",
+    "_comment": "Portada de Modelaje: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/modelaje/cover.webp.",
     "src": "/images/modelaje.webp",
     "alt": "Imagen de Modelaje",
     "position": "50% 50%"
   },
   "cover02": {
-    "_comment": "Portada de Paisajes: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-02/cover.webp.",
+    "_comment": "Portada de Paisajes: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/paisajes/cover.webp.",
     "src": "/images/paisaje.webp",
     "alt": "Imagen de Paisaje",
     "position": "50% 50%"
   },
   "cover03": {
-    "_comment": "Portada de Producto: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-03/cover.webp.",
+    "_comment": "Portada de Producto: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/producto/cover.webp.",
     "src": "/images/producto.webp",
     "alt": "Imagen de Producto",
     "position": "50% 70%"
   },
   "cover04": {
-    "_comment": "Portada de Música: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/proyecto-04/cover.webp.",
+    "_comment": "Portada de Música: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/musica/cover.webp.",
     "src": "/images/conciertos.webp",
     "alt": "Imagen de Conciertos",
     "position": "50% 50%"
   },
 
   "hero01": {
-    "_comment": "Imagen principal de Modelaje en /projects/proyecto-01, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-01/hero.webp.",
+    "_comment": "Imagen principal de Modelaje en /projects/modelaje, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/modelaje/hero.webp.",
     "src": "/images/projects/modelaje/model0.webp",
-    "alt": "Imagen principal del proyecto 01 pendiente"
+    "alt": "Imagen principal de Modelaje"
   },
   "hero02": {
-    "_comment": "Imagen principal de Paisajes en /projects/proyecto-02, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-02/hero.webp.",
+    "_comment": "Imagen principal de Paisajes en /projects/paisajes, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/paisajes/hero.webp.",
     "src": "/images/projects/paisajes/paisaje0.webp",
-    "alt": "Imagen principal del proyecto 02 pendiente"
+    "alt": "Imagen principal de Paisajes"
   },
   "hero03": {
-    "_comment": "Imagen principal de Producto en /projects/proyecto-03, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-03/hero.webp.",
+    "_comment": "Imagen principal de Producto en /projects/producto, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/producto/hero.webp.",
     "src": "/images/projects/producto/producto0.webp",
-    "alt": "Imagen principal del proyecto 03 pendiente"
+    "alt": "Imagen principal de Producto"
   },
 
   "hero04": {
-    "_comment": "Imagen principal de Música en /projects/proyecto-04, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/proyecto-04/hero.webp.",
+    "_comment": "Imagen principal de Música en /projects/musica, debajo del título. Contenedor 16:9. Es independiente de la portada. Ejemplo de src: /images/projects/musica/hero.webp.",
     "src": "/images/projects/musica/musica0.webp",
-    "alt": "Imagen principal del proyecto 04 pendiente"
+    "alt": "Imagen principal de Música"
   },
 
   "gallery01a": {
-    "_comment": "Galería de Modelaje: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-01/gallery-01.webp.",
+    "_comment": "Galería de Modelaje: imagen izquierda de la pareja en las dos columnas de escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/modelaje/gallery-01.webp.",
     "src": "/images/projects/modelaje/model02.webp",
     "alt": "Modelo Portada",
-    "position": "50% 78%"
+    "position": "50% 78%",
+    "width": 1800,
+    "height": 2398
   },
   "gallery01b": {
-    "_comment": "Galería de Modelaje: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-01/gallery-02.webp.",
+    "_comment": "Galería de Modelaje: imagen derecha de la pareja en las dos columnas de escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/modelaje/gallery-02.webp.",
     "src": "/images/projects/modelaje/model03.webp",
     "alt": "Modelo lado izquierdo",
-    "position": "50% 60%"
+    "position": "50% 60%",
+    "width": 2400,
+    "height": 3197
   },
   "gallery01wide": {
-    "_comment": "Galería de Modelaje: imagen ancha a continuación de la pareja de cuadrados. Contenedor 2:1. Ejemplo de src: /images/projects/proyecto-01/gallery-wide.webp.",
+    "_comment": "Galería de Modelaje: imagen independiente después de la pareja, en su columna. Recorte editorial 3:4 salvo aspectRatio explícito en projects.json. Ejemplo de src: /images/projects/modelaje/gallery-wide.webp.",
     "src": "/images/projects/modelaje/model05.webp",
     "alt": "Modelo parte baja",
-    "position": "50% 63%"
+    "position": "50% 63%",
+    "width": 2000,
+    "height": 2000
+  },
+
+  "modelajeGallery04": {
+    "_comment": "Cuarta fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/model06.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "modelajeGallery05": {
+    "_comment": "Quinta fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/model07.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "modelajeGallery06": {
+    "_comment": "Sexta fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/model08.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "modelajeGallery07": {
+    "_comment": "Séptima fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/model09.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "modelajeGallery08": {
+    "_comment": "Octava fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/model10.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 1880,
+    "height": 1838
+  },
+  "modelajeGallery09": {
+    "_comment": "Novena fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/model11.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "modelajeGallery10": {
+    "_comment": "Décima fotografía de la galería de Modelaje.",
+    "src": "/images/projects/modelaje/model12.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
   },
 
   "gallery02a": {
-    "_comment": "Galería de Paisajes: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-02/gallery-01.webp.",
+    "_comment": "Galería de Paisajes: imagen izquierda de la pareja en las dos columnas de escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/paisajes/gallery-01.webp.",
     "src": "/images/projects/paisajes/paisaje01.webp",
-    "alt": "Paisaje izquierdo"
+    "alt": "Paisaje izquierdo",
+    "width": 2000,
+    "height": 3273
   },
   "gallery02b": {
-    "_comment": "Galería de Paisajes: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-02/gallery-02.webp.",
+    "_comment": "Galería de Paisajes: imagen derecha de la pareja en las dos columnas de escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/paisajes/gallery-02.webp.",
     "src": "/images/projects/paisajes/paisaje02.webp",
     "alt": "Paisaje derecho",
-    "position": "50% 70%"
+    "position": "50% 70%",
+    "width": 2000,
+    "height": 3247
   },
   "gallery02wide": {
-    "_comment": "Galería de Paisajes: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-02/gallery-wide.webp.",
+    "_comment": "Galería de Paisajes: imagen horizontal después de la pareja, en su columna. Recorte editorial 3:4 salvo aspectRatio explícito en projects.json. Ejemplo de src: /images/projects/paisajes/gallery-wide.webp.",
     "src": "/images/projects/paisajes/paisaje03.webp",
-    "alt": "Paisaje ancho"
+    "alt": "Paisaje ancho",
+    "width": 2400,
+    "height": 1600
   },
 
   "gallery03a": {
-    "_comment": "Galería de Producto: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-03/gallery-01.webp.",
+    "_comment": "Galería de Producto: imagen izquierda de la pareja en las dos columnas de escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/producto/gallery-01.webp.",
     "src": "/images/projects/producto/producto01.webp",
-    "alt": "Imagen de galería pendiente"
+    "alt": "Imagen de galería pendiente",
+    "width": 1800,
+    "height": 2300
   },
   "gallery03b": {
-    "_comment": "Galería de Producto: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-03/gallery-02.webp.",
+    "_comment": "Galería de Producto: imagen derecha de la pareja en las dos columnas de escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/producto/gallery-02.webp.",
     "src": "/images/projects/producto/producto02.webp",
-    "alt": "Imagen de galería pendiente"
+    "alt": "Imagen de galería pendiente",
+    "width": 2400,
+    "height": 3600
   },
   "gallery03wide": {
-    "_comment": "Galería de Producto: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-03/gallery-wide.webp.",
-    "src": "/images/projects/producto/producto04.webp",
+    "_comment": "Galería de Producto: imagen horizontal después de la pareja, en su columna. Recorte editorial 3:4 salvo aspectRatio explícito en projects.json. Ejemplo de src: /images/projects/producto/gallery-wide.webp.",
+    "src": "/images/projects/producto/producto03.webp",
     "alt": "Imagen de galería pendiente",
-    "position": "50% 63%"
+    "position": "50% 63%",
+    "width": 2400,
+    "height": 1600
+  },
+  "productoGallery04": {
+    "_comment": "Cuarta fotografía de la galería de Producto.",
+    "src": "/images/projects/producto/producto05.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "productoGallery05": {
+    "_comment": "Quinta fotografía de la galería de Producto.",
+    "src": "/images/projects/producto/producto06.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "productoGallery06": {
+    "_comment": "Sexta fotografía de la galería de Producto.",
+    "src": "/images/projects/producto/producto07.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "productoGallery07": {
+    "_comment": "Séptima fotografía de la galería de Producto.",
+    "src": "/images/projects/producto/producto08.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
+  },
+  "productoGallery08": {
+    "_comment": "Octava fotografía de la galería de Producto.",
+    "src": "/images/projects/producto/producto09.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
   },
 
   "gallery04a": {
-    "_comment": "Galería de Música: imagen izquierda de la pareja de cuadrados en escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-04/gallery-01.webp.",
+    "_comment": "Galería de Música: imagen izquierda de la pareja en las dos columnas de escritorio; aparece en posición 1 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/musica/gallery-01.webp.",
     "src": "/images/projects/musica/musica01.webp",
     "alt": "Imagen de galería pendiente",
-    "position": "50% 85%"
+    "position": "50% 85%",
+    "width": 4128,
+    "height": 6192
   },
   "gallery04b": {
-    "_comment": "Galería de Música: imagen derecha de la pareja de cuadrados en escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/proyecto-04/gallery-02.webp.",
+    "_comment": "Galería de Música: imagen derecha de la pareja en las dos columnas de escritorio; aparece en posición 2 de la pareja en móvil según projects.json. Ejemplo de src: /images/projects/musica/gallery-02.webp.",
     "src": "/images/projects/musica/musica02.webp",
-    "alt": "Imagen de galería pendiente"
+    "alt": "Imagen de galería pendiente",
+    "width": 2400,
+    "height": 3600
   },
   "gallery04wide": {
-    "_comment": "Galería de Música: imagen ancha a continuación de la pareja de cuadrados. Contenedor 16:9. Ejemplo de src: /images/projects/proyecto-04/gallery-wide.webp.",
+    "_comment": "Galería de Música: imagen horizontal después de la pareja, en su columna. Recorte editorial 3:4 salvo aspectRatio explícito en projects.json. Ejemplo de src: /images/projects/musica/gallery-wide.webp.",
     "src": "/images/projects/musica/musica03.webp",
-    "alt": "Imagen de galería pendiente"
+    "alt": "Imagen de galería pendiente",
+    "width": 2400,
+    "height": 1600
+  },
+  "musicaGallery04": {
+    "_comment": "Cuarta fotografía de la galería de Música.",
+    "src": "/images/projects/musica/musica04.webp",
+    "alt": "Describe aquí tu fotografía",
+    "position": "50% 50%",
+    "width": 2048,
+    "height": 1538
   },
 
   "carousel01": {

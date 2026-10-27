@@ -1,0 +1,13 @@
+.arrow-badge {
+  width: 25px;
+  height: 25px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(15px) saturate(1.25);
+  display: grid;
+  place-items: center;
+}
+.arrow-badge__icon {
+  display: block;
+}

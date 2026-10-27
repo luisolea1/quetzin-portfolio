@@ -1,6 +1,6 @@
-import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { Link } from "react-router";
 import Media from "../ui/Media.jsx";
+import ArrowBadge from "../ui/ArrowBadge.jsx";
 import styles from "./ProjectCard.module.css";
 
 export default function ProjectCard({ project, media, scrollEffect = "none" }) {
@@ -19,14 +19,7 @@ export default function ProjectCard({ project, media, scrollEffect = "none" }) {
       />
       <div className={styles["project-card__overlay"]}>
         <span className={styles["project-card__title"]}>{project.title}</span>
-        <span className={styles["project-card__arrow"]} aria-hidden="true">
-          <ArrowUpRightIcon
-            className={styles["project-card__arrow-icon"]}
-            size={36}
-            color="#ffffff"
-            focusable="false"
-          />
-        </span>
+        <ArrowBadge />
       </div>
       {project.categories.length > 0 && (
         <div className={styles["project-card__categories"]}>

@@ -4,6 +4,7 @@
   --page-gutter: 5vw;
   --radius: 7px;
   --font-display: "Inter Variable", Inter, Arial, sans-serif;
+  --font-card-title: "Inter Display", "Inter Variable", Inter, Arial, sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
 }
 @media (max-width: 1199px) {

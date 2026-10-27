@@ -1,11 +1,14 @@
 import WordmarkEffect from "../../../motion/WordmarkEffect.jsx";
 import styles from "./ProfileHero.module.css";
 
-export default function ProfileHero({ site, intro, headingId }) {
+export default function ProfileHero({ site, intro, headingId, markEffect, compactMobile = false }) {
   return (
-    <section className={styles["profile-hero"]} aria-labelledby={headingId}>
+    <section
+      className={`${styles["profile-hero"]} ${compactMobile ? styles["profile-hero--compact-mobile"] : ""}`}
+      aria-labelledby={headingId}
+    >
       <div className={styles["profile-hero__mark"]}>
-        <WordmarkEffect site={site} heading id={headingId} />
+        <WordmarkEffect site={site} heading id={headingId} effect={markEffect} />
       </div>
       <div className={styles["profile-hero__intro"]}>
         <p className={styles["profile-hero__paragraph"]}>

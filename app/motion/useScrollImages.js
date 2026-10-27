@@ -6,11 +6,13 @@ export default function useScrollImages(subscribeFrame, reduced) {
   const failed = useRef(false);
   const [version, setVersion] = useState(0);
   const register = useCallback((image, surface) => {
-    targets.current.set(image, surface);
+    // image=null registra un fondo CSS opaco en el mismo renderizador.
+    const key = image ?? surface;
+    targets.current.set(key, image ? surface : { kind: "color", surface });
     setVersion((value) => value + 1);
     return () => {
       surface.removeAttribute("data-scroll-curve-ready");
-      targets.current.delete(image);
+      targets.current.delete(key);
       if (!targets.current.size) failed.current = false;
       setVersion((value) => value + 1);
     };

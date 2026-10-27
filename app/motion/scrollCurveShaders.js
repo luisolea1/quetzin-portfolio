@@ -18,6 +18,8 @@ export const vertexShader = /* glsl */ `
 export const fragmentShader = /* glsl */ `
   varying vec2 vUv;
   uniform sampler2D uImage;
+  uniform bool uSolid;
+  uniform vec3 uColor;
   uniform vec2 uUvScale;
   uniform vec2 uUvOffset;
   uniform vec2 uBoxSize;
@@ -30,7 +32,7 @@ export const fragmentShader = /* glsl */ `
     vec2 q = abs((vUv - 0.5) * uBoxSize) - halfSize + radius;
     float distanceToEdge = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
     float mask = 1.0 - smoothstep(-0.75, 0.75, distanceToEdge);
-    gl_FragColor = texture2D(uImage, imageUv);
+    gl_FragColor = uSolid ? vec4(uColor, 1.0) : texture2D(uImage, imageUv);
     gl_FragColor.a *= mask;
     #include <tonemapping_fragment>
     #include <colorspace_fragment>

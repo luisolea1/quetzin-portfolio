@@ -38,23 +38,11 @@
   gap: 15px;
 }
 .project-card__title {
+  font-family: var(--font-card-title);
   font-size: 24px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  display: block;
-}
-.project-card__arrow {
-  width: 50px;
-  height: 50px;
-  flex: none;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(15px) saturate(1.25);
-  display: grid;
-  place-items: center;
-}
-.project-card__arrow-icon {
   display: block;
 }
 .project-card__categories {

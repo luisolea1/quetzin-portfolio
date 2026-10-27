@@ -34,6 +34,15 @@
   mix-blend-mode: screen;
   transition: background 0.2s;
 }
+.wordmark--fold {
+  overflow: visible;
+}
+.wordmark--fold::after {
+  content: none;
+}
+.wordmark--fold .wordmark__text {
+  font-size: clamp(48px, 14.6vw, 260px);
+}
 @media (min-width: 1200px) {
   .wordmark__text {
     font-size: clamp(70px, 14.8vw, 260px);
@@ -45,6 +54,9 @@
   }
   .wordmark__text {
     font-size: clamp(55px, 15vw, 120px);
+  }
+  .wordmark--fold .wordmark__text {
+    font-size: clamp(42px, 13.8vw, 120px);
   }
 }
 @media (prefers-reduced-motion: reduce) {
