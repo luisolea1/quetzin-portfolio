@@ -21,6 +21,14 @@ function requireLink(value, label, allowLocal = false) {
 
 export function validate(site, projects, media) {
   requireText(site.name, "Nombre");
+  const origin = new URL(site.url);
+  if (origin.protocol !== "https:" || origin.origin !== site.url)
+    throw new Error("URL principal: se requiere un origen HTTPS sin ruta ni barra final");
+  for (const key of ["home", "work", "about"]) {
+    requireText(site.seo?.[key]?.title, `Título SEO de ${key}`);
+    requireText(site.seo?.[key]?.description, `Descripción SEO de ${key}`);
+    requireMedia(site.seo[key].image, media, `Imagen social de ${key}`);
+  }
   if (!Array.isArray(projects) || projects.length !== 4)
     throw new Error("Se requieren cuatro proyectos");
   if (
@@ -54,6 +62,8 @@ export function validate(site, projects, media) {
   for (const project of projects) {
     requireText(project.id, "Identificador");
     requireText(project.title, "Título");
+    requireText(project.description, `Descripción SEO de ${project.slug}`);
+    if (project.seoTitle !== undefined) requireText(project.seoTitle, "Título SEO");
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(project.slug))
       throw new Error(`Slug inválido: ${project.slug}`);
     if (ids.has(project.id) || slugs.has(project.slug))

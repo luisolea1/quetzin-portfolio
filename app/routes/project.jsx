@@ -1,5 +1,6 @@
+import { createPageMeta } from "../content/seo.js";
 import { Navigate, useLocation } from "react-router";
-import { findLegacyProject, findProject, findRelated, media, site } from "../content/index.js";
+import { findLegacyProject, findProject, findRelated, media } from "../content/index.js";
 import { getGalleryItems } from "../content/gallery.js";
 import PageLayout from "../components/layout/PageLayout.jsx";
 import ProjectHero from "../components/sections/project/ProjectHero.jsx";
@@ -10,15 +11,7 @@ import NotFound from "./not-found.jsx";
 import Reveal from "../motion/Reveal.jsx";
 
 export function meta({ params }) {
-  const project = findProject(params.slug);
-  if (!project) return [{ title: `Página no encontrada — ${site.name}` }];
-  return [
-    { title: `${project.title} — ${site.name}` },
-    { name: "description", content: project.description },
-    ...(media[project.hero]?.src
-      ? [{ property: "og:image", content: media[project.hero].src }]
-      : []),
-  ];
+  return createPageMeta(`/projects/${params.slug}`, { noIndex: import.meta.env.VITE_NOINDEX });
 }
 
 export default function Project({ params }) {

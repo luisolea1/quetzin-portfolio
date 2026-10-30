@@ -27,6 +27,7 @@ export default function ProjectGallery({ items }) {
                     className={styles["project-gallery__image"]}
                     media={item.media}
                     label="Imagen del proyecto pendiente"
+                    sizes="(max-width: 809px) calc(100vw - 40px), (max-width: 1199px) calc((100vw - 70px) / 2), calc((90vw - 10px) / 2)"
                   />
                 </Reveal>
               </figure>

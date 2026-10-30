@@ -7,8 +7,10 @@ export default function Media({
   label = "Imagen pendiente",
   className = "",
   priority = false,
+  fetchPriority,
   tone = "light",
   scrollEffect = "none",
+  sizes = "(max-width: 809px) calc(100vw - 40px), (max-width: 1199px) calc(100vw - 60px), 90vw",
 }) {
   const [failed, setFailed] = useState(false);
   const src = media?.src;
@@ -37,12 +39,14 @@ export default function Media({
           ref={imageRef}
           className={styles["media__image"]}
           src={src}
+          srcSet={media.srcSet}
+          sizes={media.srcSet ? sizes : undefined}
           alt={media.alt || ""}
           width={media.width}
           height={media.height}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
-          fetchPriority={priority ? "high" : undefined}
+          fetchPriority={priority ? "high" : fetchPriority}
           data-scroll-image={scrollEffect === "curve" ? "" : undefined}
           onError={() => setFailed(true)}
         />

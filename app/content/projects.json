@@ -52,7 +52,8 @@
     ],
     "related": ["project02", "project03"],
     "url": null,
-    "description": "Ficha provisional de Modelaje."
+    "description": "Fotografía de modelaje de Quetzin Cuevas: retratos, poses y detalles visuales reunidos en una galería dedicada a la expresión frente a la cámara.",
+    "seoTitle": "Fotografía de modelaje — Quetzin Cuevas"
   },
   {
     "id": "project02",
@@ -79,7 +80,8 @@
     ],
     "related": ["project01", "project03"],
     "url": null,
-    "description": "Ficha provisional de Paisajes."
+    "description": "Explora la galería de paisajes de Quetzin Cuevas, una selección de fotografías que reúne distintas perspectivas y composiciones del entorno.",
+    "seoTitle": "Fotografía de paisajes — Quetzin Cuevas"
   },
   {
     "id": "project03",
@@ -126,7 +128,8 @@
     ],
     "related": ["project01", "project02"],
     "url": null,
-    "description": "Ficha provisional de Producto."
+    "description": "Fotografía de producto de Quetzin Cuevas. Explora una selección de imágenes que muestran objetos, detalles y composiciones para comunicar su identidad visual.",
+    "seoTitle": "Fotografía de producto — Quetzin Cuevas"
   },
   {
     "id": "project04",
@@ -157,6 +160,7 @@
     ],
     "related": ["project01", "project02"],
     "url": null,
-    "description": "Ficha provisional de Música."
+    "description": "Fotografía de música y conciertos de Quetzin Cuevas. Una galería centrada en la presencia escénica y la experiencia de la música en vivo.",
+    "seoTitle": "Fotografía de música — Quetzin Cuevas"
   }
 ]

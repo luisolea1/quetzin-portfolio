@@ -20,6 +20,8 @@ export default function BiographySection({ paragraphs, portrait }) {
         className={styles["biography-section__portrait"]}
         media={portrait}
         label="Retrato pendiente"
+        sizes="(max-width: 809px) calc(100vw - 40px), 45vw"
+        priority
       />
     </section>
   );

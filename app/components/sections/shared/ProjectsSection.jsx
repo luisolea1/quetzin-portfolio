@@ -8,6 +8,7 @@ export default function ProjectsSection({
   headingId,
   title,
   scrollEffect = "none",
+  priorityFirst = false,
 }) {
   return (
     <section className={styles["projects-section"]} aria-labelledby={headingId}>
@@ -15,7 +16,12 @@ export default function ProjectsSection({
         {title}
       </h2>
       <Reveal>
-        <ProjectGrid projects={projects} media={media} scrollEffect={scrollEffect} />
+        <ProjectGrid
+          projects={projects}
+          media={media}
+          scrollEffect={scrollEffect}
+          priorityFirst={priorityFirst}
+        />
       </Reveal>
     </section>
   );

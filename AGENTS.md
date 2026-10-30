@@ -131,12 +131,12 @@ Antes de ejecutar una tarea, revisar `package.json` y usar los comandos realment
 | Acción | Comando |
 |---|---|
 | Instalar dependencias | `pnpm install` |
-| Desarrollo | `pnpm dev` → `react-router dev` |
-| Compilación y prerenderizado | `pnpm build` → `react-router build` |
+| Desarrollo | `pnpm dev` → prepara variantes y ejecuta `react-router dev` |
+| Compilación y prerenderizado | `pnpm build` → prepara imágenes, prerenderiza y genera SEO, compresión y salida estática |
 | Instalación reproducible en integración continua | `pnpm install --frozen-lockfile` |
 | Verificación del HTML ya compilado | `pnpm check:pages` |
 | Formato, pruebas, compilación y HTML generado | `pnpm check` |
-| Revisar compilación estática | `pnpm preview` (`sirv` con fallback propio) |
+| Revisar compilación estática | `pnpm preview` (servidor estático de revisión con 308/404) |
 
 Fijar la versión exacta de pnpm mediante `packageManager` al inicializar el proyecto y documentar una versión compatible de Node.js. Usar pnpm para instalar, añadir o retirar dependencias; no generar archivos de bloqueo de otros gestores ni editar manualmente `pnpm-lock.yaml`.
 
@@ -158,3 +158,16 @@ Al completar las pantallas y sus efectos, verificar:
 Adaptar la verificación al cambio realizado. Añadir pruebas automatizadas cuando protejan comportamiento significativo, como validación de datos o resolución de rutas; evitar pruebas que sólo repitan la implementación.
 
 Conservar los cambios existentes del usuario y mantener el trabajo dentro del alcance solicitado. Comunicar en español qué se modificó, qué se comprobó y qué queda pendiente. No afirmar que la réplica es exacta mientras existan diferencias o animaciones sin calibrar. Publicar únicamente cuando el usuario lo solicite.
+
+
+## SEO y entrega estática aprobados el 30 de octubre de 2026
+
+- Usar `site.url` (`https://quetzin-portfolio.vercel.app`) como origen canónico; metadatos generales en `site.seo`, títulos opcionales de ficha en `seoTitle` y descripciones en `project.description`. Conservar el enfoque aprobado en fotografía y producción audiovisual.
+- Compartir `getPagePaths` entre prerenderizado y sitemap. Las siete rutas editoriales son canónicas; `/404` es auxiliar. `legacySlugs` alimenta los HTTP 308 de Vercel y de `pnpm preview`. Conservar el respaldo de navegación cliente.
+- Mantener canónicas, Open Graph, tarjetas sociales y JSON-LD en HTML inicial y navegación. Schema usa Person/WebSite, ProfilePage, CollectionPage/ItemList y CreativeWork a partir de datos reales. No añadir fechas, clientes, dirección ni valoraciones inventados.
+- Generar sitemap, robots y error 404 en la compilación. Vercel usa Build Output API estática (`.vercel/output`), sin servidor de aplicación. El documento HTTP 404 conserva estilos y enlaces, sin hidratar React contra una URL desconocida.
+- `VERCEL_ENV=preview` o `SEO_NOINDEX=1` activa noindex en HTML y cabeceras. No aplicar noindex a producción por defecto. Robots permite rastreo para que el buscador pueda leer la directiva.
+- `media:prepare` deriva dimensiones reales y variantes WebP locales (calidad 82, sin ampliar) antes de desarrollo, pruebas y compilación. Originales y encuadres se conservan. `.cache/` y `public/images/generated/` no se versionan. Los carruseles mantienen las ocho fotos completas desde el inicio, usando una variante de 640 px compartida entre precarga, respaldo y fragmentos 3D.
+- Priorizar la primera portada de Home/Work, el retrato de About y los heroes de proyecto: son imágenes LCP observadas en laboratorio. El resto mantiene carga diferida. El motor M05 usa `currentSrc`, conserva el canvas/ticker compartidos y no cambia su curvatura.
+- Mantener Brotli/gzip en la previsualización y las comparaciones de Lighthouse. `pnpm check` incluye enlaces/recursos locales; `pnpm check:links --external` distingue errores confirmados y bloqueos. `pnpm perf` registra perfiles móvil/escritorio y medianas de tres ejecuciones por defecto. No presentar TBT como INP ni laboratorio como datos de usuarios reales.
+- Node.js mínimo 22.19; sharp, Lighthouse y sirv son herramientas de desarrollo. Ver resultados y procedimiento en `docs/SEO-RENDIMIENTO.md`.

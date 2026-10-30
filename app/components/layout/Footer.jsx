@@ -59,7 +59,10 @@ export default function Footer({ site }) {
               <span className="u-muted">Correo pendiente</span>
             )}
             {site.phone && (
-              <a className={styles["site-footer__link"]} href={`tel:${site.phone}`}>
+              <a
+                className={styles["site-footer__link"]}
+                href={`tel:${site.phone.replace(/[^+\d]/g, "")}`}
+              >
                 {site.phone}
               </a>
             )}

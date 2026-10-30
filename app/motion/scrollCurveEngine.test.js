@@ -3,6 +3,19 @@ import test from "node:test";
 import * as THREE from "three";
 import { createScrollCurveEngine } from "./scrollCurveEngine.js";
 
+test("responsive images upload the selected currentSrc and replace textures after a viewport change", (t) => {
+  const f = fixture(t);
+  assert.deepEqual(f.loadedSources, ["/image.webp"]);
+  f.image.src = "/fallback-large.webp";
+  f.image.currentSrc = "/selected-640.webp";
+  f.image.dispatchEvent(new Event("load"));
+  assert.equal(f.loadedSources.at(-1), "/selected-640.webp");
+  f.image.currentSrc = "/selected-1440.webp";
+  f.image.dispatchEvent(new Event("load"));
+  assert.equal(f.loadedSources.at(-1), "/selected-1440.webp");
+  assert.ok(!f.loadedSources.includes("/fallback-large.webp"));
+});
+
 // Adaptadores DOM/GPU controlados: prueban el relevo y la liberación de recursos,
 // incluidos errores que no dependen de que el equipo de CI disponga de WebGL.
 function fixture(
@@ -141,10 +154,12 @@ function fixture(
   }
   class Loader {
     load(src, success, progress, failure) {
+      loadedSources.push(src);
       load = () => (textureFails ? failure(new Error("CORS")) : success(texture));
       if (!delayed) load();
     }
   }
+  const loadedSources = [];
   let frame;
   let subscribers = 0;
   const failures = [];
@@ -166,6 +181,7 @@ function fixture(
   });
   return {
     engine,
+    loadedSources,
     image,
     surface,
     colorSurface,

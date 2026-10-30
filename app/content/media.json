@@ -16,13 +16,13 @@
     "_comment": "Portada de Modelaje: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/modelaje/cover.webp.",
     "src": "/images/modelaje.webp",
     "alt": "Imagen de Modelaje",
-    "position": "50% 50%"
+    "position": "50% 85%"
   },
   "cover02": {
     "_comment": "Portada de Paisajes: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/paisajes/cover.webp.",
     "src": "/images/paisaje.webp",
     "alt": "Imagen de Paisaje",
-    "position": "50% 50%"
+    "position": "50% 85%"
   },
   "cover03": {
     "_comment": "Portada de Producto: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/producto/cover.webp.",
@@ -34,7 +34,7 @@
     "_comment": "Portada de Música: tarjeta cuadrada en Home, Work y proyectos relacionados. Es independiente del anillo; sus fotos se editan en carousel01 a carousel08. Ejemplo de src: /images/projects/musica/cover.webp.",
     "src": "/images/conciertos.webp",
     "alt": "Imagen de Conciertos",
-    "position": "50% 50%"
+    "position": "50% 85%"
   },
 
   "hero01": {

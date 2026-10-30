@@ -10,9 +10,16 @@ import {
 import { projects, site } from "./content/index.js";
 import SiteLayout from "./components/layout/SiteLayout.jsx";
 import ErrorState from "./components/ui/ErrorState.jsx";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-standard-normal.woff2?url";
 import "./styles/tokens.css";
 import "./styles/fonts.css";
 import "./styles/globals.css";
+
+export function links() {
+  return [
+    { rel: "preload", as: "font", type: "font/woff2", href: interLatin, crossOrigin: "anonymous" },
+  ];
+}
 
 export function Layout({ children }) {
   return (

@@ -2,3 +2,7 @@ node_modules/
 build/
 .react-router/
 .DS_Store
+.cache/
+.vercel/
+public/images/generated/
+reports/

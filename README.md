@@ -8,7 +8,11 @@ Este documento especifica la apariencia, composición adaptable, navegación, re
 
 ### Ejecutar y editar la implementación actual
 
-Con Node.js 22 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. `pnpm test` valida el modelo de contenido, el avance y la detención del carrusel, los cálculos y el ciclo de vida de la curvatura y la conservación del DOM al formatear HTML; `pnpm build` genera las siete páginas en `build/client/` y aplica sangría al HTML; `pnpm preview` sirve esa compilación en http://localhost:8080. `pnpm check` comprueba el formato, ejecuta pruebas, compila y verifica la estructura del HTML generado, incluido el respaldo del carrusel. El alojamiento estático debe servir los HTML prerenderizados antes del fallback `__spa-fallback.html` para rutas no generadas; este fallback muestra 404 en el navegador, pero la respuesta HTTP de un servidor estático sin configuración específica puede ser 200.
+Con Node.js 22.19 o posterior y pnpm 11.3.0: `pnpm install`, `pnpm dev` y abrir http://localhost:5173. Desarrollo, pruebas y compilación preparan las variantes locales de imagen antes de importar el contenido. `pnpm test` valida contenido, SEO, rutas HTTP, carrusel, curvatura y conservación del HTML. `pnpm build` genera siete páginas editoriales y una página auxiliar 404, sitemap, robots, variantes de imagen y recursos comprimidos en `build/client/`, además de la salida estática de Vercel en `.vercel/output/`. `pnpm preview` sirve la compilación en http://localhost:8080 con alias HTTP 308 y errores 404 reales; no utiliza un fallback 200 para direcciones desconocidas. `pnpm check` comprueba formato, pruebas, compilación, HTML, metadatos y enlaces/recursos locales. No se incorpora un servidor de aplicación en producción.
+
+**SEO y rendimiento, 30 de octubre de 2026:** el dominio canónico aprobado es `https://quetzin-portfolio.vercel.app`, con enfoque en fotografía y producción audiovisual. `site.url` y `site.seo` centralizan el dominio y los títulos, descripciones e imágenes sociales de Inicio, Work y About; las fichas usan `seoTitle`, `description` y `hero` de cada proyecto. Un único generador produce canónicas, Open Graph, tarjetas sociales y JSON-LD en el HTML inicial y al navegar. El sitemap deriva de las mismas siete rutas del prerenderizado, sin alias, 404 ni fechas inventadas. Las compilaciones de Vercel Preview (`VERCEL_ENV=preview`) o `SEO_NOINDEX=1` generan `noindex` en metadatos y cabeceras; producción permite indexación. Consulta la [guía de SEO y resultados de rendimiento](./docs/SEO-RENDIMIENTO.md).
+
+La configuración estática de Vercel se genera desde los slugs y `legacySlugs` mediante Build Output API. Conserva siete páginas editoriales; `/404` es un recurso auxiliar. El error HTTP utiliza HTML sin hidratación para evitar que una URL desconocida intente hidratar el árbol de `/404`; los enlaces siguen funcionando. La navegación dentro de React conserva su estado 404. En otros alojamientos hay que reproducir las redirecciones y respuestas HTTP de la salida generada.
 
 El documento de inicio generado está en `build/client/index.html`. `pnpm format:html` vuelve a formatear los HTML de una compilación existente. `scripts/format-html.js` utiliza Prettier con sensibilidad estricta a los espacios y verifica con parse5 que el DOM permanezca idéntico. Algunos cierres `>` quedan en la línea siguiente para no introducir nodos de texto que afecten a la hidratación. Los textos, comentarios de React y scripts se conservan literalmente. Los cambios de contenido y estructura se realizan en `app/`; los HTML de `build/` se regeneran al compilar.
 
@@ -20,7 +24,7 @@ Personaliza `app/content/site.json`, `projects.json` y `media.json`; coloca imá
 
 **Implementación inicial del 27 de octubre, sustituida por la petición posterior:** el panel tenía scroll propio y altura limitada desde 810 px. La referencia observada anterior se conserva como análisis; el comportamiento actual se describe a continuación.
 
-Cada galería admite **hasta diez apariciones**, sin contar el hero. Se mantienen `pair`, `wide` y `mobileOrder`, y se añade el bloque `image` para incorporar fotos sueltas. En esta composición, cada foto ocupa su columna; `wide` identifica una imagen horizontal, sin forzar que abarque ambas columnas. El patrón actual reserva fotos 3:4, con cuadrados a la derecha en las posiciones 2 y 8 (contando desde 1). Empieza con una pareja vertical/cuadrado, sigue con dos parejas verticales y repite. `aspectRatio` numérico en el bloque permite modificar el recorte; `width` y `height` de `media.json` describen el archivo original. Modelaje tiene cuatro fotos de galería; las otras fichas conservan tres. No se añade contenido para llenar los diez espacios. La [guía de imágenes](./app/content/MEDIA-GUIDE.md#cómo-ampliar-una-galería-hasta-diez-fotos) explica cómo añadirlas. El prerenderizado mantiene siete rutas canónicas; las URL antiguas requieren JavaScript y el fallback del alojamiento para redirigir. No son redirecciones HTTP del servidor.
+Cada galería admite **hasta diez apariciones**, sin contar el hero. Se mantienen `pair`, `wide` y `mobileOrder`, y se añade el bloque `image` para incorporar fotos sueltas. En esta composición, cada foto ocupa su columna; `wide` identifica una imagen horizontal, sin forzar que abarque ambas columnas. El patrón actual reserva fotos 3:4, con cuadrados a la derecha en las posiciones 2 y 8 (contando desde 1). Empieza con una pareja vertical/cuadrado, sigue con dos parejas verticales y repite. `aspectRatio` numérico en el bloque permite modificar el recorte; `width` y `height` de `media.json` describen el archivo original. El número de fotos se configura por proyecto y no se completa automáticamente. No se añade contenido para llenar los diez espacios. La [guía de imágenes](./app/content/MEDIA-GUIDE.md#cómo-ampliar-una-galería-hasta-diez-fotos) explica cómo añadirlas. El prerenderizado mantiene siete rutas canónicas; los alias antiguos usan HTTP 308 en Vercel y en la previsualización desde el cambio SEO del 30 de octubre; el router conserva un respaldo cliente.
 
 Verificación de la implementación inicial del 27 de octubre (anterior al cambio siguiente): `pnpm check` supera 29 pruebas, compila las siete rutas canónicas y comprueba las galerías en su HTML inicial. En Chrome se revisaron los cuatro alias, un slug desconocido, enlaces relacionados, recarga e historial; no se observaron errores de hidratación o consola en esas rutas. La galería de Modelaje se comprobó a 360, 390, 768, 809, 810, 1024, 1199, 1200, 1440 y 1920 px, sin desbordamiento horizontal, con el orden móvil conservado, scroll interno desde 810 px y foco/salida con Tab. Una página temporal, retirada después, verificó diez apariciones, imágenes pendientes y fallidas sin colapso, y el estado de entradas con movimiento reducido simulado. No se ha probado un teléfono físico ni se han calibrado los tiempos exactos frente a Owen.
 
@@ -548,9 +552,9 @@ Estos comandos están disponibles desde la raíz del repositorio, con Node.js y 
 | Iniciar desarrollo | `pnpm dev` | Ejecuta `react-router dev`, integrado con Vite |
 | Formatear los archivos fuente | `pnpm format` | Aplica sangría y saltos de línea consistentes |
 | Comprobar el formato | `pnpm format:check` | Revisa los archivos fuente sin modificarlos |
-| Generar la versión publicable | `pnpm build` | Ejecuta `react-router build` y prerenderiza las siete rutas |
+| Generar la versión publicable | `pnpm build` | Prepara imágenes, prerenderiza siete rutas y 404, genera SEO, compresión y salida estática de Vercel |
 | Verificar el HTML ya compilado | `pnpm check:pages` | Comprueba regiones, encabezados, identificadores, metadatos y tarjetas |
-| Verificar el proyecto completo | `pnpm check` | Comprueba formato, pruebas, compilación y HTML generado |
+| Verificar el proyecto completo | `pnpm check` | Comprueba formato, pruebas, compilación, HTML y enlaces/recursos |
 | Instalar en integración continua | `pnpm install --frozen-lockfile` | Instala respetando el archivo de versiones y falla si requiere cambios |
 
 Las tareas principales de `package.json` son:
@@ -559,11 +563,13 @@ Las tareas principales de `package.json` son:
 {
   "type": "module",
   "scripts": {
-    "dev": "react-router dev",
-    "build": "react-router build && pnpm format:html",
+    "dev": "pnpm media:prepare && react-router dev",
+    "build": "pnpm media:prepare && react-router build && node scripts/generate-seo.js && pnpm format:html && node scripts/compress-static.js && node scripts/build-vercel.js",
+    "preview": "node scripts/preview.js",
     "format:html": "node scripts/format-html.js",
     "check:pages": "node scripts/check-pages.js",
-    "check": "pnpm format:check && pnpm test && pnpm build && pnpm check:pages"
+    "check:links": "node scripts/check-links.js",
+    "check": "pnpm format:check && pnpm test && pnpm build && pnpm check:pages && pnpm check:links"
   }
 }
 ```
@@ -579,7 +585,7 @@ Es un fragmento de configuración, no un `package.json` completo. La compilació
 | `/about` | `routes/about.jsx` | Biografía, experiencia, servicios y recursos personales |
 | `/projects/modelaje`, `/projects/paisajes`, `/projects/producto`, `/projects/musica` | `routes/project.jsx`, mediante `/projects/:slug` | El registro que corresponda al slug |
 
-Los slugs de proyecto corresponden a sus nombres y se editan en los datos. `legacySlugs` conserva sus URL anteriores y `Navigate` redirige al slug actual reemplazando la entrada del historial. La lista de rutas que se prerenderiza se derivará de esos registros, junto con las tres rutas principales. El estado 404 es auxiliar y no añade una octava página editorial. Un slug desconocido debe mostrar ese estado, sin reutilizar por defecto el primer proyecto.
+Los slugs de proyecto corresponden a sus nombres y se editan en los datos. `legacySlugs` conserva sus URL anteriores. Vercel y la previsualización redirigen con HTTP 308; `Navigate` mantiene el respaldo durante la navegación cliente y el desarrollo. La lista de rutas que se prerenderiza se derivará de esos registros, junto con las tres rutas principales. El estado 404 es auxiliar y no añade una octava página editorial. Un slug desconocido debe mostrar ese estado, sin reutilizar por defecto el primer proyecto.
 
 ### Layout, secciones y semántica
 

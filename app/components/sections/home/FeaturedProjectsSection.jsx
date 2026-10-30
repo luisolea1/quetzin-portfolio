@@ -8,6 +8,7 @@ export default function FeaturedProjectsSection({ projects, media, scrollEffect 
       scrollEffect={scrollEffect}
       headingId="featured-projects-title"
       title="Proyectos destacados"
+      priorityFirst
     />
   );
 }

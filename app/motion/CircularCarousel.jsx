@@ -276,6 +276,7 @@ const CircularCarousel = ({
         const image = new Image();
         images.push(image);
         image.decoding = "async";
+        image.fetchPriority = "low";
         image.onload = () => (image.decode ? image.decode().then(resolve, resolve) : resolve());
         image.onerror = resolve;
         image.src = src;
@@ -756,9 +757,12 @@ const CircularCarousel = ({
             <img
               className={styles["circular-carousel__photo"]}
               src={item.src}
+              width={item.width}
+              height={item.height}
               alt=""
               draggable={false}
               decoding="async"
+              fetchPriority="low"
               onError={() => failSource(item.src)}
               style={photoStyle}
             />
@@ -776,9 +780,12 @@ const CircularCarousel = ({
                 styles["circular-carousel__photo--leaving"]
               }
               src={gone.src}
+              width={gone.width}
+              height={gone.height}
               alt=""
               draggable={false}
               decoding="async"
+              fetchPriority="low"
               style={{ ...photoStyle, animationDelay: `${Math.round(leaving.delays[index])}ms` }}
             />
           )}
@@ -836,6 +843,7 @@ const CircularCarousel = ({
               label={item.title || "Imagen pendiente"}
               className={styles["circular-carousel__fallback-image"]}
               tone="dark"
+              fetchPriority="low"
             />
           </div>
         ))}

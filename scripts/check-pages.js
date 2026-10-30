@@ -3,30 +3,27 @@ import { readFile } from "node:fs/promises";
 import { parse } from "parse5";
 import { media, projects, site } from "../app/content/index.js";
 import { getGalleryItems } from "../app/content/gallery.js";
+import { getSeoPage, absoluteUrl } from "../app/content/seo.js";
 
 const pages = [
   {
     route: "/",
-    title: `${site.name} — Portfolio`,
-    description: site.intro,
+    ...getSeoPage("/"),
     cards: projects.filter((project) => project.featured),
   },
   {
     route: "/work",
-    title: `Work — ${site.name}`,
-    description: site.workIntro,
+    ...getSeoPage("/work"),
     cards: projects,
   },
   {
     route: "/about",
-    title: `About — ${site.name}`,
-    description: site.aboutIntro,
+    ...getSeoPage("/about"),
     cards: [],
   },
   ...projects.map((project) => ({
     route: `/projects/${project.slug}`,
-    title: `${project.title} — ${site.name}`,
-    description: project.description,
+    ...getSeoPage(`/projects/${project.slug}`),
     cards: project.related.map((id) => projects.find((item) => item.id === id)),
   })),
 ];
@@ -124,6 +121,47 @@ for (const page of pages) {
     );
   }
   expect(text(find("title")[0]) === page.title, "el título no corresponde a la ruta");
+  expect(find("title").length === 1, "debe existir un único título SEO");
+  const canonicals = find("link").filter((node) => attribute(node, "rel") === "canonical");
+  expect(
+    canonicals.length === 1 && attribute(canonicals[0], "href") === absoluteUrl(page.route),
+    "canónica ausente o incorrecta",
+  );
+  const schemas = find("script").filter(
+    (node) => attribute(node, "type") === "application/ld+json",
+  );
+  expect(schemas.length === 1, "debe existir un único grafo JSON-LD");
+  const graph = JSON.parse(text(schemas[0]));
+  expect(
+    graph["@context"] === "https://schema.org" &&
+      graph["@graph"].some((item) => item["@type"] === "Person" && item.name === site.name),
+    "faltan datos estructurados válidos",
+  );
+  for (const key of [
+    "og:title",
+    "og:description",
+    "og:url",
+    ...(media[page.image]?.src ? ["og:image"] : []),
+  ])
+    expect(
+      find("meta").filter((node) => attribute(node, "property") === key).length === 1,
+      `falta ${key}`,
+    );
+  for (const key of [
+    "twitter:card",
+    "twitter:title",
+    "twitter:description",
+    ...(media[page.image]?.src ? ["twitter:image"] : []),
+  ])
+    expect(
+      find("meta").filter((node) => attribute(node, "name") === key).length === 1,
+      `falta ${key}`,
+    );
+  for (const image of find("img").filter((node) => attribute(node, "src")?.startsWith("/")))
+    expect(
+      Number(attribute(image, "width")) > 0 && Number(attribute(image, "height")) > 0,
+      "todas las fotos deben reservar dimensiones",
+    );
   expect(
     find("meta").some(
       (node) =>
@@ -199,10 +237,7 @@ for (const page of pages) {
         );
         expect(attribute(images[0], "alt") === resource.alt, `falta la descripción de ${id}`);
         expect(attribute(images[0], "loading") === "lazy", `carga incorrecta de ${id}`);
-        expect(
-          attribute(images[0], "fetchpriority") === undefined,
-          `prioridad incorrecta de ${id}`,
-        );
+        expect(attribute(images[0], "fetchpriority") === "low", `prioridad incorrecta de ${id}`);
         const preloads = find("link").filter(
           (node) =>
             attribute(node, "rel") === "preload" &&
@@ -210,6 +245,10 @@ for (const page of pages) {
             attribute(node, "href") === resource.src,
         );
         expect(preloads.length === 1, `falta la precarga completa de ${id}`);
+        expect(
+          attribute(preloads[0], "fetchpriority") === "low",
+          `la precarga de ${id} debe ceder prioridad al LCP`,
+        );
         const fragments = elements(carousel).filter(
           (node) =>
             node.tagName === "img" &&
@@ -277,7 +316,13 @@ for (const page of pages) {
     }
   }
   const prioritized = find("img").filter((node) => attribute(node, "fetchpriority") === "high");
-  const prioritySrc = project ? media[project.hero]?.src : null;
+  const prioritySrc = project
+    ? media[project.hero]?.src
+    : ["/", "/work"].includes(page.route)
+      ? media[page.cards[0].cover]?.src
+      : page.route === "/about"
+        ? media[site.portrait]?.src
+        : null;
   expect(
     prioritized.length === (prioritySrc ? 1 : 0),
     "debe conservarse una única imagen prioritaria en los heroes",

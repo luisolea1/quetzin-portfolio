@@ -1,0 +1,357 @@
+{
+  "method": "Compilaciones locales antes/después con Brotli/gzip y los mismos perfiles de Lighthouse; una ejecución por ruta/dispositivo. No son datos de usuarios reales.",
+  "before": {
+    "measuredAt": "2026-10-30T16:20:29.466Z",
+    "node": "v26.0.0",
+    "lighthouse": "13.6.0",
+    "url": "http://127.0.0.1:8081",
+    "note": "Laboratorio Lighthouse con limitación simulada; TBT no equivale a INP. No contiene percentiles de usuarios reales.",
+    "results": [
+      {
+        "route": "/",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 51,
+        "seo": 100,
+        "lcpMs": 12232,
+        "cls": 0.003180887119744779,
+        "tbtMs": 1080,
+        "transferBytes": 6775938,
+        "samples": [
+          {
+            "performance": 51,
+            "seo": 100,
+            "lcpMs": 12232,
+            "cls": 0.003180887119744779,
+            "tbtMs": 1080,
+            "transferBytes": 6775938
+          }
+        ]
+      },
+      {
+        "route": "/",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 96,
+        "seo": 100,
+        "lcpMs": 889,
+        "cls": 0,
+        "tbtMs": 152,
+        "transferBytes": 6775938,
+        "samples": [
+          {
+            "performance": 96,
+            "seo": 100,
+            "lcpMs": 889,
+            "cls": 0,
+            "tbtMs": 152,
+            "transferBytes": 6775938
+          }
+        ]
+      },
+      {
+        "route": "/work",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 73,
+        "seo": 100,
+        "lcpMs": 3153,
+        "cls": 0,
+        "tbtMs": 831,
+        "transferBytes": 6845106,
+        "samples": [
+          {
+            "performance": 73,
+            "seo": 100,
+            "lcpMs": 3153,
+            "cls": 0,
+            "tbtMs": 831,
+            "transferBytes": 6845106
+          }
+        ]
+      },
+      {
+        "route": "/work",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 95,
+        "seo": 100,
+        "lcpMs": 643,
+        "cls": 0,
+        "tbtMs": 172,
+        "transferBytes": 6845106,
+        "samples": [
+          {
+            "performance": 95,
+            "seo": 100,
+            "lcpMs": 643,
+            "cls": 0,
+            "tbtMs": 172,
+            "transferBytes": 6845106
+          }
+        ]
+      },
+      {
+        "route": "/about",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 95,
+        "seo": 100,
+        "lcpMs": 3003,
+        "cls": 0.001575255857219406,
+        "tbtMs": 0,
+        "transferBytes": 5005050,
+        "samples": [
+          {
+            "performance": 95,
+            "seo": 100,
+            "lcpMs": 3003,
+            "cls": 0.001575255857219406,
+            "tbtMs": 0,
+            "transferBytes": 5005050
+          }
+        ]
+      },
+      {
+        "route": "/about",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 100,
+        "seo": 100,
+        "lcpMs": 242,
+        "cls": 0.001654245693958335,
+        "tbtMs": 0,
+        "transferBytes": 5005050,
+        "samples": [
+          {
+            "performance": 100,
+            "seo": 100,
+            "lcpMs": 242,
+            "cls": 0.001654245693958335,
+            "tbtMs": 0,
+            "transferBytes": 5005050
+          }
+        ]
+      },
+      {
+        "route": "/projects/modelaje",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 79,
+        "seo": 100,
+        "lcpMs": 5778,
+        "cls": 0.0006408645619966388,
+        "tbtMs": 0,
+        "transferBytes": 3255181,
+        "samples": [
+          {
+            "performance": 79,
+            "seo": 100,
+            "lcpMs": 5778,
+            "cls": 0.0006408645619966388,
+            "tbtMs": 0,
+            "transferBytes": 3255181
+          }
+        ]
+      },
+      {
+        "route": "/projects/modelaje",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 98,
+        "seo": 100,
+        "lcpMs": 1063,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 4250237,
+        "samples": [
+          {
+            "performance": 98,
+            "seo": 100,
+            "lcpMs": 1063,
+            "cls": 0,
+            "tbtMs": 0,
+            "transferBytes": 4250237
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "measuredAt": "2026-10-30T16:28:11.107Z",
+    "node": "v26.0.0",
+    "lighthouse": "13.6.0",
+    "url": "http://127.0.0.1:8082",
+    "note": "Laboratorio Lighthouse con limitación simulada; TBT no equivale a INP. No contiene percentiles de usuarios reales.",
+    "results": [
+      {
+        "route": "/",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 92,
+        "seo": 100,
+        "lcpMs": 3308,
+        "cls": 0,
+        "tbtMs": 4,
+        "transferBytes": 1045334,
+        "samples": [
+          {
+            "performance": 92,
+            "seo": 100,
+            "lcpMs": 3308,
+            "cls": 0,
+            "tbtMs": 4,
+            "transferBytes": 1045334
+          }
+        ]
+      },
+      {
+        "route": "/",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 100,
+        "seo": 100,
+        "lcpMs": 664,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 859816,
+        "samples": [
+          {
+            "performance": 100,
+            "seo": 100,
+            "lcpMs": 664,
+            "cls": 0,
+            "tbtMs": 0,
+            "transferBytes": 859816
+          }
+        ]
+      },
+      {
+        "route": "/work",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 92,
+        "seo": 100,
+        "lcpMs": 3305,
+        "cls": 0,
+        "tbtMs": 10,
+        "transferBytes": 1140288,
+        "samples": [
+          {
+            "performance": 92,
+            "seo": 100,
+            "lcpMs": 3305,
+            "cls": 0,
+            "tbtMs": 10,
+            "transferBytes": 1140288
+          }
+        ]
+      },
+      {
+        "route": "/work",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 100,
+        "seo": 100,
+        "lcpMs": 664,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 1002478,
+        "samples": [
+          {
+            "performance": 100,
+            "seo": 100,
+            "lcpMs": 664,
+            "cls": 0,
+            "tbtMs": 0,
+            "transferBytes": 1002478
+          }
+        ]
+      },
+      {
+        "route": "/about",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 92,
+        "seo": 100,
+        "lcpMs": 3378,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 742447,
+        "samples": [
+          {
+            "performance": 92,
+            "seo": 100,
+            "lcpMs": 3378,
+            "cls": 0,
+            "tbtMs": 0,
+            "transferBytes": 742447
+          }
+        ]
+      },
+      {
+        "route": "/about",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 100,
+        "seo": 100,
+        "lcpMs": 243,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 758595,
+        "samples": [
+          {
+            "performance": 100,
+            "seo": 100,
+            "lcpMs": 243,
+            "cls": 0,
+            "tbtMs": 0,
+            "transferBytes": 758595
+          }
+        ]
+      },
+      {
+        "route": "/projects/modelaje",
+        "device": "mobile",
+        "runs": 1,
+        "performance": 94,
+        "seo": 100,
+        "lcpMs": 3154,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 866171,
+        "samples": [
+          {
+            "performance": 94,
+            "seo": 100,
+            "lcpMs": 3154,
+            "cls": 0,
+            "tbtMs": 0,
+            "transferBytes": 866171
+          }
+        ]
+      },
+      {
+        "route": "/projects/modelaje",
+        "device": "desktop",
+        "runs": 1,
+        "performance": 100,
+        "seo": 100,
+        "lcpMs": 663,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 666067,
+        "samples": [
+          {
+            "performance": 100,
+            "seo": 100,
+            "lcpMs": 663,
+            "cls": 0,
+            "tbtMs": 0,
+            "transferBytes": 666067
+          }
+        ]
+      }
+    ]
+  }
+}

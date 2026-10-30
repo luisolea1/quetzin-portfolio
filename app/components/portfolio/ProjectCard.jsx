@@ -3,7 +3,7 @@ import Media from "../ui/Media.jsx";
 import ArrowBadge from "../ui/ArrowBadge.jsx";
 import styles from "./ProjectCard.module.css";
 
-export default function ProjectCard({ project, media, scrollEffect = "none" }) {
+export default function ProjectCard({ project, media, scrollEffect = "none", priority = false }) {
   return (
     <Link
       className={`${styles["project-card"]} ${scrollEffect === "curve" ? styles["project-card--scroll-curve"] : ""}`}
@@ -16,6 +16,8 @@ export default function ProjectCard({ project, media, scrollEffect = "none" }) {
         label={`Portada · ${project.title}`}
         tone="dark"
         scrollEffect={scrollEffect}
+        priority={priority}
+        sizes="(max-width: 809px) calc(100vw - 40px), (max-width: 1199px) calc((100vw - 65px) / 2), calc((90vw - 10px) / 2)"
       />
       <div className={styles["project-card__overlay"]}>
         <span className={styles["project-card__title"]}>{project.title}</span>

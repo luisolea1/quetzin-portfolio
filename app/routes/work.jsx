@@ -1,11 +1,15 @@
+import { createPageMeta } from "../content/seo.js";
+import { getCarouselPreloads } from "../content/media-variants.js";
 import { getWorkCarouselItems, media, projects, site } from "../content/index.js";
 import PageLayout from "../components/layout/PageLayout.jsx";
 import WorkHero from "../components/sections/work/WorkHero.jsx";
 import ProjectsSection from "../components/sections/shared/ProjectsSection.jsx";
 
 export function meta() {
-  return [{ title: `Work — ${site.name}` }, { name: "description", content: site.workIntro }];
+  return createPageMeta("/work", { noIndex: import.meta.env.VITE_NOINDEX });
 }
+
+export const links = () => getCarouselPreloads(getWorkCarouselItems());
 
 export default function Work() {
   return (
@@ -17,6 +21,7 @@ export default function Work() {
         headingId="work-projects-title"
         title="Proyectos"
         scrollEffect="curve"
+        priorityFirst
       />
     </PageLayout>
   );

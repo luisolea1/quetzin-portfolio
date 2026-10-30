@@ -3,7 +3,7 @@
   "role": "Gestión de redes sociales enfocada en la estrategia publicitaria",
   "intro": "Desarrollo propuestas visuales que ayudan a las marcas a construir su identidad y destacar en el entorno digital.",
   "approach": "Me apaciona contar historias a través de la fotografía y video, explorando la creatividad y el lenguaje visual.",
-  "aboutIntro": "Este espacio está reservado para tu presentación personal.",
+  "aboutIntro": "Desarrollo propuestas visuales que ayudan a las marcas a construir su identidad y destacar en el entorno digital.",
   "bio": [
     "Soy licenciado en Ciencias de la Comunicación, especializado en producción audiovisual.",
     "Cada proyecto tiene una identidad y una historia que contar. Te invito a explorar mi portafolio para conocer mi estilo visual, mi enfoque creativo y la manera en que puedo ayudarte a dar vida a tus ideas.",
@@ -12,7 +12,7 @@
   "description": "Una selección de proyectos",
   "workIntro": "Una cuidada selección de proyectos basados en ideas creativas y soluciones visuales que reflejan la identidad de cada uno.",
   "services": ["Fotografia", "Edición", "Video"],
-  "industries": [],
+  "industries": ["Producto", "Moda", "Entretenimiento"],
   "experience": [],
   "email": "quetzincuevas@gmail.com",
   "phone": "+ 52  77 7367 0427",
@@ -48,5 +48,23 @@
     "carousel06",
     "carousel07",
     "carousel08"
-  ]
+  ],
+  "url": "https://quetzin-portfolio.vercel.app",
+  "seo": {
+    "home": {
+      "title": "Quetzin Cuevas — Fotografía y producción audiovisual",
+      "description": "Fotografía y producción audiovisual de Quetzin Cuevas. Explora proyectos de modelaje, paisajes, producto y música y conoce su enfoque creativo.",
+      "image": "cover01"
+    },
+    "work": {
+      "title": "Proyectos de fotografía — Quetzin Cuevas",
+      "description": "Descubre los proyectos de fotografía de Quetzin Cuevas: modelaje, paisajes, producto y música, reunidos en una selección de imágenes y propuestas visuales.",
+      "image": "cover02"
+    },
+    "about": {
+      "title": "Sobre Quetzin Cuevas — Producción audiovisual",
+      "description": "Conoce a Quetzin Cuevas, licenciado en Ciencias de la Comunicación especializado en producción audiovisual, fotografía y video.",
+      "image": "portrait"
+    }
+  }
 }

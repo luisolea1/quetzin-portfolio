@@ -2,6 +2,14 @@
 
 Edita `media.json` para asignar cada fotografía. Los campos `_comment` explican dónde aparece cada recurso; son notas de edición y no se muestran en la página. JSON no admite comentarios `//`.
 
+## Optimización automática al desarrollar y compilar
+
+Sigue editando los originales y `media.json`. `pnpm dev`, `pnpm test` y `pnpm build` ejecutan `media:prepare`: genera versiones WebP de 320, 640, 960, 1440 y 1920 px cuando el original lo permite, sin ampliarlo, con calidad 82 y orientación corregida. Los originales y los encuadres `position` se conservan.
+
+Las dimensiones del HTML se obtienen del archivo real; las imágenes generales usan `srcset` y `sizes`. Las ocho fotos de cada carrusel usan la misma variante de aproximadamente 640 px en precarga, respaldo y fragmentos 3D, y siguen cargándose todas desde el inicio. La imagen social utiliza el original. Las URL HTTPS externas conservan su fuente; conviene completar sus dimensiones reales en el registro; no se descargan ni recomprimen durante la compilación.
+
+`public/images/generated/` y `.cache/media.json` son resultados ignorados por Git: no los edites ni los uses como `src` del contenido. Un hash cambia las URL al sustituir un original. Vite vuelve a generar las variantes al modificar fotografías o `media.json`; `pnpm media:prepare` permite prepararlas manualmente. Un archivo local referenciado que no existe se considera un error; usa `src: null` para un recurso pendiente.
+
 ## Tres colecciones independientes
 
 | Registros en `media.json`   | Uso                                                               | Orden                    |
@@ -106,7 +114,7 @@ Para completar `hero01`, guarda una foto en `public/images/projects/modelaje/her
 
 ## Cómo ampliar una galería hasta diez fotos
 
-Modelaje tiene cuatro fotos y las otras fichas tres. Cada una admite hasta **diez apariciones en la galería**, aparte de su hero. **Importante:** crear un registro en `media.json` no añade la foto automáticamente: también debe estar referenciada en `gallery` de su proyecto en `projects.json`. No hay que completar las diez. Una foto repetida cuenta como otra aparición; los recursos pendientes (`src: null`) también cuentan y conservan su espacio.
+El número de fotos depende del proyecto. Cada ficha admite hasta **diez apariciones en la galería**, aparte de su hero. **Importante:** crear un registro en `media.json` no añade la foto automáticamente: también debe estar referenciada en `gallery` de su proyecto en `projects.json`. No hay que completar las diez. Una foto repetida cuenta como otra aparición; los recursos pendientes (`src: null`) también cuentan y conservan su espacio.
 
 1. Guarda la foto en la carpeta de su proyecto, por ejemplo `public/images/projects/modelaje/gallery-04.webp`.
 2. Añade un registro propio a `media.json`, o edítalo si ya existe (no borres los demás):

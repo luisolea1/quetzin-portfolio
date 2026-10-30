@@ -1,8 +1,13 @@
 import site from "./site.json" with { type: "json" };
 import projects from "./projects.json" with { type: "json" };
-import media from "./media.json" with { type: "json" };
+import originalMedia from "./media.json" with { type: "json" };
+import assets from "../../.cache/media.json" with { type: "json" };
+import { applyMediaVariants } from "./media-variants.js";
 import { validate } from "./validate.js";
 
+const media = applyMediaVariants(originalMedia, assets, {
+  carouselIds: [...site.carousel, ...site.workCarousel],
+});
 export { site, projects, media };
 export const validateContent = () => validate(site, projects, media);
 export const findProject = (slug) => projects.find((project) => project.slug === slug);
