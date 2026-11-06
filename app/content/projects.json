@@ -10,7 +10,10 @@
     "featured": true,
     "cover": "cover01",
     "hero": "hero01",
-    "summary": ["Mi trabajo se define por navegar entre el caos del movimiento psicodélico de larga exposición, la autenticidad del lifestyle urbano y la pausa de un minimalismo más conceptual. ", "Dominar la iluminación en escenarios complejos, combinando neones, geles cromáticos y luz ambiental es la clave de mi propuesta técnica. Al final, mi objetivo siempre es construir una estética moderna y editorial donde el color, la textura y la actitud de la modelo se integren en una misma vibra visual."],
+    "summary": [
+      "Mi trabajo se define por navegar entre el caos del movimiento psicodélico de larga exposición, la autenticidad del lifestyle urbano y la pausa de un minimalismo más conceptual. ",
+      "Dominar la iluminación en escenarios complejos, combinando neones, geles cromáticos y luz ambiental es la clave de mi propuesta técnica. Al final, mi objetivo siempre es construir una estética moderna y editorial donde el color, la textura y la actitud de la modelo se integren en una misma vibra visual."
+    ],
     "gallery": [
       {
         "type": "pair",
@@ -66,7 +69,10 @@
     "featured": true,
     "cover": "cover02",
     "hero": "hero02",
-    "summary": ["Mi enfoque busca documentar la esencia cruda de la costa, equilibrando la textura táctil de los detalles marinos con la inmensidad orgánica del paisaje.", "El verdadero reto técnico radica en dominar la luz natural cambiante y el alto contraste para resaltar la narrativa y la escala humana frente al mar. Al final, mi propuesta congela la atmósfera salada del entorno, transformando escenas cotidianas de pesca en relatos visuales honestos y atemporales."], 
+    "summary": [
+      "Mi enfoque busca documentar la esencia cruda de la costa, equilibrando la textura táctil de los detalles marinos con la inmensidad orgánica del paisaje.",
+      "El verdadero reto técnico radica en dominar la luz natural cambiante y el alto contraste para resaltar la narrativa y la escala humana frente al mar. Al final, mi propuesta congela la atmósfera salada del entorno, transformando escenas cotidianas de pesca en relatos visuales honestos y atemporales."
+    ],
     "gallery": [
       {
         "type": "pair",
@@ -94,7 +100,10 @@
     "featured": true,
     "cover": "cover03",
     "hero": "hero03",
-    "summary": ["Mi enfoque en esta serie de fotografía de producto y lifestyle gastronómico busca capturar la calidez, la textura y la cercanía de cada platillo y bebida.", "Mi propuesta congela momentos de consumo reales y apetitosos, transformando la repostería y la barra en una experiencia visual honesta, elegante y llena de vida."],
+    "summary": [
+      "Mi enfoque en esta serie de fotografía de producto y lifestyle gastronómico busca capturar la calidez, la textura y la cercanía de cada platillo y bebida.",
+      "Mi propuesta congela momentos de consumo reales y apetitosos, transformando la repostería y la barra en una experiencia visual honesta, elegante y llena de vida."
+    ],
     "gallery": [
       {
         "type": "pair",
@@ -142,7 +151,10 @@
     "featured": true,
     "cover": "cover04",
     "hero": "hero04",
-    "summary": ["Mi trabajo en esta serie de conciertos se centra en capturar la energía visceral, la atmósfera eléctrica y la intensidad escénica de los espectáculos en vivo.", "Al final, mi propuesta congela la euforia del momento y la conexión directa con el público, transformando el ritmo y los juegos de luces del show en una narrativa visual electrizante y atemporal."],
+    "summary": [
+      "Mi trabajo en esta serie de conciertos se centra en capturar la energía visceral, la atmósfera eléctrica y la intensidad escénica de los espectáculos en vivo.",
+      "Al final, mi propuesta congela la euforia del momento y la conexión directa con el público, transformando el ritmo y los juegos de luces del show en una narrativa visual electrizante y atemporal."
+    ],
     "gallery": [
       {
         "type": "pair",
