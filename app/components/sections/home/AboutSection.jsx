@@ -1,3 +1,4 @@
+import ExperienceList from "../../editorial/ExperienceList.jsx";
 import InfoPanel from "../../editorial/InfoPanel.jsx";
 import styles from "./AboutSection.module.css";
 
@@ -13,6 +14,8 @@ export default function AboutSection({ site, carouselItems }) {
       carouselItems={carouselItems}
       linkTo="/about"
       linkLabel="Conoce mi historia"
-    />
+    >
+      {site.experience.length > 0 && <ExperienceList entries={site.experience} />}
+    </InfoPanel>
   );
 }

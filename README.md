@@ -68,7 +68,7 @@ Por indicación del usuario, About omite el botón de CV y su estado pendiente; 
 
 **Retirada de rótulos y metadatos, 5 de noviembre de 2026:** About omite los encabezados visibles «Sobre mí / 01» y «Experiencia / 01» y conserva los nombres accesibles «Biografía» y «Experiencia» mediante `aria-label` en sus secciones. Esta petición sustituye la conservación anterior del encabezado del panel de About. Las cuatro fichas omiten «El proyecto / 01» y el bloque de Cliente, Servicios y Año. Se mantienen el título y el resumen de cada ficha. Esta petición sustituye esos elementos de la composición de referencia documentada en las secciones 8 y 9.
 
-**Experiencia solicitada el 6 de noviembre de 2026:** el panel de About sustituye el texto provisional por «THE SIP — 2026», con una línea discontinua entre ambos. El nombre es un enlace de texto sin fondo, borde ni relleno a [su Instagram](https://www.instagram.com/the_sipcafe/), que abre en otra pestaña y conserva el foco visible al navegar con teclado sobre el fondo oscuro. El registro se edita en `site.json > experience` mediante `role`, `period` y `url` (opcional); los registros sin URL se muestran como texto.
+**Experiencia solicitada el 6 de noviembre de 2026:** los paneles de Home y About sustituyen sus textos provisionales por «THE SIP — 2026», con una línea discontinua entre ambos. El nombre es un enlace de texto sin fondo, borde ni relleno a [su Instagram](https://www.instagram.com/the_sipcafe/), que abre en otra pestaña y conserva el foco visible al navegar con teclado sobre el fondo oscuro. Ambos usan `ExperienceList`, con los mismos estilos y datos. El registro se edita en `site.json > experience` mediante `role`, `period` y `url` (opcional); los registros sin URL se muestran como texto y una lista vacía conserva el texto de respaldo de cada panel. Home mantiene M05 en su fondo; la lista permanece en HTML sin deformación.
 
 Contacto en la cabecera y los enlaces de redes del pie muestran sólo su texto, sin la flecha tipográfica final. En la navegación principal, Work utiliza la misma sustitución de letras M02 que Home y About. `AnimatedLink` admite un `suffix` estático para el contador y un `ariaLabel` que conserva el nombre completo `Work (04)`; texto y contador siguen formando un único enlace.
 
@@ -491,7 +491,7 @@ portfolio/
 │   │   │   │                         RelatedProjectsSection
 │   │   │   └── shared/               ProfileHero, ProjectsSection
 │   │   ├── portfolio/                ProjectCard, ProjectGrid, ProjectGallery
-│   │   ├── editorial/                InfoPanel
+│   │   ├── editorial/                InfoPanel, ExperienceList
 │   │   └── ui/                       Media, ErrorState, ArrowBadge
 │   ├── motion/
 │   │   ├── MotionProvider.jsx        Lenis, ticker compartido y preferencias de movimiento
