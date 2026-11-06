@@ -13,7 +13,13 @@
   "workIntro": "Una cuidada selección de proyectos basados en ideas creativas y soluciones visuales que reflejan la identidad de cada uno.",
   "services": ["Fotografia", "Edición", "Video"],
   "industries": ["Producto", "Moda", "Entretenimiento"],
-  "experience": [],
+  "experience": [
+    {
+      "role": "THE SIP",
+      "period": "2026",
+      "url": "https://www.instagram.com/the_sipcafe/"
+    }
+  ],
   "email": "quetzincuevas@gmail.com",
   "phone": "+ 52  77 7367 0427",
   "socials": [

@@ -23,29 +23,6 @@
 .project-overview__paragraph {
   margin: 0 0 25px;
 }
-.project-overview__metadata {
-  border-top: 1px solid #454545;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding-top: 20px;
-  margin-top: 80px;
-  margin-right: 0;
-  margin-bottom: 0;
-  margin-left: 0;
-}
-.project-overview__label {
-  display: block;
-}
-.project-overview__value {
-  font-size: 18px;
-  font-weight: 400;
-  display: block;
-  margin-top: 20px;
-  margin-right: 0;
-  margin-bottom: 0;
-  margin-left: 0;
-}
 .project-overview__visit {
   margin-top: 50px;
   display: inline-block;
@@ -72,13 +49,5 @@
   }
   .project-overview__summary {
     font-size: 25px;
-  }
-  .project-overview__metadata {
-    margin-top: 45px;
-    gap: 9px;
-  }
-  .project-overview__value {
-    font-size: 14px;
-    overflow-wrap: anywhere;
   }
 }

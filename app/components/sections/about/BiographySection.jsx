@@ -3,11 +3,8 @@ import styles from "./BiographySection.module.css";
 
 export default function BiographySection({ paragraphs, portrait }) {
   return (
-    <section className={styles["biography-section"]} aria-labelledby="biography-title">
+    <section className={styles["biography-section"]} aria-label="Biografía">
       <div className={styles["biography-section__content"]}>
-        <h2 id="biography-title" className={`${styles["biography-section__heading"]} u-eyebrow`}>
-          Sobre mí / 01
-        </h2>
         <div className={styles["biography-section__body"]}>
           {paragraphs.map((paragraph) => (
             <p key={paragraph} className={styles["biography-section__paragraph"]}>

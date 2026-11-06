@@ -53,6 +53,12 @@ export function validate(site, projects, media) {
     requireText(social.label, "Red social");
     requireLink(social.url, "Red social");
   }
+  if (!Array.isArray(site.experience)) throw new Error("Experiencia inválida");
+  for (const entry of site.experience) {
+    requireText(entry.role, "Nombre de experiencia");
+    requireText(entry.period, "Periodo de experiencia");
+    requireLink(entry.url, "Enlace de experiencia");
+  }
   if (site.email != null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(site.email))
     throw new Error("Correo inválido");
   for (const id of [...site.carousel, ...site.workCarousel, site.portrait, site.architecture])

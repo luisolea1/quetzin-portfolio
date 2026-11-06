@@ -13,10 +13,6 @@
   background: var(--ink);
   color: white;
 }
-.biography-section__heading {
-  display: inline;
-  margin: 0;
-}
 .biography-section__body {
   max-width: 560px;
   margin: auto 0;
